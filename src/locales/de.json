@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "schedule": "Kalender",
+    "results": "Ergebnisse",
+    "rules": "Regeln",
+    "about": "Über uns",
+    "games": "Spiele"
+  },
+  "hero": {
+    "tagline": "Beherrsche den Apex.",
+    "next_gp": "NÄCHSTER GRAND PRIX",
+    "preparing": "MOTOR WIRD VORBEREITET...",
+    "lights_out": "DIE AMPELN GEHEN AUS UND LOS GEHTS!",
+    "days": "Tage",
+    "hrs": "Std",
+    "mins": "Min",
+    "secs": "Sek"
+  },
+  "home": {
+    "dashboard": "Saison Dashboard",
+    "driver_standings": "Fahrerwertung",
+    "constructor_standings": "Teamwertung",
+    "view_all": "Alle ansehen",
+    "no_drivers": "Keine Fahrerdaten verfügbar.",
+    "no_constructors": "Keine Konstrukteursdaten verfügbar."
+  },
+  "games": {
+    "arcade": "Fan Arcade",
+    "arcade_subtitle": "Teste deinen Renn-IQ.",
+    "already_completed": "Quiz bereits beendet!",
+    "completed_title": "Quiz abgeschlossen!",
+    "scored": "Ergebnis",
+    "of": "von",
+    "xp_added": "XP gutgeschrieben!",
+    "try_again": "Nochmal versuchen",
+    "trivia_event": "TRIVIA EVENT #1",
+    "question": "FRAGE",
+    "confirm": "Antwort bestätigen",
+    "finish": "Quiz beenden",
+    "next": "Nächste Frage"
+  },
+  "about": {
+    "chronology": "SPORTCHRONIK",
+    "title": "VERMÄCHTNIS DER GESCHWINDIGKEIT",
+    "subtitle": "Formel 1 steht für absolute Ingenieurskunst und Mut.",
+    "full_legacy": "Gesamtes Erbe",
+    "vintage": "Goldene Jahre",
+    "turbo": "Zwangsbeatmung",
+    "modern": "Öko-Hybrid"
+  },
+  "footer": {
+    "desc": "Deine Hauptquelle für Live-Telemetriedaten und Rennberichte.",
+    "links": "Schnellzugriff",
+    "guides": "Aktivitäten",
+    "data_src": "Datenlieferanten"
+  },
+  "schedule": {
+    "title": "Rennkalender",
+    "subtitle": "Zeiten, Orte und Sieger im Überblick.",
+    "select_year": "Jahr wählen",
+    "error": "Fehler beim Laden der Kalenderpläne.",
+    "error_retry": "Versuche es erneut.",
+    "empty": "Keine Rennen terminiert."
+  },
+  "results": {
+    "title": "Ergebnisse & Stände",
+    "subtitle": "Siegerübersichten und Teamwertungen.",
+    "leaderboard": "Platzierungen",
+    "empty_results": "Keine Ergebnisse erfasst.",
+    "summary": "Meisterschaftsstand",
+    "empty_standings": "Aktuell keine Daten."
+  }
+}

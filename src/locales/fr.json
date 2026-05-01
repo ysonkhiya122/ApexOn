@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "schedule": "Calendrier",
+    "results": "Résultats",
+    "rules": "Règles",
+    "about": "Histoire",
+    "games": "Jeux"
+  },
+  "hero": {
+    "tagline": "Maîtrisez l'Apex.",
+    "next_gp": "PROCHAIN GRAND PRIX",
+    "preparing": "PRÉPARATION DU MOTEUR...",
+    "lights_out": "ÉTEIGNEZ LES FEUX ET C'EST PARTI !",
+    "days": "Jours",
+    "hrs": "Hrs",
+    "mins": "Mins",
+    "secs": "Secs"
+  },
+  "home": {
+    "dashboard": "Tableau de Bord",
+    "driver_standings": "Classement Pilotes",
+    "constructor_standings": "Classement Constructeurs",
+    "view_all": "Voir Tout",
+    "no_drivers": "Statistiques pilotes indisponibles.",
+    "no_constructors": "Statistiques constructeurs indisponibles."
+  },
+  "games": {
+    "arcade": "Arcade des Fans",
+    "arcade_subtitle": "Testez vos connaissances en course.",
+    "already_completed": "Quiz quotidien terminé !",
+    "completed_title": "Quiz Terminé !",
+    "scored": "Score",
+    "of": "sur",
+    "xp_added": "XP ajoutée au profil !",
+    "try_again": "Réessayer",
+    "trivia_event": "QUIZ ÉVÉNEMENT #1",
+    "question": "QUESTION",
+    "confirm": "Confirmer la Réponse",
+    "finish": "Terminer le Quiz",
+    "next": "Question Suivante"
+  },
+  "about": {
+    "chronology": "CHRONOLOGIE DU SPORT",
+    "title": "L'HÉRITAGE DE LA VITESSE",
+    "subtitle": "La Formule 1 incarne le summum de l'ingénierie et du courage.",
+    "full_legacy": "Héritage Global",
+    "vintage": "Années d'Or",
+    "turbo": "Moteur Turbo",
+    "modern": "Éco Hybride"
+  },
+  "footer": {
+    "desc": "Votre source ultime pour la télémétrie des courses en direct.",
+    "links": "Liens Utiles",
+    "guides": "Guides & Jeux",
+    "data_src": "Bases de Données"
+  },
+  "schedule": {
+    "title": "Calendrier F1",
+    "subtitle": "Parcourez les dates et les circuits mondiaux.",
+    "select_year": "Année",
+    "error": "Impossible de charger la saison demandée.",
+    "error_retry": "Réessayez plus tard.",
+    "empty": "Aucune course trouvée."
+  },
+  "results": {
+    "title": "Résultats & Podiums",
+    "subtitle": "Revue des victoires de fin de championnat.",
+    "leaderboard": "Classement de Course",
+    "empty_results": "Aucun résultat trouvé.",
+    "summary": "Bilan Global",
+    "empty_standings": "Classement indisponible."
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "schedule": "Calendario",
+    "results": "Resultados",
+    "rules": "Reglas",
+    "about": "Historia",
+    "games": "Juegos"
+  },
+  "hero": {
+    "tagline": "Domina el Ápice.",
+    "next_gp": "PRÓXIMO GRAN PREMIO",
+    "preparing": "PREPARANDO MOTOR...",
+    "lights_out": "¡SE APAGAN LAS LUCES Y COMENZAMOS!",
+    "days": "Días",
+    "hrs": "Hrs",
+    "mins": "Mins",
+    "secs": "Segs"
+  },
+  "home": {
+    "dashboard": "Panel de Temporada",
+    "driver_standings": "Clasificación de Pilotos",
+    "constructor_standings": "Clasificación de Constructores",
+    "view_all": "Ver Todo",
+    "no_drivers": "Estadísticas de pilotos no disponibles.",
+    "no_constructors": "Estadísticas de equipos no disponibles."
+  },
+  "games": {
+    "arcade": "Arcade Diario de Fans",
+    "arcade_subtitle": "Pon a prueba tu coeficiente intelectual de carreras.",
+    "already_completed": "¡Has completado la trivia diaria!",
+    "completed_title": "¡Cuestionario Completado!",
+    "scored": "Puntuación",
+    "of": "de",
+    "xp_added": "¡XP añadida a tu perfil!",
+    "try_again": "Intentar de Nuevo",
+    "trivia_event": "EVENTO TRIVIA #1",
+    "question": "PREGUNTA",
+    "confirm": "Confirmar Respuesta",
+    "finish": "Terminar Cuestionario",
+    "next": "Siguiente Pregunta"
+  },
+  "about": {
+    "chronology": "CRONOLOGÍA DEPORTIVA",
+    "title": "LEGADO DE VELOCIDAD",
+    "subtitle": "La Fórmula 1 representa la cumbre absoluta de la persistencia de la ingeniería.",
+    "full_legacy": "Legado Completo",
+    "vintage": "Años Dorados",
+    "turbo": "Inducción Forzada",
+    "modern": "Eco Híbrido"
+  },
+  "footer": {
+    "desc": "Tu recurso principal para carreras inmersivas y telemetría en tiempo real.",
+    "links": "Enlaces Rápidos",
+    "guides": "Guías y Actividades",
+    "data_src": "Fuentes de Datos"
+  },
+  "schedule": {
+    "title": "Calendario F1",
+    "subtitle": "Consulta fechas, ciudades y ganadores.",
+    "select_year": "Seleccionar Año",
+    "error": "Error al cargar los planes de la temporada.",
+    "error_retry": "Verifica parámetros e intenta de nuevo.",
+    "empty": "No hay carreras programadas."
+  },
+  "results": {
+    "title": "Resultados y Clasificaciones",
+    "subtitle": "Podios y tablas acumulativas anuales.",
+    "leaderboard": "Tabla de Posiciones",
+    "empty_results": "Sin resultados disponibles.",
+    "summary": "Resumen General",
+    "empty_standings": "Clasificación vacía."
+  }
+}

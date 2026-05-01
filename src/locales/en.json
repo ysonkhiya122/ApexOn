@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Home",
+    "schedule": "Schedule",
+    "results": "Results",
+    "rules": "Rules",
+    "about": "About",
+    "games": "Games"
+  },
+  "hero": {
+    "tagline": "Own the Apex.",
+    "next_gp": "NEXT GRAND PRIX",
+    "preparing": "PREPARING ENGINE...",
+    "lights_out": "LIGHTS OUT AND AWAY WE GO!",
+    "days": "Days",
+    "hrs": "Hrs",
+    "mins": "Mins",
+    "secs": "Secs"
+  },
+  "home": {
+    "dashboard": "Season Dashboard",
+    "driver_standings": "Driver Standings",
+    "constructor_standings": "Constructor Standings",
+    "view_all": "View All",
+    "no_drivers": "No driver statistics available.",
+    "no_constructors": "No team statistics available."
+  },
+  "games": {
+    "arcade": "Daily Fan Arcade",
+    "arcade_subtitle": "Test individual racing IQ thresholds and unlock custom awards.",
+    "already_completed": "You have completed the daily trivia! Feel free to practice further or wait for seasonal events.",
+    "completed_title": "Quiz Completed!",
+    "scored": "You scored",
+    "of": "out of",
+    "xp_added": "XP added to profile benchmarks!",
+    "try_again": "Try Again",
+    "trivia_event": "TRIVIA EVENT #1",
+    "question": "QUESTION",
+    "confirm": "Confirm Answer",
+    "finish": "Finish Quiz",
+    "next": "Next Question"
+  },
+  "about": {
+    "chronology": "SPORT CHRONOLOGY",
+    "title": "LEGACY OF SPEED",
+    "subtitle": "Formula 1 represents the absolute pinnacle of engineering persistence, courage, and aerodynamic breakthroughs.",
+    "full_legacy": "Full Legacy",
+    "vintage": "Golden Years",
+    "turbo": "Forced Induction",
+    "modern": "Eco Hybrid"
+  },
+  "footer": {
+    "desc": "Your primary resource for immersive racing feeds, real-time metrics, rules analysis, and telemetry logs.",
+    "links": "Quick Links",
+    "guides": "Guides & Activities",
+    "data_src": "API Data Sources"
+  },
+  "schedule": {
+    "title": "F1 Calendar",
+    "subtitle": "Review dates, host cities, and completed race records.",
+    "select_year": "Select Year",
+    "error": "Error retrieving the requested season plans.",
+    "error_retry": "Verify target constraints or retry navigation feeds.",
+    "empty": "No race schedule files currently mapped."
+  },
+  "results": {
+    "title": "Race results & Standings",
+    "subtitle": "Review podium finishes or end-of-year standings charts.",
+    "leaderboard": "Position Leaderboard",
+    "empty_results": "No results logged for the specified endpoint parameters.",
+    "summary": "Standings Summary",
+    "empty_standings": "Standings records empty."
+  },
+  "chat": {
+    "placeholder": "Ask Apexon F1 AI...",
+    "default_reply": "That's an interesting F1 query! I'll map this into the performance logs. Feel free to ask about drivers, podium criteria, or tire flags.",
+    "points_reply": "Drivers in the Top 10 earn points (25, 18, 15, 12, 10, 8, 6, 4, 2, 1). Fastest lap scores 1 bonus point if the driver places in the top 10.",
+    "tire_reply": "Teams choose from Hard (C1-C2), Medium (C3), or Soft (C4-C5) compounds. Each car must mount at least two unique configurations during full dry sessions.",
+    "champion_reply": "Lewis Hamilton and Michael Schumacher hold the elite record with 7 World Driver Championships each."
+  }
+}
