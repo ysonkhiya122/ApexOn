@@ -8,7 +8,7 @@ interface FiltersState {
 }
 
 const initialState: FiltersState = {
-  selectedYear: '2024',
+  selectedYear: '2026',
   selectedRound: '1',
   selectedDriver: '',
   selectedCircuit: '',

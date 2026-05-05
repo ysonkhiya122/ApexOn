@@ -77,5 +77,27 @@
     "points_reply": "Drivers in the Top 10 earn points (25, 18, 15, 12, 10, 8, 6, 4, 2, 1). Fastest lap scores 1 bonus point if the driver places in the top 10.",
     "tire_reply": "Teams choose from Hard (C1-C2), Medium (C3), or Soft (C4-C5) compounds. Each car must mount at least two unique configurations during full dry sessions.",
     "champion_reply": "Lewis Hamilton and Michael Schumacher hold the elite record with 7 World Driver Championships each."
+  },
+  "radio": {
+    "title": "Pit-to-Driver Team Radio",
+    "desc": "Listen to official communications across live sessions.",
+    "loading": "Polling frequency logs...",
+    "empty": "No archived audio transmissions detected.",
+    "play": "Play",
+    "pause": "Pause",
+    "driver": "Driver No"
+  },
+  "strategy": {
+    "title": "Race Strategy Simulator",
+    "subtitle": "Direct team decisions from the pitwall.",
+    "scenario": "Scenario:",
+    "choice": "Select Action:"
+  },
+  "error": {
+    "box": "BOX, BOX! 404",
+    "pit_stop": "You've taken a wrong turn into the Pit lane. This route does not exist.",
+    "oversteer": "OVERSTEER DETECTED! 403",
+    "no_access": "Lost traction! You do not have security authorization for this telemetry loop.",
+    "back": "Back to Track"
   }
 }

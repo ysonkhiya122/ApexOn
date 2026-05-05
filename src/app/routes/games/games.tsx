@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { RootState } from '../../../store';
 import { addPoints, markQuizCompleted } from '../../../store/slices/fanProfileSlice';
 import { Button } from '../../../components/atoms/button';
@@ -168,6 +169,59 @@ export const GamesPage: React.FC = () => {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Race Strategy Simulator */}
+      <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-6 backdrop-blur">
+        <h2 className="text-xl font-bold text-slate-100 flex items-center gap-2 mb-1">
+          <Award size={20} className="text-red-500" />
+          {t('strategy.title')}
+        </h2>
+        <p className="text-xs text-slate-400 mb-4">{t('strategy.subtitle')}</p>
+
+        <div className="rounded-lg bg-slate-950 p-4 border border-slate-800/80">
+          <span className="text-xxs font-black text-slate-400 uppercase tracking-wider">{t('strategy.scenario')}</span>
+          <p className="text-sm font-semibold text-slate-200 mt-1">
+            Lap 45/50: A sudden downpour hits Sector 2. You are running P3 on worn Soft tires.
+          </p>
+
+          <div className="mt-4 grid grid-cols-1 gap-2">
+            {[
+              { text: 'Box for Intermediate tires.', correct: true },
+              { text: 'Stay out on Softs and defend.', correct: false },
+              { text: 'Box for Full Wets.', correct: false },
+            ].map((choice, cIdx) => (
+              <button
+                key={cIdx}
+                onClick={() => {
+                  if (choice.correct) {
+                    alert('Outstanding call! Secured the podium seamlessly.');
+                    dispatch(addPoints(25));
+                  } else {
+                    alert('Tough break. Grid positions compromised.');
+                  }
+                }}
+                className="text-left text-xs bg-slate-900 border border-slate-800 hover:border-red-500 p-3 rounded transition-all cursor-pointer text-slate-300 hover:text-white"
+              >
+                {choice.text}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Demo Error View Links */}
+      <div className="flex gap-3 justify-center pt-8 border-t border-slate-800/40">
+        <Link to="/403">
+          <button className="text-xxs uppercase tracking-wider text-slate-500 hover:text-yellow-500 transition-colors cursor-pointer">
+            [Demo: 403 authorization state]
+          </button>
+        </Link>
+        <Link to="/missing-path">
+          <button className="text-xxs uppercase tracking-wider text-slate-500 hover:text-red-500 transition-colors cursor-pointer">
+            [Demo: 404 navigation state]
+          </button>
+        </Link>
       </div>
     </div>
   );

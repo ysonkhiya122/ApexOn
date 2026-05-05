@@ -9,6 +9,7 @@ import { Skeleton } from '../../../components/atoms/skeleton';
 import { Badge } from '../../../components/atoms/badge';
 import { Award } from 'lucide-react';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { AnalysisDashboard } from '../../../features/analysis';
 import './results.scss';
 
 export const ResultsPage: React.FC = () => {
@@ -24,10 +25,18 @@ export const ResultsPage: React.FC = () => {
   const { data: standingsData, isLoading: standingsLoading } = useGetDriverStandingsQuery(selectedYear);
 
   const yearOptions = [
+    { value: '2026', label: `2026 ${t('nav.about')}` },
+    { value: '2025', label: `2025 ${t('nav.about')}` },
     { value: '2024', label: `2024 ${t('nav.about')}` },
     { value: '2023', label: `2023 ${t('nav.about')}` },
     { value: '2022', label: `2022 ${t('nav.about')}` },
     { value: '2021', label: `2021 ${t('nav.about')}` },
+    { value: '2020', label: `2020 ${t('nav.about')}` },
+    { value: '2019', label: `2019 ${t('nav.about')}` },
+    { value: '2018', label: `2018 ${t('nav.about')}` },
+    { value: '2017', label: `2017 ${t('nav.about')}` },
+    { value: '2016', label: `2016 ${t('nav.about')}` },
+    { value: '2015', label: `2015 ${t('nav.about')}` },
   ];
 
   const rounds = scheduleData?.MRData?.RaceTable?.Races || [];
@@ -164,6 +173,10 @@ export const ResultsPage: React.FC = () => {
             <div className="text-center py-12 text-slate-500">{t('results.empty_standings')}</div>
           )}
         </div>
+      </div>
+
+      <div className="mt-12">
+        <AnalysisDashboard />
       </div>
     </div>
   );

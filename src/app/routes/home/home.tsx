@@ -6,14 +6,14 @@ import { Button } from '../../../components/atoms/button';
 import { Skeleton } from '../../../components/atoms/skeleton';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { TeamRadio } from '../../../features/radio';
 import './home.scss';
 
 export const HomePage: React.FC = () => {
-  const currentYear = '2024';
   const { t } = useTranslation();
-  const { data: scheduleData, isLoading: scheduleLoading } = useGetScheduleQuery(currentYear);
-  const { data: driverData, isLoading: driverLoading } = useGetDriverStandingsQuery(currentYear);
-  const { data: constructorData, isLoading: constructorLoading } = useGetConstructorStandingsQuery(currentYear);
+  const { data: scheduleData, isLoading: scheduleLoading } = useGetScheduleQuery('2026');
+  const { data: driverData, isLoading: driverLoading } = useGetDriverStandingsQuery('2026');
+  const { data: constructorData, isLoading: constructorLoading } = useGetConstructorStandingsQuery('2026');
 
   const [nextRace, setNextRace] = useState<any>(null);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -202,6 +202,13 @@ export const HomePage: React.FC = () => {
               <div className="text-center text-sm py-8 text-slate-500">{t('home.no_constructors')}</div>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* Advanced Radio Broadcast */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-xl mx-auto">
+          <TeamRadio />
         </div>
       </section>
     </div>

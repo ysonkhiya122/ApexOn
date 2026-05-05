@@ -12,7 +12,8 @@ import { ResultsPage } from './app/routes/results';
 import { RulesPage } from './app/routes/rules';
 import { AboutPage } from './app/routes/about';
 import { GamesPage } from './app/routes/games';
-import { ChatDock } from './features/chat/ChatDock';
+import { NotFound, NoAccess } from './app/routes/error';
+import { ChatDock } from './features/chat';
 
 export default function App() {
   return (
@@ -29,15 +30,8 @@ export default function App() {
               <Route path="/rules" element={<RulesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/games" element={<GamesPage />} />
-              <Route
-                path="*"
-                element={
-                  <div className="mx-auto max-w-7xl px-4 py-16 text-center text-slate-100">
-                    <h2 className="text-4xl font-extrabold text-red-500 uppercase">404</h2>
-                    <p className="mt-2 text-slate-400">Box, box! This route does not exist.</p>
-                  </div>
-                }
-              />
+              <Route path="/403" element={<NoAccess />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />

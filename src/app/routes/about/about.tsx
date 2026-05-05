@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Badge } from '../../../components/atoms/badge';
 import { History, Trophy, Award } from 'lucide-react';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { PhotoGallery } from '../../../features/gallery';
 import './about.scss';
 
 interface TimelineEvent {
@@ -105,6 +106,10 @@ export const AboutPage: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-8">
+        <PhotoGallery />
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 text-center">
