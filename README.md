@@ -1,4 +1,4 @@
-# F1 Hub
+# ApexOn
 
 A modern Formula 1 fan platform built as a product-first frontend application using React 19, TypeScript, Redux Toolkit, and RTK Query.
 
