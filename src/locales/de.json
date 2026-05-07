@@ -70,5 +70,34 @@
     "empty_results": "Keine Ergebnisse erfasst.",
     "summary": "Meisterschaftsstand",
     "empty_standings": "Aktuell keine Daten."
+  },
+  "chat": {
+    "placeholder": "Frag Apexon F1 AI...",
+    "default_reply": "Das ist ein interessanter F1-Vorgang! Erkundige dich gerne.",
+    "points_reply": "Top 10 erhalten Punkte (25, 18, 15, 12, 10, 8, 6, 4, 2, 1).",
+    "tire_reply": "Harte, mittlere oder weiche Reifenmischungen.",
+    "champion_reply": "Schumacher und Hamilton halten je 7 Titel."
+  },
+  "radio": {
+    "title": "Fahrerfunk-Zentrale",
+    "desc": "Lausche den Strategiedurchsagen live.",
+    "loading": "Lade...",
+    "empty": "Keine Audiodaten vorhanden.",
+    "play": "Abspielen",
+    "pause": "Anhalten",
+    "driver": "Fahrer-Nr."
+  },
+  "strategy": {
+    "title": "Taktik-Leitstand",
+    "subtitle": "Lenke die Entscheidungen direkt.",
+    "scenario": "Szenario:",
+    "choice": "Aktion:"
+  },
+  "error": {
+    "box": "BOX, BOX! 404",
+    "pit_stop": "Falsche Ausfahrt in die Boxengasse.",
+    "oversteer": "ÜBERSTEUERN! 403",
+    "no_access": "Zutritt blockiert !",
+    "back": "Zurück zur Strecke"
   }
 }

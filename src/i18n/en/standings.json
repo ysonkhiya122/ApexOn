@@ -1,0 +1,20 @@
+{
+  "title": "Championship Standings",
+  "subtitle": "Track the battle for World Championships",
+  "tabs": {
+    "drivers": "Drivers",
+    "constructors": "Constructors"
+  },
+  "season": "Season",
+  "table": {
+    "pos": "Pos",
+    "driver": "Driver",
+    "team": "Team",
+    "constructor": "Constructor",
+    "points": "Points",
+    "wins": "Wins"
+  },
+  "empty": "No standings data available for this season",
+  "loading": "Loading championship standings...",
+  "error": "Failed to load standings data"
+}

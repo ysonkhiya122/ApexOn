@@ -1,19 +1,28 @@
+import { lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 
 import { Header } from './components/organisms/header';
 import { Footer } from './components/organisms/footer';
-import { Preloader } from './components/organisms/Preloader';
+import { Preloader } from './components/organisms/preloader';
+import { ChatDock } from './modules/ai';
 
-import { HomePage } from './app/routes/home';
-import { SchedulePage } from './app/routes/schedule';
-import { ResultsPage } from './app/routes/results';
-import { RulesPage } from './app/routes/rules';
-import { AboutPage } from './app/routes/about';
-import { GamesPage } from './app/routes/games';
-import { NotFound, NoAccess } from './app/routes/error';
-import { ChatDock } from './features/chat';
+// Lazy loaded module routes
+const HomePage = lazy(() => import('./modules/home'));
+const SchedulePage = lazy(() => import('./modules/schedule'));
+const ResultsPage = lazy(() => import('./modules/results'));
+const RulesPage = lazy(() => import('./modules/rules'));
+const AboutPage = lazy(() => import('./modules/history'));
+const GamesPage = lazy(() => import('./modules/games'));
+const DriversPage = lazy(() => import('./modules/drivers'));
+const DriverDetail = lazy(() => import('./modules/drivers/pages/DriverDetail'));
+const TeamsPage = lazy(() => import('./modules/teams'));
+const TeamDetail = lazy(() => import('./modules/teams/pages/TeamDetail'));
+const CircuitsPage = lazy(() => import('./modules/circuits'));
+const StandingsPage = lazy(() => import('./modules/standings'));
+const NoAccess = lazy(() => import('./modules/shared').then(m => ({ default: m.NoAccess })));
+const NotFound = lazy(() => import('./modules/shared').then(m => ({ default: m.NotFound })));
 
 export default function App() {
   return (
@@ -23,16 +32,24 @@ export default function App() {
           <Preloader />
           <Header />
           <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/schedule" element={<SchedulePage />} />
-              <Route path="/results" element={<ResultsPage />} />
-              <Route path="/rules" element={<RulesPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/games" element={<GamesPage />} />
-              <Route path="/403" element={<NoAccess />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<div className="p-8 text-center text-xs text-slate-500 font-mono">WARMING TIRES...</div>}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/schedule" element={<SchedulePage />} />
+                <Route path="/results" element={<ResultsPage />} />
+                <Route path="/rules" element={<RulesPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/games" element={<GamesPage />} />
+                <Route path="/drivers" element={<DriversPage />} />
+                <Route path="/drivers/:driverId" element={<DriverDetail />} />
+                <Route path="/teams" element={<TeamsPage />} />
+                <Route path="/teams/:teamId" element={<TeamDetail />} />
+                <Route path="/circuits" element={<CircuitsPage />} />
+                <Route path="/standings" element={<StandingsPage />} />
+                <Route path="/403" element={<NoAccess />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
           <ChatDock />

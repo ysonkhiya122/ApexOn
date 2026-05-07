@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Trophy, Calendar, Info, BookOpen, BarChart3, Gamepad2, User, Globe } from 'lucide-react';
+import { Menu, X, Trophy, Calendar, Info, BookOpen, BarChart3, Gamepad2, User, Globe, Users, MapPin } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { setLanguage, LanguageCode } from '../../../store/slices/languageSlice';
@@ -18,6 +18,10 @@ export const Header: React.FC = () => {
     { name: t('nav.home'), path: '/', icon: Trophy },
     { name: t('nav.schedule'), path: '/schedule', icon: Calendar },
     { name: t('nav.results'), path: '/results', icon: BarChart3 },
+    { name: t('nav.standings'), path: '/standings', icon: Trophy },
+    { name: t('nav.drivers'), path: '/drivers', icon: Users },
+    { name: t('nav.teams'), path: '/teams', icon: Users },
+    { name: t('nav.circuits'), path: '/circuits', icon: MapPin },
     { name: t('nav.rules'), path: '/rules', icon: BookOpen },
     { name: t('nav.about'), path: '/about', icon: Info },
     { name: t('nav.games'), path: '/games', icon: Gamepad2 },

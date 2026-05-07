@@ -70,5 +70,34 @@
     "empty_results": "Aucun résultat trouvé.",
     "summary": "Bilan Global",
     "empty_standings": "Classement indisponible."
+  },
+  "chat": {
+    "placeholder": "Demandez à l'IA Apexon F1...",
+    "default_reply": "C'est une requête intéressante ! Interrogez-moi sur les pilotes ou les écuries.",
+    "points_reply": "Le top 10 récolte les points (25, 18, 15, 12, 10, 8, 6, 4, 2, 1).",
+    "tire_reply": "Composés durs, moyens ou tendres.",
+    "champion_reply": "Lewis Hamilton et Michael Schumacher dominent avec 7 titres."
+  },
+  "radio": {
+    "title": "Radio d'équipe",
+    "desc": "Écoutez les échanges radio.",
+    "loading": "Chargement...",
+    "empty": "Aucune archive trouvée.",
+    "play": "Lire",
+    "pause": "Pause",
+    "driver": "N° Pilote"
+  },
+  "strategy": {
+    "title": "Simulateur Tactique",
+    "subtitle": "Prenez les commandes depuis les stands.",
+    "scenario": "Scénario:",
+    "choice": "Action:"
+  },
+  "error": {
+    "box": "BOX, BOX! 404",
+    "pit_stop": "Oups, erreur de trajectoire vers les stands.",
+    "oversteer": "SURVIRAGE! 403",
+    "no_access": "Accès refusé !",
+    "back": "Retour au circuit"
   }
 }

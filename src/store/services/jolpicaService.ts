@@ -19,6 +19,24 @@ export const jolpicaService = createApi({
     getCircuits: builder.query<any, string>({
       query: (year) => `/${year}/circuits.json`,
     }),
+    getPitStops: builder.query<any, { year: string; round: string }>({
+      query: ({ year, round }) => `/${year}/${round}/pitstops.json`,
+    }),
+    getDrivers: builder.query<any, string>({
+      query: (year) => `/${year}/drivers.json`,
+    }),
+    getDriverDetails: builder.query<any, string>({
+      query: (driverId) => `/drivers/${driverId}.json`,
+    }),
+    getDriverResults: builder.query<any, string>({
+      query: (driverId) => `/drivers/${driverId}/results.json`,
+    }),
+    getConstructors: builder.query<any, string>({
+      query: (year) => `/${year}/constructors.json`,
+    }),
+    getConstructorResults: builder.query<any, string>({
+      query: (constructorId) => `/constructors/${constructorId}/results.json`,
+    }),
   }),
 });
 
@@ -28,4 +46,10 @@ export const {
   useGetConstructorStandingsQuery,
   useGetRaceResultsQuery,
   useGetCircuitsQuery,
+  useGetPitStopsQuery,
+  useGetDriversQuery,
+  useGetDriverDetailsQuery,
+  useGetDriverResultsQuery,
+  useGetConstructorsQuery,
+  useGetConstructorResultsQuery,
 } = jolpicaService;

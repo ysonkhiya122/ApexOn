@@ -1,0 +1,8 @@
+{
+  "dashboard": "Season Dashboard",
+  "driver_standings": "Driver Standings",
+  "constructor_standings": "Constructor Standings",
+  "view_all": "View All",
+  "no_drivers": "No driver statistics available.",
+  "no_constructors": "No team statistics available."
+}
