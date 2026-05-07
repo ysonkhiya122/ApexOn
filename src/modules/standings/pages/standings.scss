@@ -1,0 +1,96 @@
+.standings-page {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  &__header {
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    color: #f1f5f9;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(30, 41, 59, 0.3);
+    border: 1px solid #1e293b;
+    border-radius: 0.75rem;
+  }
+
+  &__select {
+    min-width: 10rem;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border: 1px solid #334155;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(30, 41, 59, 0.5);
+      color: #f1f5f9;
+    }
+
+    &--active {
+      background-color: #dc2626;
+      border-color: #dc2626;
+      color: #ffffff;
+    }
+  }
+
+  &__skeleton {
+    .standings-page__skeleton-table {
+      height: 24rem;
+      border-radius: 0.75rem;
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #64748b;
+    font-size: 1rem;
+    background-color: rgba(30, 41, 59, 0.3);
+    border: 1px solid #1e293b;
+    border-radius: 0.75rem;
+  }
+
+  &__error {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #f87171;
+    font-size: 1rem;
+  }
+}

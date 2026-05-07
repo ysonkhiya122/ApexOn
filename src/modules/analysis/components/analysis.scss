@@ -1,0 +1,53 @@
+.f1-analysis {
+  /* Dropdown styles */
+  .relative {
+    position: relative;
+  }
+
+  /* Chip styles */
+  .flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Bar fill base styles */
+  .bar-fill {
+    height: 100%;
+    border-radius: 0.25rem;
+    transition: width 1000ms ease;
+    width: var(--bar-width, 0%);
+  }
+
+  /* Bar fill color variants */
+  .bar-fill--red {
+    background-color: #dc2626;
+  }
+
+  .bar-fill--overtake {
+    background-color: #ef4444;
+  }
+
+  .bar-fill--tire {
+    background-color: #10b981;
+  }
+
+  .bar-fill--wet {
+    background-color: #0ea5e9;
+  }
+
+  /* Text truncation utilities */
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .max-w-\[120px\] {
+    max-width: 120px;
+  }
+
+  .max-w-\[140px\] {
+    max-width: 140px;
+  }
+}

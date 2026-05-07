@@ -1,0 +1,8 @@
+{
+  "title": "Race results & Standings",
+  "subtitle": "Review podium finishes or end-of-year standings charts.",
+  "leaderboard": "Position Leaderboard",
+  "empty_results": "No results logged for the specified endpoint parameters.",
+  "summary": "Standings Summary",
+  "empty_standings": "Standings records empty."
+}

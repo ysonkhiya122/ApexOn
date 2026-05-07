@@ -70,5 +70,34 @@
     "empty_results": "Sin resultados disponibles.",
     "summary": "Resumen General",
     "empty_standings": "Clasificación vacía."
+  },
+  "chat": {
+    "placeholder": "Pregúntale a la IA de Apexon F1...",
+    "default_reply": "¡Es una pregunta interesante de F1! No dudes en consultar sobre pilotos, podios o neumáticos.",
+    "points_reply": "Los 10 primeros ganan puntos (25, 18, 15, 12, 10, 8, 6, 4, 2, 1).",
+    "tire_reply": "Los equipos eligen entre compuestos Duro, Medio o Blando.",
+    "champion_reply": "Lewis Hamilton y Michael Schumacher tienen el récord con 7 títulos cada uno."
+  },
+  "radio": {
+    "title": "Radio de Equipo Piloto-Boxes",
+    "desc": "Escucha las transmisiones en directo.",
+    "loading": "Cargando transmisiones...",
+    "empty": "No hay grabaciones de audio guardadas.",
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "driver": "Nº Piloto"
+  },
+  "strategy": {
+    "title": "Simulador de Estrategia",
+    "subtitle": "Toma el control desde el muro de boxes.",
+    "scenario": "Escenario:",
+    "choice": "Acción:"
+  },
+  "error": {
+    "box": "¡BOX, BOX! 404",
+    "pit_stop": "Ruta equivocada por el pit lane. No existe.",
+    "oversteer": "¡SOBREVIRAJE! 403",
+    "no_access": "¡Sin acceso de seguridad a esta telemetría!",
+    "back": "Regresar a pista"
   }
 }

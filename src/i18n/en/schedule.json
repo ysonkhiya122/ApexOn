@@ -1,0 +1,8 @@
+{
+  "title": "F1 Calendar",
+  "subtitle": "Review dates, host cities, and completed race records.",
+  "select_year": "Select Year",
+  "error": "Error retrieving the requested season plans.",
+  "error_retry": "Verify target constraints or retry navigation feeds.",
+  "empty": "No race schedule files currently mapped."
+}
