@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Trophy, Calendar, Info, BookOpen, BarChart3, Gamepad2, User, Globe, Users, MapPin } from 'lucide-react';
+import { Menu, X, Trophy, Calendar, BarChart3, ChevronDown, Users, MapPin, BookOpen, Info, Gamepad2, User, Globe } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { setLanguage, LanguageCode } from '../../../store/slices/languageSlice';
@@ -9,19 +9,27 @@ import './header.scss';
 
 export const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [championshipOpen, setChampionshipOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
   const { t, currentLang } = useTranslation();
   const profile = useSelector((state: RootState) => state.fanProfile);
 
-  const navItems = [
+  const primaryNav = [
     { name: t('nav.home'), path: '/', icon: Trophy },
     { name: t('nav.schedule'), path: '/schedule', icon: Calendar },
     { name: t('nav.results'), path: '/results', icon: BarChart3 },
     { name: t('nav.standings'), path: '/standings', icon: Trophy },
+  ];
+
+  const championshipNav = [
     { name: t('nav.drivers'), path: '/drivers', icon: Users },
     { name: t('nav.teams'), path: '/teams', icon: Users },
     { name: t('nav.circuits'), path: '/circuits', icon: MapPin },
+  ];
+
+  const moreNav = [
     { name: t('nav.rules'), path: '/rules', icon: BookOpen },
     { name: t('nav.about'), path: '/about', icon: Info },
     { name: t('nav.games'), path: '/games', icon: Gamepad2 },
@@ -38,49 +46,100 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="f1-header sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="f1-header">
+      <div className="f1-header__container">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <span className="text-2xl font-black italic tracking-tighter text-red-600">
-            APEXON
-          </span>
-          <span className="hidden text-xs font-semibold uppercase tracking-widest text-slate-400 sm:block">
-            {t('hero.tagline')}
-          </span>
+        <Link to="/" className="f1-header__logo">
+          <span className="f1-header__logo-text">APEXON</span>
+          <span className="f1-header__tagline">{t('hero.tagline')}</span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.path);
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center gap-2 rounded px-3 py-2 text-sm font-medium transition-colors ${
-                  active
-                    ? 'bg-red-600 text-white'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-slate-100'
-                }`}
-              >
-                <Icon size={16} />
-                {item.name}
-              </Link>
-            );
-          })}
+        <nav className="f1-header__nav">
+          {/* Primary Navigation */}
+          <div className="f1-header__primary">
+            {primaryNav.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`f1-header__link ${active ? 'f1-header__link--active' : ''}`}
+                >
+                  <Icon size={16} />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Championship Dropdown */}
+          <div className="f1-header__dropdown" onMouseLeave={() => setChampionshipOpen(false)}>
+            <button
+              className="f1-header__dropdown-trigger"
+              onClick={() => setChampionshipOpen(!championshipOpen)}
+              onMouseEnter={() => setChampionshipOpen(true)}
+            >
+              <Users size={16} />
+              <span>Championship</span>
+              <ChevronDown size={14} className={`f1-header__chevron ${championshipOpen ? 'f1-header__chevron--open' : ''}`} />
+            </button>
+            <div className={`f1-header__menu ${championshipOpen ? 'f1-header__menu--open' : ''}`}>
+              {championshipNav.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.path);
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`f1-header__menu-link ${active ? 'f1-header__menu-link--active' : ''}`}
+                  >
+                    <Icon size={14} />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* More Dropdown */}
+          <div className="f1-header__dropdown" onMouseLeave={() => setMoreOpen(false)}>
+            <button
+              className="f1-header__dropdown-trigger"
+              onClick={() => setMoreOpen(!moreOpen)}
+              onMouseEnter={() => setMoreOpen(true)}
+            >
+              <span>More</span>
+              <ChevronDown size={14} className={`f1-header__chevron ${moreOpen ? 'f1-header__chevron--open' : ''}`} />
+            </button>
+            <div className={`f1-header__menu ${moreOpen ? 'f1-header__menu--open' : ''}`}>
+              {moreNav.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.path);
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`f1-header__menu-link ${active ? 'f1-header__menu-link--active' : ''}`}
+                  >
+                    <Icon size={14} />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
         </nav>
 
         {/* Language picker + Profile */}
-        <div className="hidden items-center gap-4 md:flex">
-          {/* Language picker */}
-          <div className="flex items-center gap-1.5 text-slate-400 border border-slate-800 bg-slate-900 rounded-md px-2.5 py-1">
-            <Globe size={14} className="text-slate-500" />
+        <div className="f1-header__actions">
+          <div className="f1-header__lang">
+            <Globe size={14} className="f1-header__lang-icon" />
             <select
               value={currentLang}
               onChange={handleLangChange}
-              className="bg-transparent text-xs text-slate-300 focus:outline-none cursor-pointer font-bold"
+              className="f1-header__lang-select"
             >
               <option value="en">EN</option>
               <option value="es">ES</option>
@@ -88,43 +147,30 @@ export const Header: React.FC = () => {
               <option value="de">DE</option>
             </select>
           </div>
-
-          <div className="text-right">
-            <div className="text-xs font-semibold text-slate-400">{profile.level}</div>
-            <div className="text-xs text-red-500 font-bold">{profile.points} XP</div>
-          </div>
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 border border-slate-700 text-slate-300">
-            <User size={16} />
+          <div className="f1-header__profile">
+            <div className="f1-header__level">{profile.level}</div>
+            <div className="f1-header__xp">{profile.points} XP</div>
+            <div className="f1-header__avatar">
+              <User size={16} />
+            </div>
           </div>
         </div>
 
         {/* Mobile Toggle */}
-        <div className="flex items-center gap-2 md:hidden">
-          <select
-            value={currentLang}
-            onChange={handleLangChange}
-            className="bg-slate-900 border border-slate-800 text-slate-300 text-xs px-2.5 py-1 rounded focus:outline-none font-bold"
-          >
-            <option value="en">EN</option>
-            <option value="es">ES</option>
-            <option value="fr">FR</option>
-            <option value="de">DE</option>
-          </select>
-
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="rounded p-2 text-slate-300 hover:bg-slate-800 focus:outline-none"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="f1-header__mobile-toggle"
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="border-t border-slate-800 bg-slate-900 md:hidden">
-          <div className="space-y-1 px-2 pt-2 pb-3">
-            {navItems.map((item) => {
+        <div className="f1-header__mobile">
+          <div className="f1-header__mobile-section">
+            <div className="f1-header__mobile-title">Main Menu</div>
+            {primaryNav.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.path);
               return (
@@ -132,26 +178,61 @@ export const Header: React.FC = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 rounded px-3 py-2.5 text-base font-medium transition-colors ${
-                    active
-                      ? 'bg-red-600 text-white'
-                      : 'text-slate-300 hover:bg-slate-800'
-                  }`}
+                  className={`f1-header__mobile-link ${active ? 'f1-header__mobile-link--active' : ''}`}
                 >
                   <Icon size={18} />
-                  {item.name}
+                  <span>{item.name}</span>
                 </Link>
               );
             })}
           </div>
-          <div className="border-t border-slate-800 px-5 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-slate-300">
-                <User size={16} />
+
+          <div className="f1-header__mobile-section">
+            <div className="f1-header__mobile-title">Championship</div>
+            {championshipNav.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileOpen(false)}
+                  className={`f1-header__mobile-link ${active ? 'f1-header__mobile-link--active' : ''}`}
+                >
+                  <Icon size={18} />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="f1-header__mobile-section">
+            <div className="f1-header__mobile-title">More</div>
+            {moreNav.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileOpen(false)}
+                  className={`f1-header__mobile-link ${active ? 'f1-header__mobile-link--active' : ''}`}
+                >
+                  <Icon size={18} />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="f1-header__mobile-footer">
+            <div className="f1-header__mobile-profile">
+              <div className="f1-header__mobile-avatar">
+                <User size={20} />
               </div>
               <div>
-                <div className="text-sm font-semibold text-slate-200">{profile.level}</div>
-                <div className="text-xs text-slate-400">{profile.points} XP</div>
+                <div className="f1-header__mobile-level">{profile.level}</div>
+                <div className="f1-header__mobile-xp">{profile.points} XP</div>
               </div>
             </div>
           </div>

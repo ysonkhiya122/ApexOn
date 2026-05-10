@@ -21,7 +21,7 @@ export const SchedulePage: React.FC = () => {
     return { value: yr, label: `${yr}` };
   });
 
-  const races = data?.MRData?.RaceTable?.Races || [];
+  const races = data || [];
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-slate-100">
