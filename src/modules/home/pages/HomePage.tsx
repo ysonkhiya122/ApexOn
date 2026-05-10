@@ -1,55 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { useGetScheduleQuery, useGetDriverStandingsQuery, useGetConstructorStandingsQuery } from '../../../store/services/jolpicaService';
-import { Trophy, Calendar, Flame, ChevronRight } from 'lucide-react';
-import { Badge } from '../../../shared/components/atoms/badge';
-import { Button } from '../../../shared/components/atoms/button';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
-import { Link } from 'react-router-dom';
-import { TeamRadio } from '../../radio/components/TeamRadio';
-import './home.scss';
+import React, { useEffect, useState } from 'react'
+import {
+  useGetScheduleQuery,
+  useGetDriverStandingsQuery,
+  useGetConstructorStandingsQuery,
+} from '../../../store/services/jolpicaService'
+import { Trophy, Calendar, Flame, ChevronRight } from 'lucide-react'
+import { Badge } from '../../../shared/components/atoms/badge'
+import { Button } from '../../../shared/components/atoms/button'
+import { Skeleton } from '../../../shared/components/atoms/skeleton'
+import { Link } from 'react-router-dom'
+import { TeamRadio } from '../../radio/components/TeamRadio'
+import './home.scss'
 
 export const HomePage: React.FC = () => {
-  const { data: scheduleData, isLoading: scheduleLoading } = useGetScheduleQuery('2026');
-  const { data: driverData, isLoading: driverLoading } = useGetDriverStandingsQuery('2026');
-  const { data: constructorData, isLoading: constructorLoading } = useGetConstructorStandingsQuery('2026');
+  const { data: scheduleData, isLoading: scheduleLoading } = useGetScheduleQuery('2026')
+  const { data: driverData, isLoading: driverLoading } = useGetDriverStandingsQuery('2026')
+  const { data: constructorData, isLoading: constructorLoading } =
+    useGetConstructorStandingsQuery('2026')
 
-  const [nextRace, setNextRace] = useState<any>(null);
-  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [nextRace, setNextRace] = useState<any>(null)
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
-    if (!scheduleData?.MRData?.RaceTable?.Races) return;
-    const races = scheduleData.MRData.RaceTable.Races;
-    const now = new Date();
-    const upcoming = races.find((race: any) => {
-      const raceDate = new Date(`${race.date}T${race.time || '12:00:00Z'}`);
-      return raceDate > now;
-    }) || races[races.length - 1];
+    if (!scheduleData || scheduleData.length === 0) return
+    const now = new Date()
+    const upcoming =
+      scheduleData.find((race) => {
+        const raceDate = new Date(`${race.date}T${race.time || '12:00:00Z'}`)
+        return raceDate > now
+      }) || scheduleData[scheduleData.length - 1]
 
-    setNextRace(upcoming);
+    setNextRace(upcoming)
 
     if (upcoming) {
-      const raceDate = new Date(`${upcoming.date}T${upcoming.time || '12:00:00Z'}`);
+      const raceDate = new Date(`${upcoming.date}T${upcoming.time || '12:00:00Z'}`)
       const updateCountdown = () => {
-        const diff = raceDate.getTime() - new Date().getTime();
+        const diff = raceDate.getTime() - new Date().getTime()
         if (diff <= 0) {
-          setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-          return;
+          setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+          return
         }
         setCountdown({
           days: Math.floor(diff / (1000 * 60 * 60 * 24)),
           hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
           minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((diff % (1000 * 60)) / 1000),
-        });
-      };
-      const timerId = setInterval(updateCountdown, 1000);
-      updateCountdown();
-      return () => clearInterval(timerId);
+        })
+      }
+      const timerId = setInterval(updateCountdown, 1000)
+      updateCountdown()
+      return () => clearInterval(timerId)
     }
-  }, [scheduleData]);
+  }, [scheduleData])
 
-  const drivers = driverData?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings?.slice(0, 5) || [];
-  const constructors = constructorData?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings?.slice(0, 5) || [];
+  const drivers = driverData?.slice(0, 5) || []
+  const constructors = constructorData?.slice(0, 5) || []
 
   return (
     <div className="f1-home space-y-12 pb-12">
@@ -58,7 +63,7 @@ export const HomePage: React.FC = () => {
           <Badge variant="red" className="mb-4 text-xs font-bold uppercase tracking-wider">
             NEXT GRAND PRIX
           </Badge>
-          
+
           {scheduleLoading ? (
             <div className="space-y-4">
               <Skeleton className="h-12 w-3/4 max-w-md" />
@@ -91,7 +96,10 @@ export const HomePage: React.FC = () => {
                   { value: countdown.minutes, label: 'Mins' },
                   { value: countdown.seconds, label: 'Secs' },
                 ].map((item, idx) => (
-                  <div key={idx} className="rounded-lg bg-slate-900/80 backdrop-blur border border-slate-800 p-3 text-center">
+                  <div
+                    key={idx}
+                    className="rounded-lg bg-slate-900/80 backdrop-blur border border-slate-800 p-3 text-center"
+                  >
                     <span className="block text-2xl font-black text-red-500 font-mono sm:text-4xl">
                       {item.value}
                     </span>
@@ -117,7 +125,11 @@ export const HomePage: React.FC = () => {
                 Driver Standings
               </h2>
               <Link to="/results">
-                <Button variant="ghost" size="sm" className="gap-1 text-slate-400 hover:text-slate-100">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-1 text-slate-400 hover:text-slate-100"
+                >
                   View All <ChevronRight size={16} />
                 </Button>
               </Link>
@@ -139,11 +151,9 @@ export const HomePage: React.FC = () => {
                       </span>
                       <div>
                         <div className="font-bold text-slate-100">
-                          {entry.Driver.givenName} {entry.Driver.familyName}
+                          {entry.driver?.firstName} {entry.driver?.lastName}
                         </div>
-                        <div className="text-xs text-slate-400">
-                          {entry.Constructors?.[0]?.name}
-                        </div>
+                        <div className="text-xs text-slate-400">{entry.team?.name}</div>
                       </div>
                     </div>
                     <span className="font-mono text-sm font-black text-red-500">
@@ -153,7 +163,9 @@ export const HomePage: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center text-sm py-8 text-slate-500">No driver statistics available.</div>
+              <div className="text-center text-sm py-8 text-slate-500">
+                No driver statistics available.
+              </div>
             )}
           </div>
 
@@ -164,7 +176,11 @@ export const HomePage: React.FC = () => {
                 Constructor Standings
               </h2>
               <Link to="/results">
-                <Button variant="ghost" size="sm" className="gap-1 text-slate-400 hover:text-slate-100">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-1 text-slate-400 hover:text-slate-100"
+                >
                   View All <ChevronRight size={16} />
                 </Button>
               </Link>
@@ -184,9 +200,7 @@ export const HomePage: React.FC = () => {
                       <span className="font-mono text-sm font-bold text-slate-500 w-4">
                         {entry.position}
                       </span>
-                      <span className="font-bold text-slate-100">
-                        {entry.Constructor.name}
-                      </span>
+                      <span className="font-bold text-slate-100">{entry.team?.name}</span>
                     </div>
                     <span className="font-mono text-sm font-black text-slate-300">
                       {entry.points} PTS
@@ -195,7 +209,9 @@ export const HomePage: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center text-sm py-8 text-slate-500">No team statistics available.</div>
+              <div className="text-center text-sm py-8 text-slate-500">
+                No team statistics available.
+              </div>
             )}
           </div>
         </div>
@@ -207,5 +223,5 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}

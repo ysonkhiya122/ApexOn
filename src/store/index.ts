@@ -9,6 +9,7 @@ import driversReducer from './slices/driversSlice';
 import teamsReducer from './slices/teamsSlice';
 import circuitsReducer from './slices/circuitsSlice';
 import standingsReducer from './slices/standingsSlice';
+import authReducer from './slices/authSlice';
 import { jolpicaService } from './services/jolpicaService';
 import { openF1Service } from './services/openF1Service';
 
@@ -24,6 +25,7 @@ export const store = configureStore({
     teams: teamsReducer,
     circuits: circuitsReducer,
     standings: standingsReducer,
+    auth: authReducer,
     [jolpicaService.reducerPath]: jolpicaService.reducer,
     [openF1Service.reducerPath]: openF1Service.reducer,
   },

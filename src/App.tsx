@@ -7,6 +7,7 @@ import { Header } from './components/organisms/header';
 import { Footer } from './components/organisms/footer';
 import { Preloader } from './components/organisms/preloader';
 import { ChatDock } from './modules/ai';
+import { LoginForm, RegisterForm } from './components/auth';
 
 // Lazy loaded module routes
 const HomePage = lazy(() => import('./modules/home'));
@@ -20,6 +21,7 @@ const DriverDetail = lazy(() => import('./modules/drivers/pages/DriverDetail'));
 const TeamsPage = lazy(() => import('./modules/teams'));
 const TeamDetail = lazy(() => import('./modules/teams/pages/TeamDetail'));
 const CircuitsPage = lazy(() => import('./modules/circuits'));
+const CircuitDetail = lazy(() => import('./modules/circuits/pages/CircuitDetail'));
 const StandingsPage = lazy(() => import('./modules/standings'));
 const NoAccess = lazy(() => import('./modules/shared').then(m => ({ default: m.NoAccess })));
 const NotFound = lazy(() => import('./modules/shared').then(m => ({ default: m.NotFound })));
@@ -45,7 +47,10 @@ export default function App() {
                 <Route path="/teams" element={<TeamsPage />} />
                 <Route path="/teams/:teamId" element={<TeamDetail />} />
                 <Route path="/circuits" element={<CircuitsPage />} />
+                <Route path="/circuits/:circuitId" element={<CircuitDetail />} />
                 <Route path="/standings" element={<StandingsPage />} />
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
                 <Route path="/403" element={<NoAccess />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
