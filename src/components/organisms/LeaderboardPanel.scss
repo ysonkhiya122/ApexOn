@@ -1,0 +1,152 @@
+.leaderboard-panel {
+  border: 1px solid #1e293b;
+  border-radius: 0.75rem;
+  background-color: rgba(30, 41, 59, 0.3);
+  overflow: hidden;
+  
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #1e293b;
+  }
+  
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0;
+  }
+  
+  &__legend {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  
+  &__legend-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    
+    &--green {
+      background-color: #10b981;
+    }
+    
+    &--red {
+      background-color: #dc2626;
+    }
+    
+    &--gray {
+      background-color: #64748b;
+    }
+  }
+  
+  &__header-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr 5rem 5rem 6rem 4rem 4rem;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: rgba(15, 23, 42, 0.8);
+    border-bottom: 1px solid #1e293b;
+  }
+  
+  &__col-position,
+  &__col-driver,
+  &__col-gap,
+  &__col-interval,
+  &__col-tire,
+  &__col-pit,
+  &__col-drs {
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+  }
+  
+  &__col-position {
+    text-align: center;
+  }
+  
+  &__col-gap,
+  &__col-interval {
+    text-align: right;
+  }
+  
+  &__entries {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &__footer {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #1e293b;
+    background-color: rgba(15, 23, 42, 0.5);
+  }
+  
+  &__last-update {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-family: monospace;
+  }
+  
+  &__loading,
+  &__empty,
+  &__error {
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+  
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  &__skeleton {
+    height: 4rem;
+    border-radius: 0.5rem;
+  }
+  
+  &__empty,
+  &__error {
+    color: #64748b;
+    
+    p {
+      margin: 0.5rem 0;
+    }
+  }
+  
+  &__empty-hint {
+    font-size: 0.875rem;
+    color: #94a3b8;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .leaderboard-panel {
+    &__header-row {
+      grid-template-columns: 2.5rem 1fr 4rem 4rem;
+      
+      .leaderboard-panel__col-interval,
+      .leaderboard-panel__col-pit,
+      .leaderboard-panel__col-drs {
+        display: none;
+      }
+    }
+    
+    &__legend {
+      display: none;
+    }
+  }
+}

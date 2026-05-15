@@ -134,7 +134,7 @@ export interface FastestLap {
 export interface DriverStanding {
   position: number;
   driver: Driver;
-  team: Team;
+  team: string; // Team name as string, not object
   points: number;
   wins: number;
 }

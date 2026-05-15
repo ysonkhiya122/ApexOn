@@ -1,9 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {
-  transformRaces,
-  transformDriverStandings,
-  transformConstructorStandings,
-} from '@/services/api/adapters'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { transformRaces, transformDriverStandings, transformConstructorStandings } from '@/services/api/adapters';
 
 export const jolpicaService = createApi({
   reducerPath: 'jolpicaService',
@@ -12,23 +8,19 @@ export const jolpicaService = createApi({
     getSchedule: builder.query({
       query: (year) => `/${year}.json`,
       transformResponse: (response: any) => {
-        return transformRaces(response?.MRData?.RaceTable?.Races || [])
+        return transformRaces(response?.MRData?.RaceTable?.Races || []);
       },
     }),
-    getDriverStandings: builder.query<any, string>({
+    getDriverStandings: builder.query({
       query: (year) => `/${year}/driverStandings.json`,
       transformResponse: (response: any) => {
-        const standings =
-          response?.MRData?.StandingsTable?.StandingsList?.[0]?.DriverStandings || []
-        return transformDriverStandings(standings)
+        return transformDriverStandings(response?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || []);
       },
     }),
-    getConstructorStandings: builder.query<any, string>({
+    getConstructorStandings: builder.query({
       query: (year) => `/${year}/constructorStandings.json`,
       transformResponse: (response: any) => {
-        const standings =
-          response?.MRData?.StandingsTable?.StandingsList?.[0]?.ConstructorStandings || []
-        return transformConstructorStandings(standings)
+        return transformConstructorStandings(response?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings || []);
       },
     }),
     getRaceResults: builder.query<any, { year: string; round: string }>({
@@ -59,7 +51,7 @@ export const jolpicaService = createApi({
       query: (circuitId) => `/circuits/${circuitId}/results.json`,
     }),
   }),
-})
+});
 
 export const {
   useGetScheduleQuery,
@@ -74,4 +66,4 @@ export const {
   useGetConstructorsQuery,
   useGetConstructorResultsQuery,
   useGetCircuitResultsQuery,
-} = jolpicaService
+} = jolpicaService;

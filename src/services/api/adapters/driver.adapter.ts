@@ -15,7 +15,6 @@ import type {
   DriverStats,
   DriverSeasonResult,
   DriverStanding,
-  Team,
 } from '../types/normalized.types';
 
 /**
@@ -48,10 +47,13 @@ export const transformDrivers = (rawDrivers: JolpicaDriver[]): Driver[] => {
 export const transformDriverStanding = (
   raw: JolpicaStanding
 ): DriverStanding => {
+  // Get team name from Constructor if available
+  const teamName = raw.Constructor?.name || '';
+  
   return {
     position: parseInt(raw.position, 10),
     driver: raw.Driver ? transformDriver(raw.Driver) : ({} as Driver),
-    team: {} as Team, // Team info would come from ConstructorStandings
+    team: teamName, // Store as string, not object
     points: parseFloat(raw.points),
     wins: parseInt(raw.wins, 10),
   };

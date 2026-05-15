@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { transformLiveTiming } from '../../utils/leaderboard/transformLiveTiming';
 
 export const openF1Service = createApi({
   reducerPath: 'openF1Service',
@@ -40,6 +41,16 @@ export const openF1Service = createApi({
         params,
       }),
     }),
+    // Live Timing endpoint for leaderboard
+    getLiveTiming: builder.query({
+      query: (sessionKey: number) => ({
+        url: '/live_timing',
+        params: { session_key: sessionKey },
+      }),
+      transformResponse: (response: any) => {
+        return transformLiveTiming(response);
+      },
+    }),
   }),
 });
 
@@ -50,4 +61,5 @@ export const {
   useGetWeatherQuery,
   useGetTeamRadioQuery,
   useGetStintsQuery,
+  useGetLiveTimingQuery,
 } = openF1Service;
