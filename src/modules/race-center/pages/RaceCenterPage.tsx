@@ -1,55 +1,106 @@
 /**
- * Race Center Page
+ * Race Center Page — TASK 7 Phase A
  * 
- * Main live race viewing experience.
+ * CRITICAL: This is the SINGLE POLLING OWNER for the entire live system.
  * 
- * Features:
- * - Timeline feed (core product)
- * - Live leaderboard
- * - Race control feed
- * - Tire stints
- * - Weather
- * 
- * MVP Scope: Timeline + basic race info
+ * DO NOT add polling to other components.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useGetSessionsQuery, useGetLiveTimingQuery } from '../../../store/services/openF1Service';
+import { 
+  findActiveSession, 
+  getSessionStatus, 
+  getPollingInterval,
+  getSessionName 
+} from '../../../utils/race/sessionDiscovery';
+import { LeaderboardPanel } from '../../../components/organisms/LeaderboardPanel';
 import { TimelineFeed } from '../../../components/organisms/TimelineFeed';
+import { Badge } from '../../../shared/components/atoms/badge';
+import { Skeleton } from '../../../shared/components/atoms/skeleton';
 import './race-center.scss';
 
 export const RaceCenterPage: React.FC = () => {
+  // Session discovery
+  const { data: sessionsData, isLoading: sessionsLoading } = useGetSessionsQuery({});
+  
+  // Find active session
+  const activeSession = useMemo(() => {
+    if (!sessionsData || !Array.isArray(sessionsData)) {
+      return null;
+    }
+    return findActiveSession(sessionsData);
+  }, [sessionsData]);
+
+  // Get session status
+  const sessionStatus = useMemo(() => {
+    return getSessionStatus(activeSession);
+  }, [activeSession]);
+
+  // Get polling interval based on session type
+  const pollingInterval = useMemo(() => {
+    const sessionType = activeSession?.session_type as 'race' | 'qualifying' | 'practice' | 'ended' | 'none' || 'none';
+    return getPollingInterval(sessionType, document.visibilityState === 'visible');
+  }, [activeSession]);
+
+  // Live timing query - ONLY POLLING POINT IN ENTIRE APP
+  useGetLiveTimingQuery(
+    activeSession?.session_key ?? 0,
+    {
+      pollingInterval,
+      skip: !activeSession?.session_key,
+    }
+  );
+
+  // Render session status indicator
+  const renderSessionStatus = () => {
+    const statusConfig = {
+      live: { color: 'green', label: 'LIVE' },
+      upcoming: { color: 'yellow', label: 'UPCOMING' },
+      ended: { color: 'slate', label: 'ENDED' },
+    };
+
+    const config = statusConfig[sessionStatus as keyof typeof statusConfig] || statusConfig.ended;
+
+    return (
+      <Badge variant={config.color as any} className="race-center-page__status">
+        {config.label}
+      </Badge>
+    );
+  };
+
   return (
     <div className="race-center-page">
       <div className="race-center-page__header">
-        <h1 className="race-center-page__title">Live Race Center</h1>
+        <div className="race-center-page__header-top">
+          <h1 className="race-center-page__title">Race Center</h1>
+          {sessionsLoading ? (
+            <Skeleton className="race-center-page__status-skeleton" />
+          ) : (
+            renderSessionStatus()
+          )}
+        </div>
         <p className="race-center-page__subtitle">
-          The easiest way to understand what is happening in an F1 race
+          {activeSession ? getSessionName(activeSession) : 'No active session'}
         </p>
+        {activeSession && (
+          <p className="race-center-page__info">
+            Polling: {pollingInterval}ms
+          </p>
+        )}
       </div>
-      
+
       <div className="race-center-page__content">
-        {/* Timeline Feed - CORE PRODUCT */}
+        {/* Live Leaderboard - CORE FEATURE */}
+        <div className="race-center-page__leaderboard">
+          <h2 className="race-center-page__section-title">Live Standings</h2>
+          <LeaderboardPanel />
+        </div>
+
+        {/* Timeline Feed */}
         <div className="race-center-page__timeline">
           <h2 className="race-center-page__section-title">Race Timeline</h2>
           <TimelineFeed />
-        </div>
-        
-        {/* Placeholder for future sections */}
-        <div className="race-center-page__sidebar">
-          <div className="race-center-placeholder">
-            <h3>Leaderboard</h3>
-            <p>Coming soon...</p>
-          </div>
-          
-          <div className="race-center-placeholder">
-            <h3>Race Control</h3>
-            <p>Coming soon...</p>
-          </div>
-          
-          <div className="race-center-placeholder">
-            <h3>Tire Stints</h3>
-            <p>Coming soon...</p>
-          </div>
         </div>
       </div>
     </div>
