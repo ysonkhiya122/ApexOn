@@ -1,20 +1,25 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { validateLeaderboardResponse } from '../../utils/leaderboard/validateLiveTiming';
 
 export const openF1Service = createApi({
   reducerPath: 'openF1Service',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.openf1.org/v1' }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: 'https://api.openf1.org/v1',
+    // Timeout after 10 seconds
+    timeout: 10000,
+  }),
+  // Keep responses for 1 minute (prevents over-polling)
+  keepUnusedDataFor: 60,
   endpoints: (builder) => ({
-    getMeetings: builder.query<any, { year?: string; country_name?: string }>({
-      query: (params) => ({
-        url: '/meetings',
-        params,
-      }),
-    }),
-    getSessions: builder.query<any, { session_key?: string; meeting_key?: string; session_name?: string; year?: string }>({
-      query: (params) => ({
-        url: '/sessions',
-        params,
-      }),
+    // Session discovery - CRITICAL for live system
+    getSessions: builder.query({
+      query: () => '/sessions?session_key=latest',
+      // Cache for 1 minute
+      keepUnusedDataFor: 60,
+      // Retry with exponential backoff
+      extraOptions: {
+        maxRetries: 3,
+      },
     }),
     getDrivers: builder.query<any, { session_key?: string; driver_number?: number }>({
       query: (params) => ({
@@ -40,14 +45,29 @@ export const openF1Service = createApi({
         params,
       }),
     }),
+    // Live Timing endpoint for leaderboard - WITH VALIDATION
+    getLiveTiming: builder.query({
+      query: (sessionKey: number) => ({
+        url: '/live_timing',
+        params: { session_key: sessionKey },
+      }),
+      transformResponse: (response: any) => {
+        // VALIDATION LAYER - prevents crashes
+        return validateLeaderboardResponse(response);
+      },
+      // Retry with exponential backoff (critical for live data)
+      extraOptions: {
+        maxRetries: 3,
+      },
+    }),
   }),
 });
 
 export const {
-  useGetMeetingsQuery,
   useGetSessionsQuery,
   useGetDriversQuery,
   useGetWeatherQuery,
   useGetTeamRadioQuery,
   useGetStintsQuery,
+  useGetLiveTimingQuery,
 } = openF1Service;

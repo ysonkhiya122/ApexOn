@@ -1,0 +1,41 @@
+.realtime-error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: rgba(248, 113, 113, 0.1);
+  border: 1px solid #f87171;
+  border-radius: 0.75rem;
+  text-align: center;
+
+  &__icon {
+    font-size: 3rem;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f87171;
+    margin: 0;
+  }
+
+  &__message {
+    font-size: 0.875rem;
+    color: #fca5a5;
+    margin: 0;
+  }
+
+  &__error {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    font-size: 0.75rem;
+    color: #fca5a5;
+    margin: 0;
+    max-width: 100%;
+    text-align: left;
+  }
+}

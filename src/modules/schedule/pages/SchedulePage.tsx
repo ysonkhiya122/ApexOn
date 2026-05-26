@@ -75,21 +75,21 @@ export const SchedulePage: React.FC = () => {
                 </div>
 
                 <h3 className="text-lg font-extrabold text-slate-100 group-hover:text-red-400 transition-colors duration-200">
-                  {race.raceName}
+                  {race.name}
                 </h3>
 
                 <div className="mt-2 flex items-center gap-1.5 text-sm text-slate-400">
                   <MapPin size={14} className="text-slate-500 flex-shrink-0" />
                   <span className="truncate">
-                    {race.Circuit?.Location?.locality}, {race.Circuit?.Location?.country}
+                    {race.circuit?.locality}, {race.circuit?.country}
                   </span>
                 </div>
 
                 <div className="mt-4 border-t border-slate-800/60 pt-3 flex items-center justify-between text-xs text-slate-500">
-                  <span>{race.Circuit?.circuitName}</span>
-                  {race.Circuit?.url && (
+                  <span>{race.circuit?.name}</span>
+                  {race.circuit?.url && (
                     <a
-                      href={race.Circuit.url}
+                      href={race.circuit.url}
                       target="_blank"
                       rel="noreferrer"
                       className="text-slate-400 hover:text-red-400 flex items-center gap-1"

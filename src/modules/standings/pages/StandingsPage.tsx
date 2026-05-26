@@ -33,16 +33,16 @@ export const StandingsPage: React.FC = () => {
   }, []);
 
   const driverStandings = useMemo(() => {
-    return driverData?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || [];
+    return driverData || [];
   }, [driverData]);
 
   const constructorStandings = useMemo(() => {
-    return constructorData?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings || [];
+    return constructorData || [];
   }, [constructorData]);
 
   const isLoading = standingsType === 'drivers' ? driverLoading : constructorLoading;
   const isError = standingsType === 'drivers' ? driverError : constructorError;
-  const standings = standingsType === 'drivers' ? driverStandings : constructorStandings;
+  const standings: any = standingsType === 'drivers' ? driverStandings : constructorStandings;
 
   if (isLoading) {
     return (

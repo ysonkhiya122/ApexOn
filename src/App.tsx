@@ -7,6 +7,10 @@ import { Header } from './components/organisms/header';
 import { Footer } from './components/organisms/footer';
 import { Preloader } from './components/organisms/preloader';
 import { ChatDock } from './modules/ai';
+import { RaceCenterPage } from './modules/race-center';
+import { RaceCenterTest } from './modules/race-center/pages/RaceCenterTest';
+import { LeaderboardTest } from './modules/race-center/pages/LeaderboardTest';
+import { LiveDebugPage } from './modules/race-center/pages/LiveDebugPage';
 import { LoginForm, RegisterForm } from './components/auth';
 
 // Lazy loaded module routes
@@ -49,6 +53,10 @@ export default function App() {
                 <Route path="/circuits" element={<CircuitsPage />} />
                 <Route path="/circuits/:circuitId" element={<CircuitDetail />} />
                 <Route path="/standings" element={<StandingsPage />} />
+                <Route path="/race-center" element={<RaceCenterPage />} />
+                <Route path="/race-center/test" element={<RaceCenterTest />} />
+                <Route path="/race-center/test-leaderboard" element={<LeaderboardTest />} />
+                <Route path="/race-center/debug" element={<LiveDebugPage />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/403" element={<NoAccess />} />

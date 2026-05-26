@@ -1,50 +1,51 @@
-import React, { useState, useMemo } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useGetCircuitResultsQuery } from '../../../store/services/jolpicaService'
-import { CircuitInfo } from '../components/CircuitInfo'
-import { Skeleton } from '../../../shared/components/atoms/skeleton'
-import { Button } from '../../../shared/components/atoms/button'
-import { ArrowLeft, MapPin, Trophy, Timer } from 'lucide-react'
-import './circuit-detail.scss'
+import React, { useState, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useGetCircuitResultsQuery } from '../../../store/services/jolpicaService';
+import { CircuitInfo } from '../components/CircuitInfo';
+import { Skeleton } from '../../../shared/components/atoms/skeleton';
+import { Button } from '../../../shared/components/atoms/button';
+import { ArrowLeft, MapPin, Trophy, Timer } from 'lucide-react';
+import './circuit-detail.scss';
 
 export const CircuitDetail: React.FC = () => {
-  const { circuitId } = useParams<{ circuitId: string }>()
-  const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'records'>('overview')
-  const [currentPage, setCurrentPage] = useState(1)
-  const racesPerPage = 10
+  const { circuitId } = useParams<{ circuitId: string }>();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'records'>('overview');
+  const [currentPage, setCurrentPage] = useState(1);
+  const racesPerPage = 10;
 
-  const { data: resultsData, isLoading, isError } = useGetCircuitResultsQuery(circuitId || '')
+  const { data: resultsData, isLoading, isError } = useGetCircuitResultsQuery(circuitId || '');
 
   const circuitInfo = useMemo(() => {
-    return resultsData?.MRData?.CircuitTable?.Circuits?.[0]
-  }, [resultsData])
+    return resultsData?.MRData?.CircuitTable?.Circuits?.[0];
+  }, [resultsData]);
 
   const raceHistory = useMemo(() => {
-    if (!resultsData?.MRData?.RaceTable?.Races) return []
-    return resultsData.MRData.RaceTable.Races
-  }, [resultsData])
+    if (!resultsData?.MRData?.RaceTable?.Races) return [];
+    return resultsData.MRData.RaceTable.Races;
+  }, [resultsData]);
 
   // Pagination
-  const totalPages = Math.ceil(raceHistory.length / racesPerPage)
+  const totalPages = Math.ceil(raceHistory.length / racesPerPage);
   const paginatedRaces = raceHistory.slice(
     (currentPage - 1) * racesPerPage,
     currentPage * racesPerPage
-  )
+  );
 
   // Calculate most wins at this circuit
   const driverWins = useMemo(() => {
-    const winsMap = new Map()
+    const winsMap = new Map();
     raceHistory.forEach((race: any) => {
-      const winner = race.Results?.[0]
-      if (winner?.Driver?.driverId) {
-        winsMap.set(winner.Driver.driverId, (winsMap.get(winner.Driver.driverId) || 0) + 1)
-      }
-    })
+      race.Results?.[0]?.Driver?.driverId &&
+        winsMap.set(
+          race.Results[0].Driver.driverId,
+          (winsMap.get(race.Results[0].Driver.driverId) || 0) + 1
+        );
+    });
     return Array.from(winsMap.entries())
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-  }, [raceHistory])
+      .slice(0, 5);
+  }, [raceHistory]);
 
   if (isLoading) {
     return (
@@ -56,7 +57,7 @@ export const CircuitDetail: React.FC = () => {
           <Skeleton className="circuit-detail__skeleton-info" />
         </div>
       </div>
-    )
+    );
   }
 
   if (isError || !circuitInfo) {
@@ -70,7 +71,7 @@ export const CircuitDetail: React.FC = () => {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -118,9 +119,7 @@ export const CircuitDetail: React.FC = () => {
           <div className="circuit-detail__overview">
             <CircuitInfo
               location={circuitInfo.Location}
-              firstGrandPrix={
-                raceHistory.length > 0 ? raceHistory[raceHistory.length - 1].season : undefined
-              }
+              firstGrandPrix={raceHistory.length > 0 ? raceHistory[raceHistory.length - 1].season : undefined}
               laps={raceHistory[0]?.laps}
               length={raceHistory[0]?.Circuit?.Length}
             />
@@ -143,13 +142,9 @@ export const CircuitDetail: React.FC = () => {
 
         {activeTab === 'history' && (
           <div className="circuit-detail__history">
-            <h3 className="circuit-detail__section-title">
-              Race History at {circuitInfo.circuitName}
-            </h3>
+            <h3 className="circuit-detail__section-title">Race History at {circuitInfo.circuitName}</h3>
             {raceHistory.length === 0 ? (
-              <div className="circuit-detail__empty">
-                No race history available for this circuit
-              </div>
+              <div className="circuit-detail__empty">No race history available for this circuit</div>
             ) : (
               <>
                 <div className="circuit-detail__table-wrapper">
@@ -170,8 +165,7 @@ export const CircuitDetail: React.FC = () => {
                           <td>{race.raceName}</td>
                           <td>{race.date}</td>
                           <td>
-                            {race.Results?.[0]?.Driver?.givenName}{' '}
-                            {race.Results?.[0]?.Driver?.familyName}
+                            {race.Results?.[0]?.Driver?.givenName} {race.Results?.[0]?.Driver?.familyName}
                           </td>
                           <td>{race.Results?.[0]?.Constructor?.name}</td>
                         </tr>
@@ -234,7 +228,7 @@ export const CircuitDetail: React.FC = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CircuitDetail
+export default CircuitDetail;

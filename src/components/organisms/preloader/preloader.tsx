@@ -3,12 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { setPreloaderVisible } from '../../../store/slices/uiSlice';
-import { useTranslation } from '../../../hooks/useTranslation';
 import './preloader.scss';
 
 export const Preloader: React.FC = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const visible = useSelector((state: RootState) => state.ui.preloaderVisible);
   const [lightsCount, setLightsCount] = useState(0);
 
@@ -67,7 +65,7 @@ export const Preloader: React.FC = () => {
               Apexon
             </h1>
             <p className="mt-2 text-sm tracking-widest text-slate-400 font-medium">
-              {lightsCount < 5 ? t('hero.preparing') : t('hero.lights_out')}
+              {lightsCount < 5 ? 'PREPARING ENGINE...' : 'LIGHTS OUT AND AWAY WE GO!'}
             </p>
           </div>
         </motion.div>

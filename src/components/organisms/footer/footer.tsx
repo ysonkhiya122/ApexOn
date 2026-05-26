@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="f1-footer border-t border-slate-800 bg-slate-950 text-slate-400">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
           {/* Brand Info */}
           <div className="space-y-4">
             <span className="text-xl font-black italic text-red-600">APEXON</span>
@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
 
           {/* Quick Nav */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-100">{t('footer.links')}</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-100">Quick Links</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link to="/" className="hover:text-red-500">
@@ -38,12 +38,22 @@ export const Footer: React.FC = () => {
                   {t('nav.results')}
                 </Link>
               </li>
+              <li>
+                <Link to="/drivers" className="hover:text-red-500">
+                  {t('nav.drivers')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/teams" className="hover:text-red-500">
+                  {t('nav.teams')}
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Learn & Play */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-100">{t('footer.guides')}</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-100">Learn & Play</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link to="/rules" className="hover:text-red-500">
@@ -58,6 +68,38 @@ export const Footer: React.FC = () => {
               <li>
                 <Link to="/games" className="hover:text-red-500">
                   {t('nav.games')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/circuits" className="hover:text-red-500">
+                  {t('nav.circuits')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/standings" className="hover:text-red-500">
+                  {t('nav.standings')}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Race Center */}
+          <div>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-100">Race Center</h3>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li>
+                <Link to="/race-center" className="hover:text-red-500">
+                  Live Race Center
+                </Link>
+              </li>
+              <li>
+                <Link to="/race-center/test" className="hover:text-red-500">
+                  🧪 Timeline Test
+                </Link>
+              </li>
+              <li>
+                <Link to="/race-center/test-leaderboard" className="hover:text-red-500">
+                  🧪 Leaderboard Test
                 </Link>
               </li>
             </ul>

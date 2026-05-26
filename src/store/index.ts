@@ -10,6 +10,8 @@ import teamsReducer from './slices/teamsSlice';
 import circuitsReducer from './slices/circuitsSlice';
 import standingsReducer from './slices/standingsSlice';
 import authReducer from './slices/authSlice';
+import raceStateReducer from './slices/raceStateSlice';
+import leaderboardReducer from './slices/leaderboardSlice';
 import { jolpicaService } from './services/jolpicaService';
 import { openF1Service } from './services/openF1Service';
 
@@ -26,6 +28,8 @@ export const store = configureStore({
     circuits: circuitsReducer,
     standings: standingsReducer,
     auth: authReducer,
+    raceState: raceStateReducer,
+    leaderboard: leaderboardReducer,
     [jolpicaService.reducerPath]: jolpicaService.reducer,
     [openF1Service.reducerPath]: openF1Service.reducer,
   },

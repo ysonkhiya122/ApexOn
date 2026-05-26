@@ -1,0 +1,168 @@
+.leaderboard-entry {
+  display: grid;
+  grid-template-columns: 3rem 1fr 5rem 5rem 6rem 4rem 4rem;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #1e293b;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(30, 41, 59, 0.5);
+  }
+  
+  &--podium {
+    background-color: rgba(234, 179, 8, 0.05);
+    
+    &:hover {
+      background-color: rgba(234, 179, 8, 0.1);
+    }
+  }
+  
+  &--pitting {
+    background-color: rgba(249, 115, 22, 0.05);
+    
+    .leaderboard-entry__pit-status {
+      animation: pulse 1.5s infinite;
+    }
+  }
+  
+  &__position {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  &__number {
+    font-size: 1.125rem;
+    font-weight: 800;
+    font-family: monospace;
+    color: #f1f5f9;
+  }
+  
+  &__driver {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  
+  &__name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  &__team {
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  &__gap {
+    text-align: right;
+  }
+  
+  &__gap-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-family: monospace;
+    color: #94a3b8;
+    
+    &--leader {
+      color: #10b981;
+      font-weight: 800;
+    }
+  }
+  
+  &__interval {
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: monospace;
+    color: #64748b;
+    text-align: right;
+  }
+  
+  &__tire {
+    justify-self: start;
+  }
+  
+  &__pit-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    
+    &--pitting {
+      background-color: rgba(249, 115, 22, 0.2);
+      color: #f97316;
+      border: 1px solid #f97316;
+    }
+    
+    &--in_pit {
+      background-color: rgba(249, 115, 22, 0.2);
+      color: #f97316;
+      border: 1px solid #f97316;
+    }
+    
+    &--just_pitted {
+      background-color: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border: 1px solid #10b981;
+    }
+  }
+  
+  &__drs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.5rem;
+    background-color: rgba(16, 185, 129, 0.2);
+    border: 1px solid #10b981;
+    border-radius: 0.25rem;
+  }
+  
+  &__drs-label {
+    font-size: 0.625rem;
+    font-weight: 800;
+    color: #10b981;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .leaderboard-entry {
+    grid-template-columns: 2.5rem 1fr 4rem 4rem;
+    gap: 0.5rem;
+    
+    .leaderboard-entry__interval,
+    .leaderboard-entry__pit-status,
+    .leaderboard-entry__drs {
+      display: none;
+    }
+  }
+}

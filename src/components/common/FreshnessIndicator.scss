@@ -1,0 +1,24 @@
+.freshness-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__pulse {
+    animation: freshness-pulse 2s infinite;
+  }
+
+  &__time {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-family: monospace;
+  }
+}
+
+@keyframes freshness-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

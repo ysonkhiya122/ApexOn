@@ -1,0 +1,123 @@
+.live-debug-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  &__header {
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    color: #94a3b8;
+    margin: 0 0 1rem 0;
+  }
+
+  &__status {
+    display: inline-block;
+  }
+
+  &__metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  &__card {
+    background-color: rgba(30, 41, 59, 0.5);
+    border: 1px solid #334155;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  &__card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 1rem 0;
+  }
+
+  &__metric {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__metric-label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+  }
+
+  &__metric-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    font-family: monospace;
+
+    &.live-debug-page__error {
+      color: #f87171;
+    }
+  }
+
+  &__checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      cursor: pointer;
+    }
+
+    label {
+      font-size: 0.875rem;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+  }
+
+  &__error-banner {
+    background-color: rgba(248, 113, 113, 0.1);
+    border: 1px solid #f87171;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f87171;
+      margin: 0 0 1rem 0;
+    }
+
+    pre {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      font-size: 0.875rem;
+      color: #fca5a5;
+      margin: 0;
+    }
+  }
+}
