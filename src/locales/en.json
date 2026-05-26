@@ -5,7 +5,11 @@
     "results": "Results",
     "rules": "Rules",
     "about": "About",
-    "games": "Games"
+    "games": "Games",
+    "standings": "Standings",
+    "drivers": "Drivers",
+    "teams": "Teams",
+    "circuits": "Circuit"
   },
   "hero": {
     "tagline": "Own the Apex.",

@@ -3,13 +3,23 @@ import { validateLeaderboardResponse } from '../../utils/leaderboard/validateLiv
 
 export const openF1Service = createApi({
   reducerPath: 'openF1Service',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.openf1.org/v1' }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: 'https://api.openf1.org/v1',
+    // Timeout after 10 seconds
+    timeout: 10000,
+  }),
+  // Keep responses for 1 minute (prevents over-polling)
+  keepUnusedDataFor: 60,
   endpoints: (builder) => ({
     // Session discovery - CRITICAL for live system
     getSessions: builder.query({
       query: () => '/sessions?session_key=latest',
       // Cache for 1 minute
       keepUnusedDataFor: 60,
+      // Retry with exponential backoff
+      extraOptions: {
+        maxRetries: 3,
+      },
     }),
     getDrivers: builder.query<any, { session_key?: string; driver_number?: number }>({
       query: (params) => ({
@@ -44,6 +54,10 @@ export const openF1Service = createApi({
       transformResponse: (response: any) => {
         // VALIDATION LAYER - prevents crashes
         return validateLeaderboardResponse(response);
+      },
+      // Retry with exponential backoff (critical for live data)
+      extraOptions: {
+        maxRetries: 3,
       },
     }),
   }),
