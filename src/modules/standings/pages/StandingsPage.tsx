@@ -4,8 +4,8 @@ import { RootState } from '../../../store';
 import { useGetDriverStandingsQuery, useGetConstructorStandingsQuery } from '../../../store/services/jolpicaService';
 import { setSelectedSeason, setStandingsType } from '../../../store/slices/standingsSlice';
 import { StandingsTable } from '../components/StandingsTable';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
-import { DropdownFilter } from '../../../shared/components/molecules/dropdown-filter';
+import { Skeleton } from '@/components/atoms/skeleton';
+import { DropdownFilter } from '@/components/molecules/dropdown-filter';
 import { Trophy, Award } from 'lucide-react';
 import './standings.scss';
 

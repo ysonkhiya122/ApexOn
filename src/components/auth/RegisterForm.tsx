@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registerStart, registerSuccess } from '../../store/slices/authSlice';
 import { useTranslation } from '../../hooks/useTranslation';
-import { Button } from '../../shared/components/atoms/button';
+import { Button } from '@/components/atoms/button';
 import './auth.scss';
 
 export const RegisterForm: React.FC = () => {

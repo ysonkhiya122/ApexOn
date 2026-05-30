@@ -24,8 +24,8 @@ import {
 } from '../../../utils/race/sessionDiscovery';
 import { LeaderboardPanel } from '../../../components/organisms/LeaderboardPanel';
 import { TimelineFeed } from '../../../components/organisms/TimelineFeed';
-import { Badge } from '../../../shared/components/atoms/badge';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
+import { Badge } from '@/components/atoms/badge';
+import { Skeleton } from '@/components/atoms/skeleton';
 import { FreshnessIndicator } from '../../../components/common/FreshnessIndicator';
 import { RealtimeErrorBoundary } from '../../../components/common/RealtimeErrorBoundary';
 import {

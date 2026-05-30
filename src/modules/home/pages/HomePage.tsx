@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useGetScheduleQuery, useGetDriverStandingsQuery, useGetConstructorStandingsQuery } from '../../../store/services/jolpicaService';
 import { Trophy, Calendar, Flame, ChevronRight } from 'lucide-react';
-import { Badge } from '../../../shared/components/atoms/badge';
-import { Button } from '../../../shared/components/atoms/button';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
+import { Badge } from '@/components/atoms/badge';
+import { Button } from '@/components/atoms/button';
+import { Skeleton } from '@/components/atoms/skeleton';
 import { Link } from 'react-router-dom';
 import { TeamRadio } from '../../radio/components/TeamRadio';
 import './home.scss';

@@ -20,7 +20,7 @@ import {
   getPollingInterval,
   getSessionName 
 } from '../../../utils/race/sessionDiscovery';
-import { Badge } from '../../../shared/components/atoms/badge';
+import { Badge } from '@/components/atoms/badge';
 import './LiveDebugPage.scss';
 
 export const LiveDebugPage: React.FC = () => {

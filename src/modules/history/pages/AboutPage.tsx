@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Badge } from '../../../shared/components/atoms/badge';
+import { Badge } from '@/components/atoms/badge';
 import { History, Trophy, Award } from 'lucide-react';
 import { PhotoGallery } from '../components/PhotoGallery';
 import { HallOfFame } from '../components/HallOfFame';

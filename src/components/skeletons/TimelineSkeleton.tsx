@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Skeleton } from '../../shared/components/atoms/skeleton';
+import { Skeleton } from '@/components/atoms/skeleton';
 import './TimelineSkeleton.scss';
 
 export const TimelineSkeleton: React.FC = () => {

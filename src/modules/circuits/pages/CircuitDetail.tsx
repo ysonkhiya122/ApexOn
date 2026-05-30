@@ -2,8 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetCircuitResultsQuery } from '../../../store/services/jolpicaService';
 import { CircuitInfo } from '../components/CircuitInfo';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
-import { Button } from '../../../shared/components/atoms/button';
+import { Skeleton } from '@/components/atoms/skeleton';
+import { Button } from '@/components/atoms/button';
 import { ArrowLeft, MapPin, Trophy, Timer } from 'lucide-react';
 import './circuit-detail.scss';
 

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { setSelectedYear } from '../../../store/slices/filtersSlice';
 
-import { DropdownFilter } from '../../../shared/components/molecules/dropdown-filter';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
-import { Badge } from '../../../shared/components/atoms/badge';
+import { DropdownFilter } from '@/components/molecules/dropdown-filter';
+import { Skeleton } from '@/components/atoms/skeleton';
+import { Badge } from '@/components/atoms/badge';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import './schedule.scss';
 

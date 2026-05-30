@@ -10,7 +10,7 @@
  */
 
 import { Component, ErrorInfo, ReactNode } from 'react';
-import { Button } from '../../shared/components/atoms/button';
+import { Button } from '@/components/atoms/button';
 import './RealtimeErrorBoundary.scss';
 
 interface Props {

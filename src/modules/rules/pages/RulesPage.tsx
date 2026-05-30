@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Badge } from '../../../shared/components/atoms/badge';
+import { Badge } from '@/components/atoms/badge';
 import { ShieldCheck, HelpCircle, AlertCircle, Sparkles } from 'lucide-react';
 import './rules.scss';
 

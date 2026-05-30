@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../../store';
 import { addPoints, markQuizCompleted } from '../../../store/slices/fanProfileSlice';
-import { Button } from '../../../shared/components/atoms/button';
+import { Button } from '@/components/atoms/button';
 import { Gamepad2, CheckCircle2, Award, Zap } from 'lucide-react';
 import './games.scss';
 

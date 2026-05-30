@@ -2,8 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetDriverDetailsQuery, useGetDriverResultsQuery } from '../../../store/services/jolpicaService';
 import { DriverStats } from '../components/DriverStats';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
-import { Button } from '../../../shared/components/atoms/button';
+import { Skeleton } from '@/components/atoms/skeleton';
+import { Button } from '@/components/atoms/button';
 import { ArrowLeft, User, Calendar, Award } from 'lucide-react';
 import './driver-detail.scss';
 

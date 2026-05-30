@@ -1,1 +1,1 @@
-export { AnalysisDashboard } from './analysis';
+export { AnalysisDashboard } from '../../modules/analysis';

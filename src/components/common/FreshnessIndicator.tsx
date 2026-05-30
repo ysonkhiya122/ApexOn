@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Badge } from '../../shared/components/atoms/badge';
+import { Badge } from '@/components/atoms/badge';
 import './FreshnessIndicator.scss';
 
 export type FreshnessState = 'live' | 'stale' | 'delayed' | 'offline';
