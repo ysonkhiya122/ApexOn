@@ -1,3 +1,2 @@
-// Re-export all components for easier imports
-export { Counter } from './Counter'
-export { Layout } from './Layout'
+// Re-export shared components for easier imports.
+export { Layout } from './Layout';

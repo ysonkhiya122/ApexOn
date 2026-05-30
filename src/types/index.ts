@@ -5,3 +5,5 @@
  */
 
 export * from './timeline.types';
+
+export * from './api.types';

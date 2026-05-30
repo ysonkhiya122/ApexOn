@@ -66,7 +66,25 @@ export function findActiveSession(sessions: Session[]): Session | null {
     return new Date(a.date_start).getTime() - new Date(b.date_start).getTime();
   });
 
-  return upcomingSessions[0] || null;
+  if (upcomingSessions[0]) {
+    return upcomingSessions[0];
+  }
+
+  // No active/upcoming session from the queried set. Fall back to the most
+  // recent completed session so debug and historical views still have a stable
+  // session_key to render instead of appearing broken between race weekends.
+  const completedSessions = sessions
+    .filter((session) => {
+      const end = session.date_end ? new Date(session.date_end) : new Date(session.date_start);
+      return end <= now;
+    })
+    .sort((a, b) => {
+      const endA = a.date_end ? new Date(a.date_end).getTime() : new Date(a.date_start).getTime();
+      const endB = b.date_end ? new Date(b.date_end).getTime() : new Date(b.date_start).getTime();
+      return endB - endA;
+    });
+
+  return completedSessions[0] || null;
 }
 
 /**

@@ -46,11 +46,22 @@ export const LiveDebugPage: React.FC = () => {
     return getSessionStatus(activeSession);
   }, [activeSession]);
 
-  // Get polling interval
+  // Get polling interval. Avoid polling completed historical sessions; this
+  // prevents public OpenF1 rate-limit errors during local debugging.
   const pollingInterval = useMemo(() => {
-    const sessionType = activeSession?.session_type as 'race' | 'qualifying' | 'practice' | 'ended' | 'none' || 'none';
-    return getPollingInterval(sessionType, document.visibilityState === 'visible');
-  }, [activeSession]);
+    if (sessionStatus !== 'live') {
+      return 0;
+    }
+
+    const sessionType = activeSession?.session_type as
+      | 'race'
+      | 'qualifying'
+      | 'practice'
+      | 'ended'
+      | 'none' || 'none';
+
+    return Math.max(getPollingInterval(sessionType, document.visibilityState === 'visible'), 10000);
+  }, [activeSession, sessionStatus]);
 
   // Live timing query
   const { 
