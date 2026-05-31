@@ -9,6 +9,7 @@ import {
   setSortBy,
   resetFilters,
 } from '../../../store/slices/driversSlice';
+import type { Driver } from '@/services/api/types/normalized.types';
 import { DriverCard } from '../components/DriverCard';
 import { Skeleton } from '@/components/atoms/skeleton';
 import { Button } from '@/components/atoms/button';
@@ -26,45 +27,37 @@ export const DriversPage: React.FC = () => {
     sortOrder,
   } = useSelector((state: RootState) => state.drivers);
 
-  const { data, isLoading, isError } = useGetDriversQuery('2024');
-
-  const drivers = useMemo(() => {
-    if (!data?.MRData?.DriverTable?.Drivers) return [];
-    return data.MRData.DriverTable.Drivers;
-  }, [data]);
+  const { data: drivers = [], isLoading, isError } = useGetDriversQuery('2024');
 
   const filteredAndSortedDrivers = useMemo(() => {
-    let result = [...drivers];
+    const normalizedQuery = searchQuery.trim().toLowerCase();
 
-    // Search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(
-        (d: any) =>
-          d.givenName.toLowerCase().includes(query) ||
-          d.familyName.toLowerCase().includes(query) ||
-          d.code?.toLowerCase().includes(query)
-      );
-    }
+    const result = drivers.filter((driver) => {
+      const matchesSearch =
+        !normalizedQuery ||
+        driver.fullName.toLowerCase().includes(normalizedQuery) ||
+        driver.firstName.toLowerCase().includes(normalizedQuery) ||
+        driver.lastName.toLowerCase().includes(normalizedQuery) ||
+        driver.code.toLowerCase().includes(normalizedQuery);
 
-    // Nationality filter
-    if (selectedNationality) {
-      result = result.filter((d: any) => d.nationality === selectedNationality);
-    }
+      const matchesNationality = !selectedNationality || driver.nationality === selectedNationality;
 
-    // Sort
-    result.sort((a: any, b: any) => {
+      return matchesSearch && matchesNationality;
+    });
+
+    result.sort((a, b) => {
       let comparison = 0;
+
       if (sortBy === 'name') {
-        comparison = a.familyName.localeCompare(b.familyName);
+        comparison = a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName);
       }
+
       return sortOrder === 'asc' ? comparison : -comparison;
     });
 
     return result;
   }, [drivers, searchQuery, selectedNationality, sortBy, sortOrder]);
 
-  // Pagination
   const totalPages = Math.ceil(filteredAndSortedDrivers.length / itemsPerPage);
   const paginatedDrivers = filteredAndSortedDrivers.slice(
     (currentPage - 1) * itemsPerPage,
@@ -72,9 +65,35 @@ export const DriversPage: React.FC = () => {
   );
 
   const uniqueNationalities = useMemo(() => {
-    const nationalities = new Set(drivers.map((d: any) => d.nationality));
-    return Array.from(nationalities as Set<string>).sort();
+    const nationalities = new Set(drivers.map((driver) => driver.nationality).filter(Boolean));
+    return Array.from(nationalities).sort();
   }, [drivers]);
+
+  const handleSearchChange = (value: string) => {
+    dispatch(setSearchQuery(value));
+    dispatch(setCurrentPage(1));
+  };
+
+  const handleNationalityChange = (value: string) => {
+    dispatch(setNationalityFilter(value));
+    dispatch(setCurrentPage(1));
+  };
+
+  const handleSortChange = (value: string) => {
+    dispatch(setSortBy(value as 'name'));
+    dispatch(setCurrentPage(1));
+  };
+
+  const renderDriverCard = (driver: Driver) => (
+    <DriverCard
+      key={driver.id}
+      driverId={driver.id}
+      givenName={driver.firstName}
+      familyName={driver.lastName}
+      nationality={driver.nationality}
+      permanentNumber={driver.number || undefined}
+    />
+  );
 
   if (isLoading) {
     return (
@@ -117,13 +136,15 @@ export const DriversPage: React.FC = () => {
             type="text"
             placeholder="Search drivers..."
             value={searchQuery}
-            onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+            onChange={(e) => handleSearchChange(e.target.value)}
             className="drivers-page__search-input"
           />
           {searchQuery && (
             <button
-              onClick={() => dispatch(setSearchQuery(''))}
+              type="button"
+              onClick={() => handleSearchChange('')}
               className="drivers-page__search-clear"
+              aria-label="Clear driver search"
             >
               <X size={16} />
             </button>
@@ -134,13 +155,14 @@ export const DriversPage: React.FC = () => {
           <Filter size={16} className="drivers-page__filter-icon" />
           <select
             value={selectedNationality}
-            onChange={(e) => dispatch(setNationalityFilter(e.target.value))}
+            onChange={(e) => handleNationalityChange(e.target.value)}
             className="drivers-page__select"
+            aria-label="Filter drivers by nationality"
           >
             <option value="">All Nationalities</option>
-            {uniqueNationalities.map((nat: string) => (
-              <option key={nat} value={nat}>
-                {nat}
+            {uniqueNationalities.map((nationality) => (
+              <option key={nationality} value={nationality}>
+                {nationality}
               </option>
             ))}
           </select>
@@ -150,8 +172,9 @@ export const DriversPage: React.FC = () => {
           <ArrowUpDown size={16} className="drivers-page__filter-icon" />
           <select
             value={sortBy}
-            onChange={(e) => dispatch(setSortBy(e.target.value as any))}
+            onChange={(e) => handleSortChange(e.target.value)}
             className="drivers-page__select"
+            aria-label="Sort drivers"
           >
             <option value="name">Sort by Name</option>
           </select>
@@ -175,18 +198,7 @@ export const DriversPage: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className="drivers-page__grid">
-            {paginatedDrivers.map((driver: any) => (
-              <DriverCard
-                key={driver.driverId}
-                driverId={driver.driverId}
-                givenName={driver.givenName}
-                familyName={driver.familyName}
-                nationality={driver.nationality}
-                permanentNumber={driver.permanentNumber}
-              />
-            ))}
-          </div>
+          <div className="drivers-page__grid">{paginatedDrivers.map(renderDriverCard)}</div>
 
           {totalPages > 1 && (
             <div className="drivers-page__pagination">
