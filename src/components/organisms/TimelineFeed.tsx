@@ -16,7 +16,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { TimelineEntry } from '../../types/timeline.types';
 import { formatRaceTime } from '../../utils/timeline/formatRaceTime';
-import { Button } from '../../shared/components/atoms/button';
+import { Button } from '@/components/atoms/button';
 import * as Icons from 'lucide-react';
 import './timeline-feed.scss';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetPitStopsQuery } from '../../../store/services/jolpicaService';
 import { Timer, ArrowRightLeft, ShieldAlert } from 'lucide-react';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
+import { Skeleton } from '@/components/atoms/skeleton';
 import './pitstops.scss';
 
 interface PitStopsProps {

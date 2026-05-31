@@ -6,6 +6,21 @@ import {
   type FetchArgs,
   type FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
+import type { LeaderboardEntry } from '../../types/leaderboard.types';
+import type {
+  OpenF1Driver,
+  OpenF1Interval,
+  OpenF1Lap,
+  OpenF1Meeting,
+  OpenF1PitStop,
+  OpenF1Position,
+  OpenF1QueryParams,
+  OpenF1RaceControlMessage,
+  OpenF1Session,
+  OpenF1Stint,
+  OpenF1TeamRadio,
+  OpenF1Weather,
+} from '../../types/openf1.types';
 import { validateLeaderboardResponse } from '../../utils/leaderboard/validateLiveTiming';
 
 const OPENF1_BASE_URL = import.meta.env.VITE_OPENF1_BASE_URL || 'https://api.openf1.org/v1';
@@ -36,104 +51,123 @@ const baseQueryWithRateLimitGuard: BaseQueryFn<
 
 const baseQuery = retry(baseQueryWithRateLimitGuard, { maxRetries: 2 });
 
-type QueryParams = Record<string, string | number | boolean | undefined>;
-
-const hasParams = (params?: QueryParams) =>
+const hasParams = (params?: OpenF1QueryParams) =>
   !!params && Object.values(params).some((value) => value !== undefined && value !== '');
 
-const latestPositionByDriver = (response: any) => {
+const latestPositionByDriver = (response: OpenF1Position[] | unknown): OpenF1Position[] => {
   if (!Array.isArray(response)) return [];
 
-  const latest = new Map<number, any>();
+  const latest = new Map<number, OpenF1Position>();
 
   response.forEach((entry) => {
-    const driverNumber = entry?.driver_number;
-    if (driverNumber == null) return;
+    const positionEntry = entry as Partial<OpenF1Position>;
+    const driverNumber = positionEntry.driver_number;
+    if (driverNumber == null || positionEntry.position == null) return;
 
     const previous = latest.get(driverNumber);
-    const entryTime = new Date(entry?.date || entry?.timestamp || 0).getTime();
+    const entryTime = new Date(positionEntry.date || positionEntry.timestamp || 0).getTime();
     const previousTime = new Date(previous?.date || previous?.timestamp || 0).getTime();
 
     if (!previous || entryTime >= previousTime) {
-      latest.set(driverNumber, entry);
+      latest.set(driverNumber, positionEntry as OpenF1Position);
     }
   });
 
   return Array.from(latest.values()).sort((a, b) => (a.position ?? 999) - (b.position ?? 999));
 };
 
+export interface OpenF1SessionQuery extends OpenF1QueryParams {
+  session_key?: string | number;
+  meeting_key?: string | number;
+  session_name?: string;
+  year?: string | number;
+}
+
+export interface OpenF1DriverQuery extends OpenF1QueryParams {
+  session_key?: string | number;
+  driver_number?: number;
+}
+
+export interface OpenF1SessionScopedQuery extends OpenF1QueryParams {
+  session_key: string | number;
+}
+
+export interface OpenF1DriverScopedQuery extends OpenF1SessionScopedQuery {
+  driver_number?: string | number;
+}
+
 export const openF1Service = createApi({
   reducerPath: 'openF1Service',
   baseQuery,
   keepUnusedDataFor: 120,
   endpoints: (builder) => ({
-    getMeetings: builder.query<any[], QueryParams | void>({
+    getMeetings: builder.query<OpenF1Meeting[], OpenF1QueryParams | void>({
       query: (params) => {
-        const safeParams = params as QueryParams | undefined;
+        const safeParams = params as OpenF1QueryParams | undefined;
         return {
           url: '/meetings',
           params: hasParams(safeParams) ? safeParams : undefined,
         };
       },
     }),
-    getSessions: builder.query<any[], QueryParams | void>({
+    getSessions: builder.query<OpenF1Session[], OpenF1SessionQuery | void>({
       query: (params) => {
-        const safeParams = params as QueryParams | undefined;
+        const safeParams = params as OpenF1SessionQuery | undefined;
         return {
           url: '/sessions',
           params: hasParams(safeParams) ? safeParams : { session_key: 'latest' },
         };
       },
     }),
-    getDrivers: builder.query<any[], { session_key?: string | number; driver_number?: number }>({
+    getDrivers: builder.query<OpenF1Driver[], OpenF1DriverQuery>({
       query: (params) => ({
         url: '/drivers',
         params,
       }),
     }),
-    getWeather: builder.query<any[], { session_key: string | number }>({
+    getWeather: builder.query<OpenF1Weather[], OpenF1SessionScopedQuery>({
       query: (params) => ({
         url: '/weather',
         params,
       }),
     }),
-    getTeamRadio: builder.query<any[], { session_key: string | number; driver_number?: string | number }>({
+    getTeamRadio: builder.query<OpenF1TeamRadio[], OpenF1DriverScopedQuery>({
       query: (params) => ({
         url: '/team_radio',
         params,
       }),
     }),
-    getStints: builder.query<any[], { session_key: string | number; driver_number?: number }>({
+    getStints: builder.query<OpenF1Stint[], OpenF1DriverScopedQuery>({
       query: (params) => ({
         url: '/stints',
         params,
       }),
     }),
-    getRaceControl: builder.query<any[], { session_key: string | number }>({
+    getRaceControl: builder.query<OpenF1RaceControlMessage[], OpenF1SessionScopedQuery>({
       query: (params) => ({
         url: '/race_control',
         params,
       }),
     }),
-    getPitStops: builder.query<any[], { session_key: string | number; driver_number?: number }>({
+    getPitStops: builder.query<OpenF1PitStop[], OpenF1DriverScopedQuery>({
       query: (params) => ({
         url: '/pit',
         params,
       }),
     }),
-    getPositions: builder.query<any[], { session_key: string | number; driver_number?: number }>({
+    getPositions: builder.query<OpenF1Position[], OpenF1DriverScopedQuery>({
       query: (params) => ({
         url: '/position',
         params,
       }),
     }),
-    getIntervals: builder.query<any[], { session_key: string | number; driver_number?: number }>({
+    getIntervals: builder.query<OpenF1Interval[], OpenF1DriverScopedQuery>({
       query: (params) => ({
         url: '/intervals',
         params,
       }),
     }),
-    getLaps: builder.query<any[], { session_key: string | number; driver_number?: number }>({
+    getLaps: builder.query<OpenF1Lap[], OpenF1DriverScopedQuery>({
       query: (params) => ({
         url: '/laps',
         params,
@@ -144,12 +178,13 @@ export const openF1Service = createApi({
      * `/live_timing`; we read `/position`, keep the latest row per driver, and
      * validate it into safe leaderboard entries.
      */
-    getLiveTiming: builder.query<any[], string | number>({
+    getLiveTiming: builder.query<LeaderboardEntry[], string | number>({
       query: (sessionKey) => ({
         url: '/position',
         params: { session_key: sessionKey },
       }),
-      transformResponse: (response: any) => validateLeaderboardResponse(latestPositionByDriver(response)),
+      transformResponse: (response: OpenF1Position[] | unknown) =>
+        validateLeaderboardResponse(latestPositionByDriver(response)),
     }),
   }),
 });

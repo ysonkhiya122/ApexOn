@@ -17,7 +17,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { LeaderboardEntry } from '../molecules/LeaderboardEntry';
-import { Skeleton } from '../../shared/components/atoms/skeleton';
+import { Skeleton } from '@/components/atoms/skeleton';
 import type { RootState } from '../../store';
 import './LeaderboardPanel.scss';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGetSessionsQuery, useGetTeamRadioQuery } from '../../../store/services/openF1Service';
-import { Badge } from '../../../shared/components/atoms/badge';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
+import { Badge } from '@/components/atoms/badge';
+import { Skeleton } from '@/components/atoms/skeleton';
 import { Radio, Play, Pause, Volume2 } from 'lucide-react';
 import './radio.scss';
 

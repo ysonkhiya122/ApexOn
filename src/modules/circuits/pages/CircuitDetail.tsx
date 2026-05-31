@@ -2,8 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetCircuitResultsQuery } from '../../../store/services/jolpicaService';
 import { CircuitInfo } from '../components/CircuitInfo';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
-import { Button } from '../../../shared/components/atoms/button';
+import { Skeleton } from '@/components/atoms/skeleton';
+import { Button } from '@/components/atoms/button';
 import { ArrowLeft, MapPin, Trophy, Timer } from 'lucide-react';
 import './circuit-detail.scss';
 
@@ -119,9 +119,9 @@ export const CircuitDetail: React.FC = () => {
           <div className="circuit-detail__overview">
             <CircuitInfo
               location={circuitInfo.Location}
-              firstGrandPrix={raceHistory.length > 0 ? raceHistory[raceHistory.length - 1].season : undefined}
-              laps={raceHistory[0]?.laps}
-              length={raceHistory[0]?.Circuit?.Length}
+              firstGrandPrix={raceHistory.length > 0 ? parseInt(raceHistory[raceHistory.length - 1].season, 10) : undefined}
+              laps={(raceHistory[0] as any)?.laps}
+              length={(raceHistory[0]?.Circuit as any)?.Length}
             />
 
             {raceHistory.length > 0 && (

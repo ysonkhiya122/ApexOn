@@ -47,8 +47,11 @@ export const transformDrivers = (rawDrivers: JolpicaDriver[]): Driver[] => {
 export const transformDriverStanding = (
   raw: JolpicaStanding
 ): DriverStanding => {
-  // Get team name from Constructor if available
-  const teamName = raw.Constructor?.name || '';
+  // Jolpica driver standings expose constructors as `Constructors`;
+  // some adapter tests/legacy payloads may still provide a singular
+  // `Constructor`, so support both shapes.
+  const constructors = (raw as JolpicaStanding & { Constructors?: Array<{ name: string }> }).Constructors;
+  const teamName = raw.Constructor?.name || constructors?.[0]?.name || '';
   
   return {
     position: parseInt(raw.position, 10),

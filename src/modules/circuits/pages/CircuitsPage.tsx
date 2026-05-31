@@ -10,8 +10,8 @@ import {
   resetFilters,
 } from '../../../store/slices/circuitsSlice';
 import { CircuitCard } from '../components/CircuitCard';
-import { Skeleton } from '../../../shared/components/atoms/skeleton';
-import { Button } from '../../../shared/components/atoms/button';
+import { Skeleton } from '@/components/atoms/skeleton';
+import { Button } from '@/components/atoms/button';
 import { Search, Filter, ArrowUpDown, X } from 'lucide-react';
 import './circuits.scss';
 

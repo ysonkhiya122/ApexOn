@@ -1,1 +1,1 @@
-export { PhotoGallery } from './gallery';
+export { PhotoGallery } from '../../modules/history/components/PhotoGallery';

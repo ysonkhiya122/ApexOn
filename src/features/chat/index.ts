@@ -1,1 +1,2 @@
-export { ChatDock } from './chat-dock';
+export { ChatDock } from '../../modules/ai';
+export { default } from '../../modules/ai';
