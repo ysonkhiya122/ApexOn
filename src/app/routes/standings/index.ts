@@ -1,1 +1,0 @@
-export { StandingsPage } from './standings';
