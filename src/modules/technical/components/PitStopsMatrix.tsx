@@ -38,11 +38,16 @@ export const PitStopsMatrix: React.FC<PitStopsProps> = ({ year, round }) => {
       ) : pitStops.length > 0 ? (
         <div className="space-y-3">
           {pitStops.slice(0, 5).map((stop: any, idx: number) => (
-            <div key={idx} className="flex items-center justify-between rounded bg-slate-950 p-3 border border-slate-800/60 hover:border-slate-700 transition-colors">
+            <div
+              key={idx}
+              className="flex items-center justify-between rounded bg-slate-950 p-3 border border-slate-800/60 hover:border-slate-700 transition-colors"
+            >
               <div className="flex items-center gap-3">
                 <span className="font-mono text-xs text-slate-500 font-bold">#{stop.stop}</span>
                 <div>
-                  <span className="text-xs font-black text-slate-200 uppercase">Driver #{stop.driverId}</span>
+                  <span className="text-xs font-black text-slate-200 uppercase">
+                    Driver #{stop.driverId}
+                  </span>
                   <div className="flex items-center gap-1.5 text-xxs text-slate-400 mt-0.5">
                     <ArrowRightLeft size={10} className="text-red-500" /> Lap: {stop.lap}
                   </div>

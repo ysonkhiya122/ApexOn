@@ -17,14 +17,8 @@ import { CURRENT_SEASON_TOKEN } from '../../../utils/season';
 
 export const CircuitsPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {
-    searchQuery,
-    selectedCountry,
-    currentPage,
-    itemsPerPage,
-    sortBy,
-    sortOrder,
-  } = useAppSelector((state) => state.circuits);
+  const { searchQuery, selectedCountry, currentPage, itemsPerPage, sortBy, sortOrder } =
+    useAppSelector((state) => state.circuits);
 
   const { data, isLoading, isError } = useGetCircuitsQuery(CURRENT_SEASON_TOKEN);
 
@@ -41,8 +35,7 @@ export const CircuitsPage: React.FC = () => {
       const query = searchQuery.toLowerCase();
       result = result.filter(
         (c: any) =>
-          c.circuitName.toLowerCase().includes(query) ||
-          c.circuitId.toLowerCase().includes(query)
+          c.circuitName.toLowerCase().includes(query) || c.circuitId.toLowerCase().includes(query)
       );
     }
 

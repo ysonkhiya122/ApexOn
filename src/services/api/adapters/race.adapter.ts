@@ -1,6 +1,6 @@
 /**
  * Race Adapter
- * 
+ *
  * Transforms raw Jolpica API race data into normalized Race models.
  */
 
@@ -59,11 +59,11 @@ const determineRaceStatus = (
   if (raceDate > now) {
     return 'scheduled';
   }
-  
+
   if (results && results.length > 0) {
     return 'completed';
   }
-  
+
   return 'cancelled';
 };
 
@@ -117,11 +117,11 @@ export const transformRaceResults = (rawResults: JolpicaResult[]): RaceResult[] 
 export const formatRaceDate = (date: string, format: 'full' | 'short' | 'relative'): string => {
   const raceDate = new Date(date);
   const now = new Date();
-  
+
   if (format === 'relative') {
     const diffMs = raceDate.getTime() - now.getTime();
     const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays < 0) {
       return `${Math.abs(diffDays)} days ago`;
     } else if (diffDays === 0) {
@@ -132,14 +132,14 @@ export const formatRaceDate = (date: string, format: 'full' | 'short' | 'relativ
       return `in ${diffDays} days`;
     }
   }
-  
+
   if (format === 'short') {
     return raceDate.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
     });
   }
-  
+
   return raceDate.toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -155,7 +155,7 @@ export const formatLapTime = (timeMs: number): string => {
   const minutes = Math.floor(timeMs / 60000);
   const seconds = Math.floor((timeMs % 60000) / 1000);
   const milliseconds = Math.floor(timeMs % 1000);
-  
+
   return `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
 };
 

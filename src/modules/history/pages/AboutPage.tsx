@@ -19,31 +19,36 @@ export const AboutPage: React.FC = () => {
     {
       year: '1950',
       title: 'The Inaugural Championship',
-      description: 'The first official F1 World Championship race takes place at Silverstone, England. Giuseppe Farina takes the crown.',
+      description:
+        'The first official F1 World Championship race takes place at Silverstone, England. Giuseppe Farina takes the crown.',
       era: 'Vintage',
     },
     {
       year: '1970',
       title: 'Aerodynamic Innovations',
-      description: 'Lotus introduces the iconic ground-effect concept, revolutionizing racecar downforce metrics exponentially.',
+      description:
+        'Lotus introduces the iconic ground-effect concept, revolutionizing racecar downforce metrics exponentially.',
       era: 'Vintage',
     },
     {
       year: '1988',
       title: 'Senna vs Prost Rivalry',
-      description: 'McLaren-Honda captures 15 out of 16 GPs in a season fueled by aggressive engine limits and supreme internal competition.',
+      description:
+        'McLaren-Honda captures 15 out of 16 GPs in a season fueled by aggressive engine limits and supreme internal competition.',
       era: 'Turbo',
     },
     {
       year: '2014',
       title: 'V6 Turbo Hybrid Era',
-      description: 'Shift from classic fuel formats into modern hybrid recovery setups. Mercedes begins unprecedented dominance.',
+      description:
+        'Shift from classic fuel formats into modern hybrid recovery setups. Mercedes begins unprecedented dominance.',
       era: 'Turbo',
     },
     {
       year: '2022',
       title: 'Return of Ground Effect',
-      description: 'Massive regulations remodel aiming to promote closer wheel-to-wheel battles across narrow street circuits.',
+      description:
+        'Massive regulations remodel aiming to promote closer wheel-to-wheel battles across narrow street circuits.',
       era: 'Modern',
     },
   ];
@@ -68,7 +73,8 @@ export const AboutPage: React.FC = () => {
           LEGACY OF SPEED
         </h1>
         <p className="mx-auto max-w-xl text-slate-400 text-sm sm:text-base">
-          Formula 1 represents the absolute pinnacle of engineering persistence, courage, and aerodynamic breakthroughs.
+          Formula 1 represents the absolute pinnacle of engineering persistence, courage, and
+          aerodynamic breakthroughs.
         </p>
       </div>
 
@@ -123,10 +129,15 @@ export const AboutPage: React.FC = () => {
         ].map((stat, idx) => {
           const Icon = stat.icon;
           return (
-            <div key={idx} className="rounded-xl border border-slate-800 bg-slate-900/20 p-6 flex flex-col items-center gap-2">
+            <div
+              key={idx}
+              className="rounded-xl border border-slate-800 bg-slate-900/20 p-6 flex flex-col items-center gap-2"
+            >
               <Icon className="text-red-500" size={28} />
               <div className="font-mono text-2xl font-black text-slate-100">{stat.count}</div>
-              <div className="text-xs text-slate-400 uppercase tracking-widest font-semibold">{stat.label}</div>
+              <div className="text-xs text-slate-400 uppercase tracking-widest font-semibold">
+                {stat.label}
+              </div>
             </div>
           );
         })}

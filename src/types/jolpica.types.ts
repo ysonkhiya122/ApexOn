@@ -12,7 +12,14 @@ import type {
   JolpicaStanding,
 } from '@/services/api/types/base.types';
 
-export type { JolpicaCircuit, JolpicaConstructor, JolpicaDriver, JolpicaRace, JolpicaResponse, JolpicaResult };
+export type {
+  JolpicaCircuit,
+  JolpicaConstructor,
+  JolpicaDriver,
+  JolpicaRace,
+  JolpicaResponse,
+  JolpicaResult,
+};
 
 export interface JolpicaRaceTable {
   season?: string;

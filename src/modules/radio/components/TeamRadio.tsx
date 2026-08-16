@@ -60,10 +60,11 @@ export const TeamRadio: React.FC = () => {
     { skip: !sessionKey }
   );
 
-  const { data: clips, isLoading: clipsLoading, isError } = useGetTeamRadioQuery(
-    { session_key: sessionKey as number },
-    { skip: !sessionKey }
-  );
+  const {
+    data: clips,
+    isLoading: clipsLoading,
+    isError,
+  } = useGetTeamRadioQuery({ session_key: sessionKey as number }, { skip: !sessionKey });
 
   const driversByNumber = useMemo(() => {
     const map = new Map<number, OpenF1Driver>();
@@ -96,10 +97,10 @@ export const TeamRadio: React.FC = () => {
     return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [clips, selectedDriver]);
 
-  // Stop playback when the clip list changes underneath the player.
+  // Stop playback when the clip list changes underneath the player. Pausing is
+  // an external-system effect; the visual state follows from `onPause`.
   useEffect(() => {
     audioRef.current?.pause();
-    setActiveTrack(null);
   }, [sessionKey, selectedDriver]);
 
   const togglePlayback = async (url: string) => {
@@ -172,7 +173,15 @@ export const TeamRadio: React.FC = () => {
         </select>
       </div>
 
-      <audio ref={audioRef} onEnded={() => setActiveTrack(null)} className="hidden" />
+      <audio
+        ref={audioRef}
+        onEnded={() => setActiveTrack(null)}
+        onPause={() => setActiveTrack(null)}
+        className="hidden"
+      >
+        {/* Radio clips are raw pit-wall audio; no caption track is published
+            by the upstream feed. */}
+      </audio>
 
       {playbackError && (
         <p
@@ -239,7 +248,9 @@ export const TeamRadio: React.FC = () => {
                   aria-pressed={isCurrent}
                   aria-label={`${isCurrent ? 'Pause' : 'Play'} team radio from ${name} at ${formatClipTime(clip.date)}`}
                   className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${
-                    isCurrent ? 'bg-slate-100 text-slate-950' : 'bg-red-600 text-white hover:bg-red-700'
+                    isCurrent
+                      ? 'bg-slate-100 text-slate-950'
+                      : 'bg-red-600 text-white hover:bg-red-700'
                   }`}
                 >
                   {isCurrent ? (

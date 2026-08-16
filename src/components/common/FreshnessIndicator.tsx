@@ -1,8 +1,8 @@
 /**
  * Freshness Indicator Component
- * 
+ *
  * Shows data freshness state (live/stale/delayed/offline).
- * 
+ *
  * CRITICAL: Users should know when data is stale.
  */
 
@@ -30,16 +30,14 @@ export const FreshnessIndicator: React.FC<FreshnessIndicatorProps> = ({ lastUpda
 
   return (
     <div className="freshness-indicator">
-      <Badge 
-        variant={currentConfig.color} 
+      <Badge
+        variant={currentConfig.color}
         className={currentConfig.pulse ? 'freshness-indicator__pulse' : ''}
       >
         {currentConfig.label}
       </Badge>
       {lastUpdate && (
-        <span className="freshness-indicator__time">
-          {formatLastUpdate(lastUpdate)}
-        </span>
+        <span className="freshness-indicator__time">{formatLastUpdate(lastUpdate)}</span>
       )}
     </div>
   );

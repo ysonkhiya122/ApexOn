@@ -4,24 +4,24 @@
   gap: 0.25rem;
   font-size: 0.75rem;
   font-weight: 700;
-  
+
   &--gained {
     color: #10b981; // Green
-    
+
     svg {
       animation: bounceIn 0.3s ease-out;
     }
   }
-  
+
   &--lost {
     color: #dc2626; // Red
   }
-  
+
   &--same {
     color: #64748b; // Gray
     opacity: 0.5;
   }
-  
+
   &__value {
     font-family: monospace;
     line-height: 1;

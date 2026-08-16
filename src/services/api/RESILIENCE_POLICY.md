@@ -13,18 +13,20 @@
 **When:** Missing non-critical data
 
 **Examples:**
+
 ```typescript
 // Driver code missing
-code: raw.code || ''
+code: raw.code || '';
 
 // Nationality flag missing
-return flagMap[nationality] || '🏁'
+return flagMap[nationality] || '🏁';
 
 // Team not available
-team: undefined
+team: undefined;
 ```
 
 **Use For:**
+
 - Display names
 - Optional metadata
 - Non-critical UI elements
@@ -36,6 +38,7 @@ team: undefined
 **When:** Data loading or temporarily unavailable
 
 **Examples:**
+
 ```typescript
 if (isLoading) {
   return <Skeleton className="h-12 w-full" />;
@@ -43,6 +46,7 @@ if (isLoading) {
 ```
 
 **Use For:**
+
 - Initial page loads
 - Data refetching
 - Network delays
@@ -54,6 +58,7 @@ if (isLoading) {
 **When:** Data fundamentally missing (not just delayed)
 
 **Examples:**
+
 ```typescript
 if (!driver || !driver.fullName) {
   return null; // Don't render broken UI
@@ -61,6 +66,7 @@ if (!driver || !driver.fullName) {
 ```
 
 **Use For:**
+
 - Critical data missing
 - Would show misleading information
 - Better to show nothing than wrong data
@@ -72,6 +78,7 @@ if (!driver || !driver.fullName) {
 **When:** Temporary network failure
 
 **Implementation:**
+
 ```typescript
 // RTK Query handles this automatically
 {
@@ -81,6 +88,7 @@ if (!driver || !driver.fullName) {
 ```
 
 **Use For:**
+
 - Network timeouts
 - Temporary API failures
 - Intermittent connectivity
@@ -89,26 +97,27 @@ if (!driver || !driver.fullName) {
 
 ## 📊 Decision Matrix
 
-| Data Type | Missing Data Strategy | Fallback |
-|-----------|----------------------|----------|
-| **Driver Name** | Fallback Value | "Unknown Driver" |
-| **Driver Code** | Fallback Value | "" (empty string) |
-| **Nationality** | Fallback Value | "Unknown" |
-| **Nationality Flag** | Fallback Value | "🏁" |
-| **Team Name** | Fallback Value | "Unknown Team" |
-| **Position** | Omit Component | Hide from standings |
-| **Points** | Fallback Value | 0 |
-| **Lap Time** | Skeleton UI | Show loading |
-| **Telemetry** | Omit Component | Hide gauge |
-| **Race Control** | Retry Fetch | Poll again |
-| **Weather** | Fallback Value | Last known value |
-| **Session Status** | Retry Fetch | Poll again |
+| Data Type            | Missing Data Strategy | Fallback            |
+| -------------------- | --------------------- | ------------------- |
+| **Driver Name**      | Fallback Value        | "Unknown Driver"    |
+| **Driver Code**      | Fallback Value        | "" (empty string)   |
+| **Nationality**      | Fallback Value        | "Unknown"           |
+| **Nationality Flag** | Fallback Value        | "🏁"                |
+| **Team Name**        | Fallback Value        | "Unknown Team"      |
+| **Position**         | Omit Component        | Hide from standings |
+| **Points**           | Fallback Value        | 0                   |
+| **Lap Time**         | Skeleton UI           | Show loading        |
+| **Telemetry**        | Omit Component        | Hide gauge          |
+| **Race Control**     | Retry Fetch           | Poll again          |
+| **Weather**          | Fallback Value        | Last known value    |
+| **Session Status**   | Retry Fetch           | Poll again          |
 
 ---
 
 ## 🎯 Critical vs Non-Critical Data
 
 ### Critical (Never Show Wrong Data)
+
 - Race position
 - Session status (live/completed)
 - Safety car/VSC status
@@ -117,6 +126,7 @@ if (!driver || !driver.fullName) {
 **Strategy:** Omit or Retry, NEVER guess
 
 ### Non-Critical (Safe to Fallback)
+
 - Driver code
 - Nationality flag
 - Team colors
@@ -131,6 +141,7 @@ if (!driver || !driver.fullName) {
 ### Policy 1: Stale Data is Better Than No Data
 
 For live timing:
+
 ```typescript
 // Keep showing last known position
 // Even if update is 5s old
@@ -159,6 +170,7 @@ const leaderboard = useLiveLeaderboard(); // Shows stale data gracefully
 ## 📝 Implementation Guidelines
 
 ### DO:
+
 - ✅ Use fallback values for non-critical data
 - ✅ Show skeleton for loading states
 - ✅ Omit components for critical missing data
@@ -167,6 +179,7 @@ const leaderboard = useLiveLeaderboard(); // Shows stale data gracefully
 - ✅ Show connection status indicators
 
 ### DO NOT:
+
 - ❌ Show "Unknown" for everything
 - ❌ Crash on missing data
 - ❌ Display stale data without timestamp
@@ -198,6 +211,7 @@ export const jolpicaService = createApi({
 ## 🚨 Error Boundaries
 
 For critical failures:
+
 ```typescript
 <ErrorBoundary fallback={<ErrorMessage />}>
   <LiveTimingComponent />

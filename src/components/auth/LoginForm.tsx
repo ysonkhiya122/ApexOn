@@ -11,7 +11,7 @@ export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
@@ -92,16 +92,9 @@ export const LoginForm: React.FC = () => {
             />
           </div>
 
-          {validationError && (
-            <div className="auth-form__error">{validationError}</div>
-          )}
+          {validationError && <div className="auth-form__error">{validationError}</div>}
 
-          <Button
-            type="submit"
-            variant="primary"
-            className="auth-form__submit"
-            isLoading={false}
-          >
+          <Button type="submit" variant="primary" className="auth-form__submit" isLoading={false}>
             {t('auth.login.submit')}
           </Button>
 

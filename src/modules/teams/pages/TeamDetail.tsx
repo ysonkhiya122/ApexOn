@@ -49,9 +49,7 @@ export const TeamDetail: React.FC = () => {
     });
 
     // Count championships (seasons where they scored significant points)
-    const championships = Array.from(seasonMap.values())
-      .filter((s: any) => s.wins > 0)
-      .length;
+    const championships = Array.from(seasonMap.values()).filter((s: any) => s.wins > 0).length;
 
     return {
       championships,
@@ -84,7 +82,11 @@ export const TeamDetail: React.FC = () => {
         seasonData.points += parseFloat(result.points || 0);
         seasonData.races += 1;
         if (result.position === '1') seasonData.wins++;
-        if (result.position !== '\\N' && (!seasonData.bestPosition || parseInt(result.position) < parseInt(seasonData.bestPosition))) {
+        if (
+          result.position !== '\\N' &&
+          (!seasonData.bestPosition ||
+            parseInt(result.position) < parseInt(seasonData.bestPosition))
+        ) {
           seasonData.bestPosition = result.position;
         }
       });
@@ -239,7 +241,10 @@ export const TeamDetail: React.FC = () => {
           <div className="team-detail__drivers">
             <h3 className="team-detail__section-title">Notable Drivers</h3>
             <div className="team-detail__drivers-note">
-              <p>Driver lineup data available through individual driver profiles. This feature is under development.</p>
+              <p>
+                Driver lineup data available through individual driver profiles. This feature is
+                under development.
+              </p>
             </div>
           </div>
         )}

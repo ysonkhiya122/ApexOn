@@ -1,6 +1,6 @@
 /**
  * Leaderboard Mock Data
- * 
+ *
  * For testing leaderboard functionality without live API.
  * Simulates Top 10 drivers with various positions, gaps, and tire strategies.
  */

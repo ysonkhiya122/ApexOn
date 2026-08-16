@@ -10,7 +10,7 @@ export const RegisterForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -119,16 +119,9 @@ export const RegisterForm: React.FC = () => {
             />
           </div>
 
-          {validationError && (
-            <div className="auth-form__error">{validationError}</div>
-          )}
+          {validationError && <div className="auth-form__error">{validationError}</div>}
 
-          <Button
-            type="submit"
-            variant="primary"
-            className="auth-form__submit"
-            isLoading={false}
-          >
+          <Button type="submit" variant="primary" className="auth-form__submit" isLoading={false}>
             {t('auth.register.submit')}
           </Button>
 

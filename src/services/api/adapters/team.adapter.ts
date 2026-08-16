@@ -1,6 +1,6 @@
 /**
  * Team Adapter
- * 
+ *
  * Transforms raw Jolpica API constructor data into normalized Team models.
  */
 
@@ -29,9 +29,7 @@ export const transformTeams = (rawTeams: JolpicaConstructor[]): Team[] => {
 /**
  * Transform raw constructor standing to normalized ConstructorStanding
  */
-export const transformConstructorStanding = (
-  raw: JolpicaStanding
-): ConstructorStanding => {
+export const transformConstructorStanding = (raw: JolpicaStanding): ConstructorStanding => {
   return {
     position: parseInt(raw.position, 10),
     team: raw.Constructor ? transformTeam(raw.Constructor) : ({} as Team),
@@ -56,10 +54,10 @@ export const calculateTeamStats = (
   teamId: string,
   results: any[] // Would be properly typed with race results
 ): TeamStats => {
-  let championships = 0;
+  const championships = 0;
   let raceWins = 0;
   let podiums = 0;
-  let polePositions = 0;
+  const polePositions = 0;
   let totalPoints = 0;
 
   results.forEach((result) => {
@@ -89,7 +87,11 @@ export const calculateTeamStats = (
 export const formatTeamName = (team: Team, format: 'full' | 'short'): string => {
   if (format === 'short') {
     // Could implement abbreviation logic here
-    return team.name.split(' ').map(w => w[0]).join('').toUpperCase();
+    return team.name
+      .split(' ')
+      .map((w) => w[0])
+      .join('')
+      .toUpperCase();
   }
   return team.fullName;
 };

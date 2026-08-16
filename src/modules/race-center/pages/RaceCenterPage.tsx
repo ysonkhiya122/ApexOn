@@ -78,7 +78,14 @@ const normalizeDrivers = (drivers: any[] = []): Driver[] =>
 
 const normalizeRaceControl = (messages: any[] = [], sessionKey: number): RaceControlMessage[] =>
   messages.map((message, index) => ({
-    id: makeStableId('rc', message.date, message.category, message.message, message.lap_number, index),
+    id: makeStableId(
+      'rc',
+      message.date,
+      message.category,
+      message.message,
+      message.lap_number,
+      index
+    ),
     session_key: Number(message.session_key ?? sessionKey),
     lap: Number(message.lap_number ?? message.lap ?? 0),
     date: message.date || new Date().toISOString(),
@@ -113,7 +120,11 @@ interface RaceCenterIdleStateProps {
   onRefresh: () => void;
 }
 
-const RaceCenterIdleState: React.FC<RaceCenterIdleStateProps> = ({ session, status, onRefresh }) => {
+const RaceCenterIdleState: React.FC<RaceCenterIdleStateProps> = ({
+  session,
+  status,
+  onRefresh,
+}) => {
   const isUpcoming = status === 'upcoming';
 
   return (
@@ -194,7 +205,8 @@ export const RaceCenterPage: React.FC = () => {
 
   const pollingInterval = useMemo(() => {
     const sessionType =
-      (activeSession?.session_type as 'race' | 'qualifying' | 'practice' | 'ended' | 'none') || 'none';
+      (activeSession?.session_type as 'race' | 'qualifying' | 'practice' | 'ended' | 'none') ||
+      'none';
 
     if (!isLiveSession) return 0;
 
@@ -255,12 +267,20 @@ export const RaceCenterPage: React.FC = () => {
     if (!isLiveSession) return;
 
     dispatch(setLeaderboardLoading(liveTimingQuery.isLoading));
-    dispatch(setLeaderboardError(liveTimingQuery.error ? 'Unable to load live timing data.' : null));
+    dispatch(
+      setLeaderboardError(liveTimingQuery.error ? 'Unable to load live timing data.' : null)
+    );
 
     if (Array.isArray(liveTimingQuery.data)) {
       dispatch(updateLeaderboard(liveTimingQuery.data as LeaderboardEntry[]));
     }
-  }, [dispatch, isLiveSession, liveTimingQuery.data, liveTimingQuery.error, liveTimingQuery.isLoading]);
+  }, [
+    dispatch,
+    isLiveSession,
+    liveTimingQuery.data,
+    liveTimingQuery.error,
+    liveTimingQuery.isLoading,
+  ]);
 
   useEffect(() => {
     if (!isLiveSession) return;
@@ -273,7 +293,14 @@ export const RaceCenterPage: React.FC = () => {
           : null
       )
     );
-  }, [dispatch, isLiveSession, raceControlQuery.error, raceControlQuery.isLoading, pitStopsQuery.error, pitStopsQuery.isLoading]);
+  }, [
+    dispatch,
+    isLiveSession,
+    raceControlQuery.error,
+    raceControlQuery.isLoading,
+    pitStopsQuery.error,
+    pitStopsQuery.isLoading,
+  ]);
 
   useEffect(() => {
     if (isLiveSession && Array.isArray(driversQuery.data)) {
@@ -327,8 +354,12 @@ export const RaceCenterPage: React.FC = () => {
             {activeSession ? getSessionName(activeSession) : 'No active session'}
           </p>
           <div className="race-center-page__info">
-            <span>Polling: {isLiveSession && pollingInterval > 0 ? `${pollingInterval}ms` : 'paused'}</span>
-            {isLiveSession && <FreshnessIndicator lastUpdate={liveTimingQuery.fulfilledTimeStamp || Date.now()} />}
+            <span>
+              Polling: {isLiveSession && pollingInterval > 0 ? `${pollingInterval}ms` : 'paused'}
+            </span>
+            {isLiveSession && liveTimingQuery.fulfilledTimeStamp !== undefined && (
+              <FreshnessIndicator lastUpdate={liveTimingQuery.fulfilledTimeStamp} />
+            )}
           </div>
         </div>
 
@@ -337,7 +368,8 @@ export const RaceCenterPage: React.FC = () => {
             <div className="race-center-idle__eyebrow">Connection issue</div>
             <h2 className="race-center-idle__title">Unable to discover OpenF1 sessions</h2>
             <p className="race-center-idle__copy">
-              The Race Center is still available, but live session discovery failed. This may be a temporary public API limit.
+              The Race Center is still available, but live session discovery failed. This may be a
+              temporary public API limit.
             </p>
             <div className="race-center-idle__actions">
               <button type="button" className="race-center-idle__button" onClick={refetchSessions}>

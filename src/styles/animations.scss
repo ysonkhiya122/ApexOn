@@ -2,62 +2,111 @@
 
 /* Starting Lights Animation (Preloader) */
 @keyframes lightsSequence {
-  0%, 100% { opacity: 0.3; transform: scale(0.95); }
-  50% { opacity: 1; transform: scale(1.05); }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
 @keyframes lightsOn {
-  0% { 
-    opacity: 0.3; 
+  0% {
+    opacity: 0.3;
     box-shadow: none;
     transform: scale(0.95);
   }
-  100% { 
-    opacity: 1; 
-    box-shadow: 0 0 30px rgba(220, 38, 38, 0.8), 0 0 60px rgba(220, 38, 38, 0.4);
+  100% {
+    opacity: 1;
+    box-shadow:
+      0 0 30px rgba(220, 38, 38, 0.8),
+      0 0 60px rgba(220, 38, 38, 0.4);
     transform: scale(1);
   }
 }
 
 /* Podium Celebration */
 @keyframes podiumBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes confetti {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 /* F1 Car Motion */
 @keyframes speedLine {
-  0% { transform: translateX(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(100%); opacity: 0; }
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
 
 @keyframes turboBoost {
-  0% { transform: scaleX(1); }
-  50% { transform: scaleX(1.05); }
-  100% { transform: scaleX(1); }
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.05);
+  }
+  100% {
+    transform: scaleX(1);
+  }
 }
 
 /* DRS Zone Indicator */
 @keyframes drsPulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Safety Car States */
 @keyframes safetyCarPulse {
-  0%, 100% { background-color: rgba(234, 179, 8, 0.2); }
-  50% { background-color: rgba(234, 179, 8, 0.4); }
+  0%,
+  100% {
+    background-color: rgba(234, 179, 8, 0.2);
+  }
+  50% {
+    background-color: rgba(234, 179, 8, 0.4);
+  }
 }
 
 @keyframes vscPulse {
-  0%, 100% { background-color: rgba(16, 185, 129, 0.2); }
-  50% { background-color: rgba(16, 185, 129, 0.4); }
+  0%,
+  100% {
+    background-color: rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    background-color: rgba(16, 185, 129, 0.4);
+  }
 }
 
 /* Page Transitions */
@@ -96,14 +145,25 @@
 
 /* Loading Skeleton Shimmer */
 @keyframes skeletonShimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* Countdown Pulse */
 @keyframes countdownPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
 }
 
 /* Utility Classes */
@@ -154,11 +214,21 @@
 }
 
 /* Tire Compound Colors */
-.f1-tire-soft { color: #dc2626; }
-.f1-tire-medium { color: #fbbf24; }
-.f1-tire-hard { color: #1e40af; }
-.f1-tire-intermediate { color: #10b981; }
-.f1-tire-wet { color: #3b82f6; }
+.f1-tire-soft {
+  color: #dc2626;
+}
+.f1-tire-medium {
+  color: #fbbf24;
+}
+.f1-tire-hard {
+  color: #1e40af;
+}
+.f1-tire-intermediate {
+  color: #10b981;
+}
+.f1-tire-wet {
+  color: #3b82f6;
+}
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {

@@ -1,8 +1,8 @@
 /**
  * Adapter Exports
- * 
+ *
  * Central export for all data adapters/transformers.
- * 
+ *
  * Usage:
  * import { transformDriver, transformDrivers } from '@/services/api/adapters';
  */

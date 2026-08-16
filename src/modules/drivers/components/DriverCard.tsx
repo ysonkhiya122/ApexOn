@@ -31,9 +31,7 @@ export const DriverCard: React.FC<DriverCardProps> = ({
   return (
     <Link to={`/drivers/${driverId}`} className="driver-card">
       <div className="driver-card__header">
-        {permanentNumber && (
-          <div className="driver-card__number">{permanentNumber}</div>
-        )}
+        {permanentNumber && <div className="driver-card__number">{permanentNumber}</div>}
         <div className="driver-card__names">
           <h3 className="driver-card__name">
             <span className="driver-card__given-name">{givenName}</span>{' '}

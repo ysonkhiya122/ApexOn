@@ -1,6 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetDriverDetailsQuery, useGetDriverResultsQuery } from '../../../store/services/jolpicaService';
+import {
+  useGetDriverDetailsQuery,
+  useGetDriverResultsQuery,
+} from '../../../store/services/jolpicaService';
 import { DriverStats } from '../components/DriverStats';
 import { Skeleton } from '@/components/atoms/skeleton';
 import { Button } from '@/components/atoms/button';
@@ -12,7 +15,11 @@ const DriverDetail: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'overview' | 'results' | 'statistics'>('overview');
 
-  const { data: driverData, isLoading: driverLoading, isError: driverError } = useGetDriverDetailsQuery(driverId || '');
+  const {
+    data: driverData,
+    isLoading: driverLoading,
+    isError: driverError,
+  } = useGetDriverDetailsQuery(driverId || '');
   const { data: resultsData, isLoading: resultsLoading } = useGetDriverResultsQuery(driverId || '');
 
   const driver = useMemo(() => {
@@ -46,7 +53,7 @@ const DriverDetail: React.FC = () => {
 
   const seasonResults = useMemo(() => {
     if (!resultsData?.MRData?.RaceTable?.Races) return [];
-    
+
     const seasonMap = new Map();
     resultsData.MRData.RaceTable.Races.forEach((race: any) => {
       race.Results?.forEach((result: any) => {
@@ -63,7 +70,10 @@ const DriverDetail: React.FC = () => {
         const seasonData = seasonMap.get(season);
         seasonData.points += parseFloat(result.points || 0);
         seasonData.races += 1;
-        if (result.position !== '\\N' && (!seasonData.position || parseInt(result.position) < parseInt(seasonData.position))) {
+        if (
+          result.position !== '\\N' &&
+          (!seasonData.position || parseInt(result.position) < parseInt(seasonData.position))
+        ) {
           seasonData.position = result.position;
         }
       });
@@ -155,7 +165,7 @@ const DriverDetail: React.FC = () => {
               fastestLaps={careerStats.fastestLaps}
               grandsPrix={seasonResults.reduce((acc, s) => acc + s.races, 0)}
             />
-            
+
             <div className="driver-detail__info">
               <h3 className="driver-detail__info-title">Driver Information</h3>
               <div className="driver-detail__info-grid">

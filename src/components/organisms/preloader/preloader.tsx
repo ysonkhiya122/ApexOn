@@ -10,8 +10,7 @@ const FADE_MS = 500;
 const SESSION_KEY = 'apexon_seen_preloader';
 
 const prefersReducedMotion = () =>
-  typeof window !== 'undefined' &&
-  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 const alreadySeenThisSession = () => {
   try {
@@ -25,23 +24,25 @@ export const Preloader: React.FC = () => {
   const dispatch = useAppDispatch();
   const visible = useAppSelector((state) => state.ui.preloaderVisible);
 
-  const [lightsCount, setLightsCount] = useState(0);
-  const [isFadingOut, setIsFadingOut] = useState(false);
-  const [isMounted, setIsMounted] = useState(visible);
-  const wasVisible = useRef(visible);
-
   // Skip the whole sequence for repeat navigations in the same session and for
   // users who have asked for reduced motion — a start-light show is charming
-  // once, not on every page load.
-  useEffect(() => {
-    if (visible && (alreadySeenThisSession() || prefersReducedMotion())) {
-      dispatch(setPreloaderVisible(false));
-      setIsMounted(false);
-    }
-  }, [visible, dispatch]);
+  // once, not on every page load. Computed once at mount so it never causes a
+  // cascading render.
+  const [shouldSkip] = useState(() => alreadySeenThisSession() || prefersReducedMotion());
+
+  const [lightsCount, setLightsCount] = useState(0);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [isMounted, setIsMounted] = useState(visible && !shouldSkip);
+  const wasVisible = useRef(visible && !shouldSkip);
 
   useEffect(() => {
-    if (!visible) return;
+    if (visible && shouldSkip) {
+      dispatch(setPreloaderVisible(false));
+    }
+  }, [visible, shouldSkip, dispatch]);
+
+  useEffect(() => {
+    if (!visible || shouldSkip) return;
 
     const interval = setInterval(() => {
       setLightsCount((prev) => {
@@ -51,10 +52,10 @@ export const Preloader: React.FC = () => {
     }, LIGHT_INTERVAL_MS);
 
     return () => clearInterval(interval);
-  }, [visible]);
+  }, [visible, shouldSkip]);
 
   useEffect(() => {
-    if (!visible || lightsCount < LIGHT_COUNT) return;
+    if (!visible || shouldSkip || lightsCount < LIGHT_COUNT) return;
 
     const timeout = setTimeout(() => {
       try {
@@ -66,25 +67,25 @@ export const Preloader: React.FC = () => {
     }, HOLD_AFTER_LIGHTS_MS);
 
     return () => clearTimeout(timeout);
-  }, [visible, lightsCount, dispatch]);
+  }, [visible, shouldSkip, lightsCount, dispatch]);
 
   // CSS-driven exit: keep the node mounted for one fade, then drop it.
   useEffect(() => {
-    if (wasVisible.current && !visible) {
-      setIsFadingOut(true);
-      const timeout = setTimeout(() => {
-        setIsFadingOut(false);
-        setIsMounted(false);
-      }, FADE_MS);
-      wasVisible.current = visible;
-      return () => clearTimeout(timeout);
-    }
+    const wasShowing = wasVisible.current;
+    wasVisible.current = visible && !shouldSkip;
 
-    wasVisible.current = visible;
-    if (visible) setIsMounted(true);
-  }, [visible]);
+    if (!wasShowing || visible) return;
 
-  if (!isMounted) return null;
+    setIsFadingOut(true);
+    const timeout = setTimeout(() => {
+      setIsFadingOut(false);
+      setIsMounted(false);
+    }, FADE_MS);
+
+    return () => clearTimeout(timeout);
+  }, [visible, shouldSkip]);
+
+  if (!isMounted || shouldSkip) return null;
 
   const lightsOut = lightsCount >= LIGHT_COUNT;
 

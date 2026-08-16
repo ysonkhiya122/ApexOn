@@ -54,10 +54,12 @@ export const PhotoGallery: React.FC = () => {
           alt={images[currentIndex].title}
           className="w-full h-full object-cover select-none transition-transform duration-500 group-hover:scale-105"
         />
-        
+
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 p-4">
           <h3 className="text-sm font-bold text-slate-100">{images[currentIndex].title}</h3>
-          <span className="text-xxs text-slate-400 font-medium tracking-wide uppercase">{images[currentIndex].credit}</span>
+          <span className="text-xxs text-slate-400 font-medium tracking-wide uppercase">
+            {images[currentIndex].credit}
+          </span>
         </div>
 
         <button

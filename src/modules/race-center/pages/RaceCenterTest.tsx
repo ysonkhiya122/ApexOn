@@ -1,22 +1,27 @@
 /**
  * Race Center Test Page
- * 
+ *
  * Tests timeline with mock data.
  * Use this to verify all features work correctly.
- * 
+ *
  * Access at: /race-center/test
  */
 
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 import { TimelineFeed } from '../../../components/organisms/TimelineFeed';
-import { updateRaceControl, updatePitStops, updateDrivers, updateSessionStatus } from '../../../store/slices/raceStateSlice';
+import {
+  updateRaceControl,
+  updatePitStops,
+  updateDrivers,
+  updateSessionStatus,
+} from '../../../store/slices/raceStateSlice';
 import { mockRaceControl, mockPitStops, mockDrivers } from '../../../utils/timeline/mockData';
 import './race-center.scss';
 
 export const RaceCenterTest: React.FC = () => {
   const dispatch = useAppDispatch();
-  
+
   // Load mock data on mount
   useEffect(() => {
     dispatch(updateRaceControl(mockRaceControl));
@@ -24,19 +29,15 @@ export const RaceCenterTest: React.FC = () => {
     dispatch(updateDrivers(mockDrivers));
     dispatch(updateSessionStatus('live'));
   }, [dispatch]);
-  
+
   return (
     <div className="race-center-page">
       <div className="race-center-page__header">
         <h1 className="race-center-page__title">Race Center (Test Mode)</h1>
-        <p className="race-center-page__subtitle">
-          Testing timeline with mock data
-        </p>
-        <div className="race-center-test__badge">
-          🧪 Test Mode - Mock Data
-        </div>
+        <p className="race-center-page__subtitle">Testing timeline with mock data</p>
+        <div className="race-center-test__badge">🧪 Test Mode - Mock Data</div>
       </div>
-      
+
       <div className="race-center-page__content">
         {/* Timeline Feed - CORE PRODUCT */}
         <div className="race-center-page__timeline">
@@ -49,7 +50,7 @@ export const RaceCenterTest: React.FC = () => {
           </div>
           <TimelineFeed />
         </div>
-        
+
         {/* Test Info Sidebar */}
         <div className="race-center-page__sidebar">
           <div className="race-center-test__card">
@@ -67,7 +68,7 @@ export const RaceCenterTest: React.FC = () => {
               <li>✅ Mobile responsive</li>
             </ul>
           </div>
-          
+
           <div className="race-center-test__card">
             <h3>Mock Data</h3>
             <p>Race Control: {mockRaceControl.length} events</p>

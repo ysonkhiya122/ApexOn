@@ -18,14 +18,8 @@ import { CURRENT_SEASON_TOKEN } from '../../../utils/season';
 
 export const DriversPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {
-    searchQuery,
-    selectedNationality,
-    currentPage,
-    itemsPerPage,
-    sortBy,
-    sortOrder,
-  } = useAppSelector((state) => state.drivers);
+  const { searchQuery, selectedNationality, currentPage, itemsPerPage, sortBy, sortOrder } =
+    useAppSelector((state) => state.drivers);
 
   const { data: drivers = [], isLoading, isError } = useGetDriversQuery(CURRENT_SEASON_TOKEN);
 

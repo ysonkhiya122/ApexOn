@@ -5,7 +5,12 @@ import {
   transformDrivers,
   transformRaces,
 } from '@/services/api/adapters';
-import type { ConstructorStanding, Driver, DriverStanding, Race } from '@/services/api/types/normalized.types';
+import type {
+  ConstructorStanding,
+  Driver,
+  DriverStanding,
+  Race,
+} from '@/services/api/types/normalized.types';
 import type {
   JolpicaCircuitsResponse,
   JolpicaConstructorsResponse,
@@ -76,7 +81,10 @@ export const jolpicaService = createApi({
     getConstructors: builder.query<JolpicaConstructorsResponse, string>({
       query: (year) => `/${year}/constructors.json`,
     }),
-    getConstructorResults: builder.query<JolpicaRaceResultsResponse & JolpicaConstructorsResponse, string>({
+    getConstructorResults: builder.query<
+      JolpicaRaceResultsResponse & JolpicaConstructorsResponse,
+      string
+    >({
       query: (constructorId) => `/constructors/${constructorId}/results.json`,
     }),
     getCircuitResults: builder.query<JolpicaRaceResultsResponse & JolpicaCircuitsResponse, string>({

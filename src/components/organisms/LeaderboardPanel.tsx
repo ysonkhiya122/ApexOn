@@ -1,8 +1,8 @@
 /**
  * Leaderboard Panel Component
- * 
+ *
  * Main leaderboard display showing Top 10 drivers.
- * 
+ *
  * Features:
  * - Live position updates
  * - Position change indicators
@@ -21,12 +21,13 @@ import { Skeleton } from '@/components/atoms/skeleton';
 import './LeaderboardPanel.scss';
 
 export const LeaderboardPanel: React.FC = () => {
-  const { entries, isLoading, hasError, sessionStatus, lastUpdate } = useAppSelector((state) => state.leaderboard
+  const { entries, isLoading, hasError, sessionStatus, lastUpdate } = useAppSelector(
+    (state) => state.leaderboard
   );
-  
+
   // Show only Top 10
   const top10 = entries.slice(0, 10);
-  
+
   if (isLoading) {
     return (
       <div className="leaderboard-panel">
@@ -41,7 +42,7 @@ export const LeaderboardPanel: React.FC = () => {
       </div>
     );
   }
-  
+
   if (hasError) {
     return (
       <div className="leaderboard-panel">
@@ -54,7 +55,7 @@ export const LeaderboardPanel: React.FC = () => {
       </div>
     );
   }
-  
+
   if (top10.length === 0) {
     return (
       <div className="leaderboard-panel">
@@ -70,7 +71,7 @@ export const LeaderboardPanel: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="leaderboard-panel">
       <div className="leaderboard-panel__header">
@@ -90,7 +91,7 @@ export const LeaderboardPanel: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Header Row */}
       <div className="leaderboard-panel__header-row">
         <div className="leaderboard-panel__col-position">Pos</div>
@@ -101,18 +102,18 @@ export const LeaderboardPanel: React.FC = () => {
         <div className="leaderboard-panel__col-pit">Pit</div>
         <div className="leaderboard-panel__col-drs">DRS</div>
       </div>
-      
+
       {/* Entries */}
       <div className="leaderboard-panel__entries">
         {top10.map((entry, index) => (
           <LeaderboardEntry key={entry.driver.id} entry={entry} rank={index + 1} />
         ))}
       </div>
-      
+
       {/* Last Update */}
       <div className="leaderboard-panel__footer">
         <span className="leaderboard-panel__last-update">
-          Last update: {new Date(lastUpdate || Date.now()).toLocaleTimeString()}
+          Last update: {lastUpdate ? new Date(lastUpdate).toLocaleTimeString() : '—'}
         </span>
       </div>
     </div>

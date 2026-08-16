@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Trophy, Calendar, BarChart3, ChevronDown, Users, MapPin, BookOpen, Info, Gamepad2, User, Globe } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Trophy,
+  Calendar,
+  BarChart3,
+  ChevronDown,
+  Users,
+  MapPin,
+  BookOpen,
+  Info,
+  Gamepad2,
+  User,
+  Globe,
+} from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setLanguage, LanguageCode } from '../../../store/slices/languageSlice';
 import { useTranslation } from '../../../hooks/useTranslation';
@@ -85,7 +99,10 @@ export const Header: React.FC = () => {
             >
               <Users size={16} />
               <span>Championship</span>
-              <ChevronDown size={14} className={`f1-header__chevron ${championshipOpen ? 'f1-header__chevron--open' : ''}`} />
+              <ChevronDown
+                size={14}
+                className={`f1-header__chevron ${championshipOpen ? 'f1-header__chevron--open' : ''}`}
+              />
             </button>
             <div className={`f1-header__menu ${championshipOpen ? 'f1-header__menu--open' : ''}`}>
               {championshipNav.map((item) => {
@@ -116,7 +133,10 @@ export const Header: React.FC = () => {
               aria-haspopup="true"
             >
               <span>More</span>
-              <ChevronDown size={14} className={`f1-header__chevron ${moreOpen ? 'f1-header__chevron--open' : ''}`} />
+              <ChevronDown
+                size={14}
+                className={`f1-header__chevron ${moreOpen ? 'f1-header__chevron--open' : ''}`}
+              />
             </button>
             <div className={`f1-header__menu ${moreOpen ? 'f1-header__menu--open' : ''}`}>
               {moreNav.map((item) => {

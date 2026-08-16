@@ -2,46 +2,46 @@
   max-width: 80rem;
   margin: 0 auto;
   padding: 2rem 1rem;
-  
+
   &__header {
     margin-bottom: 2rem;
     text-align: center;
   }
-  
+
   &__title {
     font-size: 2.5rem;
     font-weight: 800;
     color: #f1f5f9;
     margin: 0 0 0.5rem 0;
   }
-  
+
   &__subtitle {
     font-size: 1rem;
     color: #94a3b8;
     margin: 0;
   }
-  
+
   &__content {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    
+
     @media (min-width: 1024px) {
       grid-template-columns: 2fr 1fr;
     }
   }
-  
+
   &__timeline {
     min-width: 0;
   }
-  
+
   &__section-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: #f1f5f9;
     margin: 0 0 1rem 0;
   }
-  
+
   &__sidebar {
     display: flex;
     flex-direction: column;
@@ -55,14 +55,14 @@
   border-radius: 0.75rem;
   background-color: rgba(30, 41, 59, 0.3);
   text-align: center;
-  
+
   h3 {
     font-size: 1.25rem;
     font-weight: 700;
     color: #f1f5f9;
     margin: 0 0 0.5rem 0;
   }
-  
+
   p {
     font-size: 0.875rem;
     color: #64748b;
@@ -82,54 +82,54 @@
     font-size: 0.875rem;
     font-weight: 600;
   }
-  
+
   &__info {
     margin-bottom: 1rem;
     padding: 1rem;
     background-color: rgba(59, 130, 246, 0.1);
     border: 1px solid #3b82f6;
     border-radius: 0.5rem;
-    
+
     p {
       font-size: 0.875rem;
       color: #94a3b8;
       margin: 0.25rem 0;
-      
+
       &:not(:last-child) {
         margin-bottom: 0.5rem;
       }
     }
   }
-  
+
   &__card {
     padding: 1.5rem;
     border: 1px solid #334155;
     border-radius: 0.75rem;
     background-color: rgba(30, 41, 59, 0.3);
-    
+
     h3 {
       font-size: 1.125rem;
       font-weight: 700;
       color: #f1f5f9;
       margin: 0 0 1rem 0;
     }
-    
+
     ul {
       list-style: none;
       padding: 0;
       margin: 0;
-      
+
       li {
         font-size: 0.875rem;
         color: #94a3b8;
         padding: 0.25rem 0;
-        
+
         &:not(:last-child) {
           border-bottom: 1px solid rgba(51, 65, 85, 0.5);
         }
       }
     }
-    
+
     p {
       font-size: 0.875rem;
       color: #94a3b8;
@@ -230,7 +230,10 @@
     font-size: 0.875rem;
     font-weight: 800;
     text-decoration: none;
-    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease;
 
     &:focus-visible {
       outline: 2px solid #f87171;

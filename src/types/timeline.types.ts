@@ -1,35 +1,31 @@
 /**
  * Timeline Types
- * 
+ *
  * Core types for race timeline events.
  * Used throughout the timeline system for type safety.
  */
 
 export type TimelinePriority = 'low' | 'medium' | 'high' | 'critical';
 
-export type TimelineEventType = 
-  | 'race_control'
-  | 'pit_stop'
-  | 'overtake'
-  | 'fastest_lap';
+export type TimelineEventType = 'race_control' | 'pit_stop' | 'overtake' | 'fastest_lap';
 
 export interface TimelineEntry {
-  id: string;          // Unique ID for deduplication
+  id: string; // Unique ID for deduplication
   lap: number;
   timestamp: string;
   type: TimelineEventType;
   priority: TimelinePriority;
-  message: string;     // Human-readable narrative (SHORT, scannable)
+  message: string; // Human-readable narrative (SHORT, scannable)
   subMessage?: string; // Additional context (optional)
   driverName?: string;
   teamName?: string;
   icon: string;
-  color: string;       // For visual hierarchy
+  color: string; // For visual hierarchy
 }
 
 /**
  * Timeline State
- * 
+ *
  * Tracks last processed IDs for incremental updates.
  * Prevents duplicate events and unnecessary re-processing.
  */

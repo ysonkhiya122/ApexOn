@@ -1,6 +1,6 @@
 /**
  * Normalized API Types
- * 
+ *
  * These types represent CLEAN, normalized data models.
  * Components should ONLY use these types.
  * Adapters transform raw API data into these models.

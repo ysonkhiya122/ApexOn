@@ -9,9 +9,7 @@ import { AppRoutes } from './routes/AppRoutes';
 
 // Floating assistant is never needed for first paint — defer it off the
 // critical path so it doesn't tax the initial download.
-const ChatDock = lazy(() =>
-  import('../modules/ai').then((m) => ({ default: m.ChatDock }))
-);
+const ChatDock = lazy(() => import('../modules/ai').then((m) => ({ default: m.ChatDock })));
 
 export default function App() {
   return (

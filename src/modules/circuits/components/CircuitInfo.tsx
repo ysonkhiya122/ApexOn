@@ -31,7 +31,9 @@ export const CircuitInfo: React.FC<CircuitInfoProps> = ({
         <div className="circuit-info__item">
           <MapPin size={16} className="circuit-info__icon" />
           <span className="circuit-info__label">Location</span>
-          <span className="circuit-info__value">{location.locality}, {location.country}</span>
+          <span className="circuit-info__value">
+            {location.locality}, {location.country}
+          </span>
         </div>
         {firstGrandPrix && (
           <div className="circuit-info__item">
@@ -59,7 +61,9 @@ export const CircuitInfo: React.FC<CircuitInfoProps> = ({
             <Timer size={16} className="circuit-info__icon" />
             <span className="circuit-info__label">Lap Record</span>
             <span className="circuit-info__value">{lapRecord.time}</span>
-            <span className="circuit-info__subvalue">{lapRecord.driver} ({lapRecord.year})</span>
+            <span className="circuit-info__subvalue">
+              {lapRecord.driver} ({lapRecord.year})
+            </span>
           </div>
         )}
       </div>

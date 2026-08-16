@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useGetDriverStandingsQuery, useGetConstructorStandingsQuery } from '../../../store/services/jolpicaService';
+import {
+  useGetDriverStandingsQuery,
+  useGetConstructorStandingsQuery,
+} from '../../../store/services/jolpicaService';
 import { setSelectedSeason, setStandingsType } from '../../../store/slices/standingsSlice';
 import { StandingsTable } from '../components/StandingsTable';
 import { Skeleton } from '@/components/atoms/skeleton';

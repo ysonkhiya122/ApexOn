@@ -1,13 +1,13 @@
 /**
  * Leaderboard Slice
- * 
+ *
  * Manages live leaderboard state including:
  * - Driver positions
  * - Position changes
  * - Gaps/intervals
  * - Tire information
  * - Pit status
- * 
+ *
  * Uses incremental updates to detect position changes.
  */
 
@@ -34,25 +34,25 @@ const leaderboardSlice = createSlice({
     updateLeaderboard: (state, action: PayloadAction<LeaderboardEntry[]>) => {
       const newEntries = action.payload.map((entry, idx) => {
         // Find previous entry for this driver
-        const previous = state.entries.find(e => e.driver.id === entry.driver.id);
-        
+        const previous = state.entries.find((e) => e.driver.id === entry.driver.id);
+
         return {
           ...entry,
           previousPosition: previous?.position || idx + 1,
         };
       });
-      
+
       state.entries = newEntries;
       state.lastUpdate = Date.now();
     },
-    
+
     /**
      * Set loading state.
      */
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    
+
     /**
      * Set error state.
      */
@@ -61,14 +61,17 @@ const leaderboardSlice = createSlice({
       state.errorMessage = action.payload;
       state.isLoading = false;
     },
-    
+
     /**
      * Update session status.
      */
-    updateSessionStatus: (state, action: PayloadAction<'scheduled' | 'live' | 'completed' | 'aborted'>) => {
+    updateSessionStatus: (
+      state,
+      action: PayloadAction<'scheduled' | 'live' | 'completed' | 'aborted'>
+    ) => {
       state.sessionStatus = action.payload;
     },
-    
+
     /**
      * Clear leaderboard (for new session).
      */
@@ -79,12 +82,7 @@ const leaderboardSlice = createSlice({
   },
 });
 
-export const {
-  updateLeaderboard,
-  setLoading,
-  setError,
-  updateSessionStatus,
-  clearLeaderboard,
-} = leaderboardSlice.actions;
+export const { updateLeaderboard, setLoading, setError, updateSessionStatus, clearLeaderboard } =
+  leaderboardSlice.actions;
 
 export default leaderboardSlice.reducer;

@@ -34,5 +34,6 @@ export const filtersSlice = createSlice({
   },
 });
 
-export const { setSelectedYear, setSelectedRound, setSelectedDriver, setSelectedCircuit } = filtersSlice.actions;
+export const { setSelectedYear, setSelectedRound, setSelectedDriver, setSelectedCircuit } =
+  filtersSlice.actions;
 export default filtersSlice.reducer;
