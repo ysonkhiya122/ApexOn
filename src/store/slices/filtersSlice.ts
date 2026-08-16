@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CURRENT_SEASON } from '../../utils/season';
 
 interface FiltersState {
   selectedYear: string;
@@ -8,7 +9,7 @@ interface FiltersState {
 }
 
 const initialState: FiltersState = {
-  selectedYear: '2026',
+  selectedYear: CURRENT_SEASON,
   selectedRound: '1',
   selectedDriver: '',
   selectedCircuit: '',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetScheduleQuery } from '../../../store/services/jolpicaService';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { seasonOptions } from '../../../utils/season';
 import { setSelectedYear } from '../../../store/slices/filtersSlice';
 
 import { DropdownFilter } from '@/components/molecules/dropdown-filter';
@@ -11,15 +11,12 @@ import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import './schedule.scss';
 
 export const SchedulePage: React.FC = () => {
-  const dispatch = useDispatch();
-  const selectedYear = useSelector((state: RootState) => state.filters.selectedYear);
+  const dispatch = useAppDispatch();
+  const selectedYear = useAppSelector((state) => state.filters.selectedYear);
 
   const { data, isLoading, isError } = useGetScheduleQuery(selectedYear);
 
-  const yearOptions = Array.from({ length: 2026 - 1950 + 1 }, (_, i) => {
-    const yr = (2026 - i).toString();
-    return { value: yr, label: `${yr}` };
-  });
+  const yearOptions = seasonOptions();
 
   const races = data || [];
 
@@ -34,7 +31,7 @@ export const SchedulePage: React.FC = () => {
           label="Select Year"
           value={selectedYear}
           options={yearOptions}
-          onChange={(val: any) => dispatch(setSelectedYear(val))}
+          onChange={(val) => dispatch(setSelectedYear(val))}
           className="w-full sm:w-48"
         />
       </div>

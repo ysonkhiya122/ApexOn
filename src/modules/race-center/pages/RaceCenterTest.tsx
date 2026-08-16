@@ -8,14 +8,14 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../store/hooks';
 import { TimelineFeed } from '../../../components/organisms/TimelineFeed';
 import { updateRaceControl, updatePitStops, updateDrivers, updateSessionStatus } from '../../../store/slices/raceStateSlice';
 import { mockRaceControl, mockPitStops, mockDrivers } from '../../../utils/timeline/mockData';
 import './race-center.scss';
 
 export const RaceCenterTest: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
   // Load mock data on mount
   useEffect(() => {
@@ -80,3 +80,5 @@ export const RaceCenterTest: React.FC = () => {
     </div>
   );
 };
+
+export default RaceCenterTest;

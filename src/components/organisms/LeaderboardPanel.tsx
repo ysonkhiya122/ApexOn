@@ -15,15 +15,13 @@
  */
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../store/hooks';
 import { LeaderboardEntry } from '../molecules/LeaderboardEntry';
 import { Skeleton } from '@/components/atoms/skeleton';
-import type { RootState } from '../../store';
 import './LeaderboardPanel.scss';
 
 export const LeaderboardPanel: React.FC = () => {
-  const { entries, isLoading, hasError, sessionStatus, lastUpdate } = useSelector(
-    (state: RootState) => state.leaderboard
+  const { entries, isLoading, hasError, sessionStatus, lastUpdate } = useAppSelector((state) => state.leaderboard
   );
   
   // Show only Top 10

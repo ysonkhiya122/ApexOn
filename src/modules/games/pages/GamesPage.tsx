@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { Link } from 'react-router-dom';
-import { RootState } from '../../../store';
 import { addPoints, markQuizCompleted } from '../../../store/slices/fanProfileSlice';
 import { Button } from '@/components/atoms/button';
 import { Gamepad2, CheckCircle2, Award, Zap } from 'lucide-react';
@@ -15,8 +14,8 @@ interface Question {
 }
 
 export const GamesPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const completedQuizzes = useSelector((state: RootState) => state.fanProfile.completedQuizzes);
+  const dispatch = useAppDispatch();
+  const completedQuizzes = useAppSelector((state) => state.fanProfile.completedQuizzes);
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null);

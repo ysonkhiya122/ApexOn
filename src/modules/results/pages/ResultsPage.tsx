@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetScheduleQuery, useGetRaceResultsQuery, useGetDriverStandingsQuery } from '../../../store/services/jolpicaService';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { seasonOptions } from '../../../utils/season';
 import { setSelectedYear, setSelectedRound } from '../../../store/slices/filtersSlice';
 
 import { DropdownFilter } from '@/components/molecules/dropdown-filter';
@@ -11,8 +11,8 @@ import { Award } from 'lucide-react';
 import './results.scss';
 
 export const ResultsPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const { selectedYear, selectedRound } = useSelector((state: RootState) => state.filters);
+  const dispatch = useAppDispatch();
+  const { selectedYear, selectedRound } = useAppSelector((state) => state.filters);
 
   const { data: scheduleData } = useGetScheduleQuery(selectedYear);
   const { data: resultsData, isLoading: resultsLoading } = useGetRaceResultsQuery({
@@ -21,13 +21,10 @@ export const ResultsPage: React.FC = () => {
   });
   const { data: standingsData, isLoading: standingsLoading } = useGetDriverStandingsQuery(selectedYear);
 
-  const yearOptions = Array.from({ length: 2026 - 1950 + 1 }, (_, i) => {
-    const yr = (2026 - i).toString();
-    return { value: yr, label: `${yr}` };
-  });
+  const yearOptions = seasonOptions();
 
   const rounds = scheduleData || [];
-  const roundOptions = rounds.map((r: any) => ({
+  const roundOptions = rounds.map((r) => ({
     value: String(r.round),
     label: `Round ${r.round} - ${r.name}`,
   }));
@@ -49,7 +46,7 @@ export const ResultsPage: React.FC = () => {
             label="Season"
             value={selectedYear}
             options={yearOptions}
-            onChange={(val: any) => {
+            onChange={(val) => {
               dispatch(setSelectedYear(val));
               dispatch(setSelectedRound('1'));
             }}
@@ -60,7 +57,7 @@ export const ResultsPage: React.FC = () => {
               label="Grand Prix"
               value={selectedRound}
               options={roundOptions}
-              onChange={(val: any) => dispatch(setSelectedRound(val))}
+              onChange={(val) => dispatch(setSelectedRound(val))}
               className="w-64"
             />
           )}

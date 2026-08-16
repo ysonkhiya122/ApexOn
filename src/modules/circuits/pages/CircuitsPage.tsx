@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useGetCircuitsQuery } from '../../../store/services/jolpicaService';
 import {
   setSearchQuery,
@@ -14,9 +13,10 @@ import { Skeleton } from '@/components/atoms/skeleton';
 import { Button } from '@/components/atoms/button';
 import { Search, Filter, ArrowUpDown, X } from 'lucide-react';
 import './circuits.scss';
+import { CURRENT_SEASON_TOKEN } from '../../../utils/season';
 
 export const CircuitsPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     searchQuery,
     selectedCountry,
@@ -24,9 +24,9 @@ export const CircuitsPage: React.FC = () => {
     itemsPerPage,
     sortBy,
     sortOrder,
-  } = useSelector((state: RootState) => state.circuits);
+  } = useAppSelector((state) => state.circuits);
 
-  const { data, isLoading, isError } = useGetCircuitsQuery('2024');
+  const { data, isLoading, isError } = useGetCircuitsQuery(CURRENT_SEASON_TOKEN);
 
   const circuits = useMemo(() => {
     if (!data?.MRData?.CircuitTable?.Circuits) return [];
@@ -217,3 +217,5 @@ export const CircuitsPage: React.FC = () => {
     </div>
   );
 };
+
+export default CircuitsPage;

@@ -146,7 +146,7 @@ export const transformDriverSeasonResults = (
   results.forEach((result) => {
     // Extract season from context (would need to be passed in)
     // This is simplified
-    const season = 2024; // Placeholder
+    const season = new Date().getFullYear(); // TODO: thread real season through the adapter
 
     if (!seasonMap.has(season)) {
       seasonMap.set(season, {

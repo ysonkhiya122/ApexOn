@@ -7,7 +7,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../store/hooks';
 import {
   useGetDriversQuery,
   useGetLiveTimingQuery,
@@ -163,7 +163,7 @@ const RaceCenterIdleState: React.FC<RaceCenterIdleStateProps> = ({ session, stat
 };
 
 export const RaceCenterPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isTabVisible, setIsTabVisible] = useState(true);
 
   useEffect(() => {
@@ -368,3 +368,5 @@ export const RaceCenterPage: React.FC = () => {
     </RealtimeErrorBoundary>
   );
 };
+
+export default RaceCenterPage;

@@ -240,3 +240,5 @@ export const LiveDebugPage: React.FC = () => {
     </div>
   );
 };
+
+export default LiveDebugPage;

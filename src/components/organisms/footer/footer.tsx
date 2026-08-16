@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { DEV_ROUTES, ROUTES } from '../../../app/routes/paths';
 import './footer.scss';
 
 export const Footer: React.FC = () => {
@@ -88,20 +89,24 @@ export const Footer: React.FC = () => {
             <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-100">Race Center</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <Link to="/race-center" className="hover:text-red-500">
+                <Link to={ROUTES.RACE_CENTER} className="hover:text-red-500">
                   Live Race Center
                 </Link>
               </li>
-              <li>
-                <Link to="/race-center/test" className="hover:text-red-500">
-                  🧪 Timeline Test
-                </Link>
-              </li>
-              <li>
-                <Link to="/race-center/test-leaderboard" className="hover:text-red-500">
-                  🧪 Leaderboard Test
-                </Link>
-              </li>
+              {import.meta.env.DEV && (
+                <>
+                  <li>
+                    <Link to={DEV_ROUTES.RACE_CENTER_TEST} className="hover:text-red-500">
+                      🧪 Timeline Test
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={DEV_ROUTES.LEADERBOARD_TEST} className="hover:text-red-500">
+                      🧪 Leaderboard Test
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 

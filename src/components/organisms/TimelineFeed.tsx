@@ -13,7 +13,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../store/hooks';
 import type { TimelineEntry } from '../../types/timeline.types';
 import { formatRaceTime } from '../../utils/timeline/formatRaceTime';
 import { Button } from '@/components/atoms/button';
@@ -30,9 +30,9 @@ const TimelineSkeleton = () => (
 );
 
 export const TimelineFeed: React.FC = () => {
-  const timeline = useSelector((state: any) => state.raceState?.timeline?.entries || []);
-  const isLoading = useSelector((state: any) => state.raceState?.isLoading || false);
-  const isRaceLive = useSelector((state: any) => state.raceState?.sessionStatus === 'live');
+  const timeline = useAppSelector((state) => state.raceState.timeline.entries);
+  const isLoading = useAppSelector((state) => state.raceState.isLoading);
+  const isRaceLive = useAppSelector((state) => state.raceState.sessionStatus === 'live');
   
   const containerRef = useRef<HTMLDivElement>(null);
   const [userScrolled, setUserScrolled] = useState(false);

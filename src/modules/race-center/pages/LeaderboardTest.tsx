@@ -8,14 +8,14 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../store/hooks';
 import { LeaderboardPanel } from '../../../components/organisms/LeaderboardPanel';
 import { updateLeaderboard, updateSessionStatus } from '../../../store/slices/leaderboardSlice';
 import { mockLeaderboardEntries } from '../../../utils/leaderboard/mockData';
 import './race-center.scss';
 
 export const LeaderboardTest: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
   // Load mock data on mount
   useEffect(() => {
@@ -78,3 +78,5 @@ export const LeaderboardTest: React.FC = () => {
     </div>
   );
 };
+
+export default LeaderboardTest;
