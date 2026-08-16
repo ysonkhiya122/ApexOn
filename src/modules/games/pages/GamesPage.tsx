@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { Link } from 'react-router-dom';
-import { RootState } from '../../../store';
 import { addPoints, markQuizCompleted } from '../../../store/slices/fanProfileSlice';
 import { Button } from '@/components/atoms/button';
 import { Gamepad2, CheckCircle2, Award, Zap } from 'lucide-react';
@@ -15,8 +14,8 @@ interface Question {
 }
 
 export const GamesPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const completedQuizzes = useSelector((state: RootState) => state.fanProfile.completedQuizzes);
+  const dispatch = useAppDispatch();
+  const completedQuizzes = useAppSelector((state) => state.fanProfile.completedQuizzes);
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
@@ -85,15 +84,22 @@ export const GamesPage: React.FC = () => {
       <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
         <Gamepad2 className="text-red-500 flex-shrink-0" size={32} />
         <div>
-          <h1 className="text-3xl font-extrabold uppercase tracking-tight text-white">Daily Fan Arcade</h1>
-          <p className="text-slate-400 text-xs mt-0.5">Test individual racing IQ thresholds and unlock custom awards.</p>
+          <h1 className="text-3xl font-extrabold uppercase tracking-tight text-white">
+            Daily Fan Arcade
+          </h1>
+          <p className="text-slate-400 text-xs mt-0.5">
+            Test individual racing IQ thresholds and unlock custom awards.
+          </p>
         </div>
       </div>
 
       {isAlreadyTaken && !quizDone && (
         <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 flex items-center gap-3 text-sm text-emerald-400">
           <CheckCircle2 className="flex-shrink-0" size={18} />
-          <span>You have completed the daily trivia! Feel free to practice further or wait for seasonal events.</span>
+          <span>
+            You have completed the daily trivia! Feel free to practice further or wait for seasonal
+            events.
+          </span>
         </div>
       )}
 
@@ -105,7 +111,8 @@ export const GamesPage: React.FC = () => {
             <Award className="text-yellow-500 mx-auto" size={48} />
             <h2 className="text-2xl font-black text-slate-100">Quiz Completed!</h2>
             <p className="text-slate-400">
-              You scored <span className="text-red-500 font-extrabold font-mono text-xl">{score}</span> out of{' '}
+              You scored{' '}
+              <span className="text-red-500 font-extrabold font-mono text-xl">{score}</span> out of{' '}
               {questions.length}.
             </p>
             <div className="font-semibold text-emerald-400 flex items-center justify-center gap-1">
@@ -136,7 +143,8 @@ export const GamesPage: React.FC = () => {
                   btnStyle = 'border-red-600 bg-slate-900 text-red-400 font-semibold';
                 }
                 if (isAnswered) {
-                  if (isCorrect) btnStyle = 'border-emerald-600 bg-emerald-950/20 text-emerald-400 font-bold';
+                  if (isCorrect)
+                    btnStyle = 'border-emerald-600 bg-emerald-950/20 text-emerald-400 font-bold';
                   else if (isSelected) btnStyle = 'border-rose-600 bg-rose-950/20 text-rose-400';
                 }
 
@@ -148,7 +156,9 @@ export const GamesPage: React.FC = () => {
                     className={`w-full flex items-center justify-between rounded-lg border p-4 text-left text-sm transition-all cursor-pointer ${btnStyle}`}
                   >
                     <span>{opt}</span>
-                    {isAnswered && isCorrect && <CheckCircle2 size={16} className="text-emerald-400" />}
+                    {isAnswered && isCorrect && (
+                      <CheckCircle2 size={16} className="text-emerald-400" />
+                    )}
                   </button>
                 );
               })}
@@ -177,7 +187,9 @@ export const GamesPage: React.FC = () => {
         <p className="text-xs text-slate-400 mb-4">Direct team decisions from the pitwall.</p>
 
         <div className="rounded-lg bg-slate-950 p-4 border border-slate-800/80">
-          <span className="text-xxs font-black text-slate-400 uppercase tracking-wider">Scenario:</span>
+          <span className="text-xxs font-black text-slate-400 uppercase tracking-wider">
+            Scenario:
+          </span>
           <p className="text-sm font-semibold text-slate-200 mt-1">
             Lap 45/50: A sudden downpour hits Sector 2. You are running P3 on worn Soft tires.
           </p>

@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  
+
   &__indicator {
     display: flex;
     align-items: center;
@@ -15,25 +15,25 @@
     color: #0f172a; // Dark text for contrast
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    
+
     // SOFT compound (red)
-    &[style*="background-color: rgb(220, 38, 38)"],
-    &[style*="background-color: #dc2626"] {
+    &[style*='background-color: rgb(220, 38, 38)'],
+    &[style*='background-color: #dc2626'] {
       color: #ffffff;
     }
-    
+
     // HARD compound (white)
-    &[style*="background-color: rgb(241, 245, 249)"],
-    &[style*="background-color: #f1f5f9"] {
+    &[style*='background-color: rgb(241, 245, 249)'],
+    &[style*='background-color: #f1f5f9'] {
       color: #0f172a;
       border: 1px solid #e2e8f0;
     }
   }
-  
+
   &__label {
     line-height: 1;
   }
-  
+
   &__age {
     font-size: 0.75rem;
     font-weight: 600;

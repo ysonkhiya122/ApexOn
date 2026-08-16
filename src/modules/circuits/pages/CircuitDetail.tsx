@@ -34,13 +34,11 @@ export const CircuitDetail: React.FC = () => {
 
   // Calculate most wins at this circuit
   const driverWins = useMemo(() => {
-    const winsMap = new Map();
+    const winsMap = new Map<string, number>();
     raceHistory.forEach((race: any) => {
-      race.Results?.[0]?.Driver?.driverId &&
-        winsMap.set(
-          race.Results[0].Driver.driverId,
-          (winsMap.get(race.Results[0].Driver.driverId) || 0) + 1
-        );
+      const winnerId = race.Results?.[0]?.Driver?.driverId;
+      if (!winnerId) return;
+      winsMap.set(winnerId, (winsMap.get(winnerId) ?? 0) + 1);
     });
     return Array.from(winsMap.entries())
       .sort((a, b) => b[1] - a[1])
@@ -119,7 +117,11 @@ export const CircuitDetail: React.FC = () => {
           <div className="circuit-detail__overview">
             <CircuitInfo
               location={circuitInfo.Location}
-              firstGrandPrix={raceHistory.length > 0 ? parseInt(raceHistory[raceHistory.length - 1].season, 10) : undefined}
+              firstGrandPrix={
+                raceHistory.length > 0
+                  ? parseInt(raceHistory[raceHistory.length - 1].season, 10)
+                  : undefined
+              }
               laps={(raceHistory[0] as any)?.laps}
               length={(raceHistory[0]?.Circuit as any)?.Length}
             />
@@ -142,9 +144,13 @@ export const CircuitDetail: React.FC = () => {
 
         {activeTab === 'history' && (
           <div className="circuit-detail__history">
-            <h3 className="circuit-detail__section-title">Race History at {circuitInfo.circuitName}</h3>
+            <h3 className="circuit-detail__section-title">
+              Race History at {circuitInfo.circuitName}
+            </h3>
             {raceHistory.length === 0 ? (
-              <div className="circuit-detail__empty">No race history available for this circuit</div>
+              <div className="circuit-detail__empty">
+                No race history available for this circuit
+              </div>
             ) : (
               <>
                 <div className="circuit-detail__table-wrapper">
@@ -165,7 +171,8 @@ export const CircuitDetail: React.FC = () => {
                           <td>{race.raceName}</td>
                           <td>{race.date}</td>
                           <td>
-                            {race.Results?.[0]?.Driver?.givenName} {race.Results?.[0]?.Driver?.familyName}
+                            {race.Results?.[0]?.Driver?.givenName}{' '}
+                            {race.Results?.[0]?.Driver?.familyName}
                           </td>
                           <td>{race.Results?.[0]?.Constructor?.name}</td>
                         </tr>

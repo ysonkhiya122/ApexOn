@@ -1,8 +1,8 @@
 /**
  * Timeline Feed Component
- * 
+ *
  * Main timeline feed with auto-scroll behavior.
- * 
+ *
  * Features:
  * - Auto-scrolls to newest entries during live race
  * - Pauses auto-scroll when user manually scrolls
@@ -13,7 +13,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../store/hooks';
 import type { TimelineEntry } from '../../types/timeline.types';
 import { formatRaceTime } from '../../utils/timeline/formatRaceTime';
 import { Button } from '@/components/atoms/button';
@@ -30,56 +30,49 @@ const TimelineSkeleton = () => (
 );
 
 export const TimelineFeed: React.FC = () => {
-  const timeline = useSelector((state: any) => state.raceState?.timeline?.entries || []);
-  const isLoading = useSelector((state: any) => state.raceState?.isLoading || false);
-  const isRaceLive = useSelector((state: any) => state.raceState?.sessionStatus === 'live');
-  
+  const timeline = useAppSelector((state) => state.raceState.timeline.entries);
+  const isLoading = useAppSelector((state) => state.raceState.isLoading);
+  const isRaceLive = useAppSelector((state) => state.raceState.sessionStatus === 'live');
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [userScrolled, setUserScrolled] = useState(false);
-  const [showJumpButton, setShowJumpButton] = useState(false);
-  
+
+  // Derived, not stored: the old copy was set in an effect but never cleared,
+  // so the button stuck around after the user scrolled back to the top.
+  const showJumpButton = userScrolled && isRaceLive;
+
   // Auto-scroll to top (newest) when new entries arrive
   useEffect(() => {
     if (isLoading || !containerRef.current) return;
-    
+
     // Only auto-scroll if user hasn't manually scrolled
     if (!userScrolled && isRaceLive) {
       containerRef.current.scrollTop = 0; // Newest entries at top
-    } else if (userScrolled && isRaceLive) {
-      // Show "Jump to Live" button
-      setShowJumpButton(true);
     }
   }, [timeline, isLoading, userScrolled, isRaceLive]);
-  
+
   // Detect manual scroll
   const handleScroll = () => {
     if (!containerRef.current) return;
-    
+
     const { scrollTop } = containerRef.current;
-    
+
     // If user scrolled down more than 100px from top
-    if (scrollTop > 100) {
-      setUserScrolled(true);
-      setShowJumpButton(true);
-    } else {
-      setUserScrolled(false);
-      setShowJumpButton(false);
-    }
+    setUserScrolled(scrollTop > 100);
   };
-  
+
   // Jump to live (top)
   const jumpToLive = () => {
     if (containerRef.current) {
       containerRef.current.scrollTop = 0;
       setUserScrolled(false);
-      setShowJumpButton(false);
     }
   };
-  
+
   if (isLoading) {
     return <TimelineSkeleton />;
   }
-  
+
   if (timeline.length === 0) {
     return (
       <div className="timeline-empty">
@@ -87,27 +80,18 @@ export const TimelineFeed: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="timeline-feed-container">
-      <div 
-        ref={containerRef}
-        className="timeline-feed"
-        onScroll={handleScroll}
-      >
+      <div ref={containerRef} className="timeline-feed" onScroll={handleScroll}>
         {timeline.map((entry: TimelineEntry) => (
           <TimelineEntry key={entry.id} entry={entry} />
         ))}
       </div>
-      
+
       {/* Jump to Live Button */}
-      {showJumpButton && isRaceLive && (
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={jumpToLive}
-          className="timeline-jump-button"
-        >
+      {showJumpButton && (
+        <Button variant="primary" size="sm" onClick={jumpToLive} className="timeline-jump-button">
           Jump to Live
         </Button>
       )}
@@ -140,9 +124,11 @@ const TimelineEntry = ({ entry }: { entry: TimelineEntry }) => {
         return <Icons.Info size={20} />;
     }
   };
-  
+
   return (
-    <div className={`timeline-entry timeline-entry--${entry.priority} timeline-entry--${entry.color}`}>
+    <div
+      className={`timeline-entry timeline-entry--${entry.priority} timeline-entry--${entry.color}`}
+    >
       <div className="timeline-entry__time">
         <span className="timeline-entry__lap">{formatRaceTime(entry.timestamp, entry.lap)}</span>
       </div>
@@ -151,15 +137,9 @@ const TimelineEntry = ({ entry }: { entry: TimelineEntry }) => {
       </div>
       <div className="timeline-entry__content">
         <div className="timeline-entry__message">{entry.message}</div>
-        {entry.subMessage && (
-          <div className="timeline-entry__submessage">{entry.subMessage}</div>
-        )}
-        {entry.driverName && (
-          <div className="timeline-entry__driver">{entry.driverName}</div>
-        )}
-        {entry.teamName && (
-          <div className="timeline-entry__team">{entry.teamName}</div>
-        )}
+        {entry.subMessage && <div className="timeline-entry__submessage">{entry.subMessage}</div>}
+        {entry.driverName && <div className="timeline-entry__driver">{entry.driverName}</div>}
+        {entry.teamName && <div className="timeline-entry__team">{entry.teamName}</div>}
       </div>
     </div>
   );

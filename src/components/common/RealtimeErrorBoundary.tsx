@@ -1,8 +1,8 @@
 /**
  * Realtime Error Boundary
- * 
+ *
  * CRITICAL: Isolates realtime crashes and keeps app functional.
- * 
+ *
  * Catches errors from:
  * - Live polling components
  * - API failures
@@ -57,9 +57,7 @@ export class RealtimeErrorBoundary extends Component<Props, State> {
             Unable to load live timing data. Please try again.
           </p>
           {this.state.error && (
-            <pre className="realtime-error-boundary__error">
-              {this.state.error.message}
-            </pre>
+            <pre className="realtime-error-boundary__error">{this.state.error.message}</pre>
           )}
           <Button onClick={this.handleRetry} variant="primary">
             Retry

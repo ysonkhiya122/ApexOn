@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
-import { useGetDriverStandingsQuery, useGetConstructorStandingsQuery } from '../../../store/services/jolpicaService';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+  useGetDriverStandingsQuery,
+  useGetConstructorStandingsQuery,
+} from '../../../store/services/jolpicaService';
 import { setSelectedSeason, setStandingsType } from '../../../store/slices/standingsSlice';
 import { StandingsTable } from '../components/StandingsTable';
 import { Skeleton } from '@/components/atoms/skeleton';
@@ -10,8 +12,8 @@ import { Trophy, Award } from 'lucide-react';
 import './standings.scss';
 
 export const StandingsPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const { selectedSeason, standingsType } = useSelector((state: RootState) => state.standings);
+  const dispatch = useAppDispatch();
+  const { selectedSeason, standingsType } = useAppSelector((state) => state.standings);
 
   const {
     data: driverData,

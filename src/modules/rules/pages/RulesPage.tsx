@@ -60,7 +60,8 @@ export const RulesPage: React.FC = () => {
     },
   ];
 
-  const filteredRules = selectedCat === 'All' ? rulebook : rulebook.filter((r) => r.category === selectedCat);
+  const filteredRules =
+    selectedCat === 'All' ? rulebook : rulebook.filter((r) => r.category === selectedCat);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 text-slate-100 space-y-10 pb-16">
@@ -70,7 +71,8 @@ export const RulesPage: React.FC = () => {
           Rules
         </h1>
         <p className="text-slate-400 text-sm">
-          A summarized compilation of crucial parameters establishing modern grand prix racing logic.
+          A summarized compilation of crucial parameters establishing modern grand prix racing
+          logic.
         </p>
       </div>
 
@@ -100,7 +102,9 @@ export const RulesPage: React.FC = () => {
             <div
               key={rule.id}
               className={`rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden transition-all ${
-                isExpanded ? 'border-red-500/40 bg-slate-900/50 shadow-red-500/5 shadow-md' : 'hover:border-slate-700'
+                isExpanded
+                  ? 'border-red-500/40 bg-slate-900/50 shadow-red-500/5 shadow-md'
+                  : 'hover:border-slate-700'
               }`}
             >
               <button
@@ -109,7 +113,10 @@ export const RulesPage: React.FC = () => {
               >
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <Badge variant={rule.category === 'Sporting' ? 'blue' : 'yellow'} className="font-bold text-xxs">
+                    <Badge
+                      variant={rule.category === 'Sporting' ? 'blue' : 'yellow'}
+                      className="font-bold text-xxs"
+                    >
                       {rule.category}
                     </Badge>
                   </div>
@@ -128,7 +135,10 @@ export const RulesPage: React.FC = () => {
                   </h4>
                   <ul className="space-y-2">
                     {rule.details.map((detail, dIdx) => (
-                      <li key={dIdx} className="flex items-start gap-2 text-sm text-slate-300 leading-relaxed">
+                      <li
+                        key={dIdx}
+                        className="flex items-start gap-2 text-sm text-slate-300 leading-relaxed"
+                      >
                         <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={14} />
                         <span>{detail}</span>
                       </li>
@@ -144,7 +154,8 @@ export const RulesPage: React.FC = () => {
       <div className="rounded-xl bg-blue-500/5 border border-blue-500/20 p-4 flex gap-3 text-sm text-slate-300">
         <HelpCircle className="text-blue-400 flex-shrink-0 mt-0.5" size={18} />
         <p>
-          Need targeted specifics? Open the floating AI Chatbot Dock at the lower viewport corner to clarify standard sporting inquiries efficiently.
+          Need targeted specifics? Open the floating AI Chatbot Dock at the lower viewport corner to
+          clarify standard sporting inquiries efficiently.
         </p>
       </div>
     </div>

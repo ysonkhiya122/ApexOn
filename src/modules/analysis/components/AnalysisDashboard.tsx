@@ -15,14 +15,94 @@ interface DriverProfile {
 }
 
 const ALL_DRIVERS: DriverProfile[] = [
-  { id: 'max', name: 'Max Verstappen', team: 'Red Bull Racing', wins: 61, podiums: 106, qualifying: 95, tireManagement: 92, wetWeather: 98, overtaking: 94 },
-  { id: 'lewis', name: 'Lewis Hamilton', team: 'Ferrari', wins: 105, podiums: 201, qualifying: 98, tireManagement: 96, wetWeather: 97, overtaking: 95 },
-  { id: 'charles', name: 'Charles Leclerc', team: 'Ferrari', wins: 7, podiums: 36, qualifying: 97, tireManagement: 85, wetWeather: 88, overtaking: 92 },
-  { id: 'lando', name: 'Lando Norris', team: 'McLaren', wins: 3, podiums: 21, qualifying: 92, tireManagement: 89, wetWeather: 85, overtaking: 90 },
-  { id: 'fernando', name: 'Fernando Alonso', team: 'Aston Martin', wins: 32, podiums: 106, qualifying: 90, tireManagement: 95, wetWeather: 94, overtaking: 96 },
-  { id: 'oscar', name: 'Oscar Piastri', team: 'McLaren', wins: 2, podiums: 9, qualifying: 88, tireManagement: 91, wetWeather: 86, overtaking: 89 },
-  { id: 'carlos', name: 'Carlos Sainz', team: 'Williams', wins: 3, podiums: 26, qualifying: 89, tireManagement: 93, wetWeather: 90, overtaking: 91 },
-  { id: 'george', name: 'George Russell', team: 'Mercedes', wins: 3, podiums: 14, qualifying: 91, tireManagement: 88, wetWeather: 89, overtaking: 88 },
+  {
+    id: 'max',
+    name: 'Max Verstappen',
+    team: 'Red Bull Racing',
+    wins: 61,
+    podiums: 106,
+    qualifying: 95,
+    tireManagement: 92,
+    wetWeather: 98,
+    overtaking: 94,
+  },
+  {
+    id: 'lewis',
+    name: 'Lewis Hamilton',
+    team: 'Ferrari',
+    wins: 105,
+    podiums: 201,
+    qualifying: 98,
+    tireManagement: 96,
+    wetWeather: 97,
+    overtaking: 95,
+  },
+  {
+    id: 'charles',
+    name: 'Charles Leclerc',
+    team: 'Ferrari',
+    wins: 7,
+    podiums: 36,
+    qualifying: 97,
+    tireManagement: 85,
+    wetWeather: 88,
+    overtaking: 92,
+  },
+  {
+    id: 'lando',
+    name: 'Lando Norris',
+    team: 'McLaren',
+    wins: 3,
+    podiums: 21,
+    qualifying: 92,
+    tireManagement: 89,
+    wetWeather: 85,
+    overtaking: 90,
+  },
+  {
+    id: 'fernando',
+    name: 'Fernando Alonso',
+    team: 'Aston Martin',
+    wins: 32,
+    podiums: 106,
+    qualifying: 90,
+    tireManagement: 95,
+    wetWeather: 94,
+    overtaking: 96,
+  },
+  {
+    id: 'oscar',
+    name: 'Oscar Piastri',
+    team: 'McLaren',
+    wins: 2,
+    podiums: 9,
+    qualifying: 88,
+    tireManagement: 91,
+    wetWeather: 86,
+    overtaking: 89,
+  },
+  {
+    id: 'carlos',
+    name: 'Carlos Sainz',
+    team: 'Williams',
+    wins: 3,
+    podiums: 26,
+    qualifying: 89,
+    tireManagement: 93,
+    wetWeather: 90,
+    overtaking: 91,
+  },
+  {
+    id: 'george',
+    name: 'George Russell',
+    team: 'Mercedes',
+    wins: 3,
+    podiums: 14,
+    qualifying: 91,
+    tireManagement: 88,
+    wetWeather: 89,
+    overtaking: 88,
+  },
 ];
 
 export const AnalysisDashboard: React.FC = () => {
@@ -78,7 +158,10 @@ export const AnalysisDashboard: React.FC = () => {
           <span className="text-slate-400">
             {availableDrivers.length === 0 ? 'All drivers selected' : 'Add driver to compare...'}
           </span>
-          <ChevronDown size={16} className={`text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown
+            size={16}
+            className={`text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+          />
         </button>
 
         {dropdownOpen && (

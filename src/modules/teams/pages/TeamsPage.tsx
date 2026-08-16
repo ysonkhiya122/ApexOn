@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useGetConstructorsQuery } from '../../../store/services/jolpicaService';
 import {
   setSearchQuery,
@@ -14,19 +13,14 @@ import { Skeleton } from '@/components/atoms/skeleton';
 import { Button } from '@/components/atoms/button';
 import { Search, Filter, ArrowUpDown, X } from 'lucide-react';
 import './teams.scss';
+import { CURRENT_SEASON_TOKEN } from '../../../utils/season';
 
 export const TeamsPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const {
-    searchQuery,
-    selectedNationality,
-    currentPage,
-    itemsPerPage,
-    sortBy,
-    sortOrder,
-  } = useSelector((state: RootState) => state.teams);
+  const dispatch = useAppDispatch();
+  const { searchQuery, selectedNationality, currentPage, itemsPerPage, sortBy, sortOrder } =
+    useAppSelector((state) => state.teams);
 
-  const { data, isLoading, isError } = useGetConstructorsQuery('2024');
+  const { data, isLoading, isError } = useGetConstructorsQuery(CURRENT_SEASON_TOKEN);
 
   const teams = useMemo(() => {
     if (!data?.MRData?.ConstructorTable?.Constructors) return [];
@@ -41,8 +35,7 @@ export const TeamsPage: React.FC = () => {
       const query = searchQuery.toLowerCase();
       result = result.filter(
         (t: any) =>
-          t.name.toLowerCase().includes(query) ||
-          t.constructorId.toLowerCase().includes(query)
+          t.name.toLowerCase().includes(query) || t.constructorId.toLowerCase().includes(query)
       );
     }
 
@@ -213,3 +206,5 @@ export const TeamsPage: React.FC = () => {
     </div>
   );
 };
+
+export default TeamsPage;

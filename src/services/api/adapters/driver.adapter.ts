@@ -1,15 +1,11 @@
 /**
  * Driver Adapter
- * 
+ *
  * Transforms raw Jolpica/OpenF1 API driver data into normalized Driver models.
  * Components should ONLY use the normalized output.
  */
 
-import type {
-  JolpicaDriver,
-  JolpicaStanding,
-  JolpicaResult,
-} from '../types/base.types';
+import type { JolpicaDriver, JolpicaStanding, JolpicaResult } from '../types/base.types';
 import type {
   Driver,
   DriverStats,
@@ -44,15 +40,14 @@ export const transformDrivers = (rawDrivers: JolpicaDriver[]): Driver[] => {
 /**
  * Transform raw standing entry to normalized DriverStanding
  */
-export const transformDriverStanding = (
-  raw: JolpicaStanding
-): DriverStanding => {
+export const transformDriverStanding = (raw: JolpicaStanding): DriverStanding => {
   // Jolpica driver standings expose constructors as `Constructors`;
   // some adapter tests/legacy payloads may still provide a singular
   // `Constructor`, so support both shapes.
-  const constructors = (raw as JolpicaStanding & { Constructors?: Array<{ name: string }> }).Constructors;
+  const constructors = (raw as JolpicaStanding & { Constructors?: Array<{ name: string }> })
+    .Constructors;
   const teamName = raw.Constructor?.name || constructors?.[0]?.name || '';
-  
+
   return {
     position: parseInt(raw.position, 10),
     driver: raw.Driver ? transformDriver(raw.Driver) : ({} as Driver),
@@ -65,19 +60,14 @@ export const transformDriverStanding = (
 /**
  * Transform array of standings
  */
-export const transformDriverStandings = (
-  rawStandings: JolpicaStanding[]
-): DriverStanding[] => {
+export const transformDriverStandings = (rawStandings: JolpicaStanding[]): DriverStanding[] => {
   return rawStandings.map(transformDriverStanding);
 };
 
 /**
  * Calculate driver career statistics from race results
  */
-export const calculateDriverStats = (
-  driverId: string,
-  results: JolpicaResult[]
-): DriverStats => {
+export const calculateDriverStats = (driverId: string, results: JolpicaResult[]): DriverStats => {
   let championships = 0;
   let raceWins = 0;
   let podiums = 0;
@@ -129,9 +119,7 @@ export const calculateDriverStats = (
 /**
  * Transform race results into season-by-season driver results
  */
-export const transformDriverSeasonResults = (
-  results: JolpicaResult[]
-): DriverSeasonResult[] => {
+export const transformDriverSeasonResults = (results: JolpicaResult[]): DriverSeasonResult[] => {
   const seasonMap = new Map<
     number,
     {
@@ -146,7 +134,7 @@ export const transformDriverSeasonResults = (
   results.forEach((result) => {
     // Extract season from context (would need to be passed in)
     // This is simplified
-    const season = 2024; // Placeholder
+    const season = new Date().getFullYear(); // TODO: thread real season through the adapter
 
     if (!seasonMap.has(season)) {
       seasonMap.set(season, {
@@ -203,16 +191,16 @@ export const formatDriverName = (driver: Driver, format: 'full' | 'last' | 'code
  */
 export const getNationalityFlag = (nationality: string): string => {
   const flagMap: Record<string, string> = {
-    'British': '🇬🇧',
-    'Dutch': '🇳🇱',
-    'Monegasque': '🇲🇨',
-    'Spanish': '🇪🇸',
-    'French': '🇫🇷',
-    'German': '🇩🇪',
-    'Italian': '🇮🇹',
-    'Australian': '🇦🇺',
-    'Mexican': '🇲🇽',
-    'Japanese': '🇯🇵',
+    British: '🇬🇧',
+    Dutch: '🇳🇱',
+    Monegasque: '🇲🇨',
+    Spanish: '🇪🇸',
+    French: '🇫🇷',
+    German: '🇩🇪',
+    Italian: '🇮🇹',
+    Australian: '🇦🇺',
+    Mexican: '🇲🇽',
+    Japanese: '🇯🇵',
     // Add more as needed
   };
 

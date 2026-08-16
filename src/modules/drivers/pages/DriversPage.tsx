@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useGetDriversQuery } from '../../../store/services/jolpicaService';
 import {
   setSearchQuery,
@@ -15,19 +14,14 @@ import { Skeleton } from '@/components/atoms/skeleton';
 import { Button } from '@/components/atoms/button';
 import { Search, Filter, ArrowUpDown, X } from 'lucide-react';
 import './drivers.scss';
+import { CURRENT_SEASON_TOKEN } from '../../../utils/season';
 
 export const DriversPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const {
-    searchQuery,
-    selectedNationality,
-    currentPage,
-    itemsPerPage,
-    sortBy,
-    sortOrder,
-  } = useSelector((state: RootState) => state.drivers);
+  const dispatch = useAppDispatch();
+  const { searchQuery, selectedNationality, currentPage, itemsPerPage, sortBy, sortOrder } =
+    useAppSelector((state) => state.drivers);
 
-  const { data: drivers = [], isLoading, isError } = useGetDriversQuery('2024');
+  const { data: drivers = [], isLoading, isError } = useGetDriversQuery(CURRENT_SEASON_TOKEN);
 
   const filteredAndSortedDrivers = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -228,3 +222,5 @@ export const DriversPage: React.FC = () => {
     </div>
   );
 };
+
+export default DriversPage;

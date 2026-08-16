@@ -1,8 +1,8 @@
 /**
  * Tire Compound Component
- * 
+ *
  * Displays tire compound with color coding and age.
- * 
+ *
  * Features:
  * - Color-coded by compound (SOFT=Red, MEDIUM=Yellow, HARD=White, etc.)
  * - Tire age in laps
@@ -24,18 +24,13 @@ interface TireCompoundProps {
 export const TireCompound: React.FC<TireCompoundProps> = ({ compound, age, showAge = true }) => {
   const color = getTireColor(compound);
   const label = getTireLabel(compound);
-  
+
   return (
     <div className="tire-compound" title={`${compound} - ${age} laps`}>
-      <div 
-        className="tire-compound__indicator"
-        style={{ backgroundColor: color }}
-      >
+      <div className="tire-compound__indicator" style={{ backgroundColor: color }}>
         <span className="tire-compound__label">{label}</span>
       </div>
-      {showAge && (
-        <span className="tire-compound__age">{age}</span>
-      )}
+      {showAge && <span className="tire-compound__age">{age}</span>}
     </div>
   );
 };

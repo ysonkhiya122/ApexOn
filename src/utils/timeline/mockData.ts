@@ -1,21 +1,61 @@
 /**
  * Mock Timeline Data
- * 
+ *
  * For testing timeline functionality without live API.
  * Simulates various race events with different priorities.
  */
 
-import type { TimelineEntry, RaceControlMessage, PitStop, Driver } from '../../types/timeline.types';
+import type {
+  TimelineEntry,
+  RaceControlMessage,
+  PitStop,
+  Driver,
+} from '../../types/timeline.types';
 
 /**
  * Mock drivers for testing
  */
 export const mockDrivers: Driver[] = [
-  { id: 'verstappen', firstName: 'Max', lastName: 'Verstappen', fullName: 'Max Verstappen', number: 1, team: 'Red Bull Racing' },
-  { id: 'hamilton', firstName: 'Lewis', lastName: 'Hamilton', fullName: 'Lewis Hamilton', number: 44, team: 'Mercedes' },
-  { id: 'norris', firstName: 'Lando', lastName: 'Norris', fullName: 'Lando Norris', number: 4, team: 'McLaren' },
-  { id: 'leclerc', firstName: 'Charles', lastName: 'Leclerc', fullName: 'Charles Leclerc', number: 16, team: 'Ferrari' },
-  { id: 'sainz', firstName: 'Carlos', lastName: 'Sainz', fullName: 'Carlos Sainz', number: 55, team: 'Ferrari' },
+  {
+    id: 'verstappen',
+    firstName: 'Max',
+    lastName: 'Verstappen',
+    fullName: 'Max Verstappen',
+    number: 1,
+    team: 'Red Bull Racing',
+  },
+  {
+    id: 'hamilton',
+    firstName: 'Lewis',
+    lastName: 'Hamilton',
+    fullName: 'Lewis Hamilton',
+    number: 44,
+    team: 'Mercedes',
+  },
+  {
+    id: 'norris',
+    firstName: 'Lando',
+    lastName: 'Norris',
+    fullName: 'Lando Norris',
+    number: 4,
+    team: 'McLaren',
+  },
+  {
+    id: 'leclerc',
+    firstName: 'Charles',
+    lastName: 'Leclerc',
+    fullName: 'Charles Leclerc',
+    number: 16,
+    team: 'Ferrari',
+  },
+  {
+    id: 'sainz',
+    firstName: 'Carlos',
+    lastName: 'Sainz',
+    fullName: 'Carlos Sainz',
+    number: 55,
+    team: 'Ferrari',
+  },
 ];
 
 /**
@@ -181,10 +221,15 @@ export const mockTimelineEntries: TimelineEntry[] = [
  */
 export function generateMockEntries(count: number): TimelineEntry[] {
   const entries: TimelineEntry[] = [];
-  const priorities: Array<'low' | 'medium' | 'high' | 'critical'> = ['low', 'medium', 'high', 'critical'];
+  const priorities: Array<'low' | 'medium' | 'high' | 'critical'> = [
+    'low',
+    'medium',
+    'high',
+    'critical',
+  ];
   const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
   const icons = ['safety-car', 'flag', 'stop', 'check', 'pit-stop', 'overtake', 'drs'];
-  
+
   for (let i = 0; i < count; i++) {
     entries.push({
       id: `mock-${i}`,
@@ -200,7 +245,7 @@ export function generateMockEntries(count: number): TimelineEntry[] {
       color: colors[Math.floor(Math.random() * colors.length)],
     });
   }
-  
+
   return entries;
 }
 

@@ -1,8 +1,8 @@
 /**
  * Live Timing Transformer
- * 
+ *
  * Transforms raw OpenF1 live timing data into normalized leaderboard entries.
- * 
+ *
  * Features:
  * - Position change detection
  * - Gap/interval formatting
@@ -11,7 +11,12 @@
  * - DRS status parsing
  */
 
-import type { LeaderboardEntry, OpenF1LiveTiming, TireCompound, PitStatus } from '../../types/leaderboard.types';
+import type {
+  LeaderboardEntry,
+  OpenF1LiveTiming,
+  TireCompound,
+  PitStatus,
+} from '../../types/leaderboard.types';
 
 /**
  * Tire compound color mapping
@@ -48,13 +53,11 @@ export function transformLiveTiming(
 
   return rawTiming.data.map((driverData) => {
     // Find previous entry for position change detection
-    const previousEntry = previousEntries.find(
-      (e) => e.driver.number === driverData.driver_number
-    );
+    const previousEntry = previousEntries.find((e) => e.driver.number === driverData.driver_number);
 
     // Parse tire compound
     const compound = parseTireCompound(driverData.tire_compound || 'UNKNOWN');
-    
+
     // Determine pit status
     const pitStatus = determinePitStatus(driverData);
 
@@ -89,13 +92,13 @@ export function transformLiveTiming(
  */
 function parseTireCompound(compound: string): TireCompound {
   const normalized = compound.toUpperCase();
-  
+
   if (normalized.includes('SOFT')) return 'SOFT';
   if (normalized.includes('MEDIUM')) return 'MEDIUM';
   if (normalized.includes('HARD')) return 'HARD';
   if (normalized.includes('INTERMEDIATE')) return 'INTERMEDIATE';
   if (normalized.includes('WET') || normalized.includes('FULL')) return 'WET';
-  
+
   return 'MEDIUM'; // Default fallback
 }
 
@@ -122,15 +125,15 @@ function formatGap(gap?: number): string {
   if (gap === undefined || gap === null) {
     return '---';
   }
-  
+
   if (gap < 0) {
     return 'LAP'; // Lapped cars
   }
-  
+
   if (gap === 0) {
     return 'LEADER';
   }
-  
+
   return `+${gap.toFixed(3)}`;
 }
 
@@ -156,7 +159,7 @@ export function calculatePositionChange(
   previous: number
 ): { direction: 'up' | 'down' | 'same'; change: number; color: 'green' | 'red' | 'gray' } {
   const change = previous - current; // Positive = gained positions
-  
+
   if (change > 0) {
     return { direction: 'up', change, color: 'green' };
   }

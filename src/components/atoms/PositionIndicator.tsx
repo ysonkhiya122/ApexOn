@@ -1,8 +1,8 @@
 /**
  * Position Indicator Component
- * 
+ *
  * Shows position change with arrow and color coding.
- * 
+ *
  * Features:
  * - ↑ Green for gained positions
  * - ↓ Red for lost positions
@@ -21,7 +21,7 @@ interface PositionIndicatorProps {
 
 export const PositionIndicator: React.FC<PositionIndicatorProps> = ({ current, previous }) => {
   const change = previous - current; // Positive = gained positions
-  
+
   if (change > 0) {
     return (
       <div className="position-indicator position-indicator--gained">
@@ -30,16 +30,18 @@ export const PositionIndicator: React.FC<PositionIndicatorProps> = ({ current, p
       </div>
     );
   }
-  
+
   if (change < 0) {
     return (
       <div className="position-indicator position-indicator--lost">
         <ArrowDown size={14} />
-        <span className="position-indicator__value">{Math.abs(change) > 99 ? '99+' : Math.abs(change)}</span>
+        <span className="position-indicator__value">
+          {Math.abs(change) > 99 ? '99+' : Math.abs(change)}
+        </span>
       </div>
     );
   }
-  
+
   return (
     <div className="position-indicator position-indicator--same">
       <Minus size={14} />

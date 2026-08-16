@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CURRENT_SEASON } from '../../utils/season';
 
 interface StandingsUIState {
   selectedSeason: string;
@@ -6,7 +7,7 @@ interface StandingsUIState {
 }
 
 const initialState: StandingsUIState = {
-  selectedSeason: '2024',
+  selectedSeason: CURRENT_SEASON,
   standingsType: 'drivers',
 };
 

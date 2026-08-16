@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetScheduleQuery } from '../../../store/services/jolpicaService';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { seasonOptions } from '../../../utils/season';
 import { setSelectedYear } from '../../../store/slices/filtersSlice';
 
 import { DropdownFilter } from '@/components/molecules/dropdown-filter';
@@ -11,15 +11,12 @@ import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import './schedule.scss';
 
 export const SchedulePage: React.FC = () => {
-  const dispatch = useDispatch();
-  const selectedYear = useSelector((state: RootState) => state.filters.selectedYear);
+  const dispatch = useAppDispatch();
+  const selectedYear = useAppSelector((state) => state.filters.selectedYear);
 
   const { data, isLoading, isError } = useGetScheduleQuery(selectedYear);
 
-  const yearOptions = Array.from({ length: 2026 - 1950 + 1 }, (_, i) => {
-    const yr = (2026 - i).toString();
-    return { value: yr, label: `${yr}` };
-  });
+  const yearOptions = seasonOptions();
 
   const races = data || [];
 
@@ -27,14 +24,18 @@ export const SchedulePage: React.FC = () => {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-slate-100">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-6 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-red-500 uppercase tracking-tight">Schedule</h1>
-          <p className="text-slate-400 mt-1">Review dates, host cities, and completed race records.</p>
+          <h1 className="text-3xl font-extrabold text-red-500 uppercase tracking-tight">
+            Schedule
+          </h1>
+          <p className="text-slate-400 mt-1">
+            Review dates, host cities, and completed race records.
+          </p>
         </div>
         <DropdownFilter
           label="Select Year"
           value={selectedYear}
           options={yearOptions}
-          onChange={(val: any) => dispatch(setSelectedYear(val))}
+          onChange={(val) => dispatch(setSelectedYear(val))}
           className="w-full sm:w-48"
         />
       </div>
@@ -47,8 +48,12 @@ export const SchedulePage: React.FC = () => {
         </div>
       ) : isError ? (
         <div className="text-center py-12 border border-slate-800 rounded-xl bg-slate-900/20">
-          <p className="text-rose-400 font-semibold">Error retrieving the requested season plans.</p>
-          <p className="text-xs text-slate-500 mt-1">Verify target constraints or retry navigation feeds.</p>
+          <p className="text-rose-400 font-semibold">
+            Error retrieving the requested season plans.
+          </p>
+          <p className="text-xs text-slate-500 mt-1">
+            Verify target constraints or retry navigation feeds.
+          </p>
         </div>
       ) : races.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -103,7 +108,9 @@ export const SchedulePage: React.FC = () => {
           })}
         </div>
       ) : (
-        <div className="text-center py-12 text-slate-500">No race schedule files currently mapped.</div>
+        <div className="text-center py-12 text-slate-500">
+          No race schedule files currently mapped.
+        </div>
       )}
     </div>
   );

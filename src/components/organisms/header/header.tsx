@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Trophy, Calendar, BarChart3, ChevronDown, Users, MapPin, BookOpen, Info, Gamepad2, User, Globe } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import {
+  Menu,
+  X,
+  Trophy,
+  Calendar,
+  BarChart3,
+  ChevronDown,
+  Users,
+  MapPin,
+  BookOpen,
+  Info,
+  Gamepad2,
+  User,
+  Globe,
+} from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setLanguage, LanguageCode } from '../../../store/slices/languageSlice';
 import { useTranslation } from '../../../hooks/useTranslation';
 import './header.scss';
@@ -12,9 +25,9 @@ export const Header: React.FC = () => {
   const [championshipOpen, setChampionshipOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t, currentLang } = useTranslation();
-  const profile = useSelector((state: RootState) => state.fanProfile);
+  const profile = useAppSelector((state) => state.fanProfile);
 
   const primaryNav = [
     { name: t('nav.home'), path: '/', icon: Trophy },
@@ -77,13 +90,19 @@ export const Header: React.FC = () => {
           {/* Championship Dropdown */}
           <div className="f1-header__dropdown" onMouseLeave={() => setChampionshipOpen(false)}>
             <button
+              type="button"
               className="f1-header__dropdown-trigger"
               onClick={() => setChampionshipOpen(!championshipOpen)}
               onMouseEnter={() => setChampionshipOpen(true)}
+              aria-expanded={championshipOpen}
+              aria-haspopup="true"
             >
               <Users size={16} />
               <span>Championship</span>
-              <ChevronDown size={14} className={`f1-header__chevron ${championshipOpen ? 'f1-header__chevron--open' : ''}`} />
+              <ChevronDown
+                size={14}
+                className={`f1-header__chevron ${championshipOpen ? 'f1-header__chevron--open' : ''}`}
+              />
             </button>
             <div className={`f1-header__menu ${championshipOpen ? 'f1-header__menu--open' : ''}`}>
               {championshipNav.map((item) => {
@@ -106,12 +125,18 @@ export const Header: React.FC = () => {
           {/* More Dropdown */}
           <div className="f1-header__dropdown" onMouseLeave={() => setMoreOpen(false)}>
             <button
+              type="button"
               className="f1-header__dropdown-trigger"
               onClick={() => setMoreOpen(!moreOpen)}
               onMouseEnter={() => setMoreOpen(true)}
+              aria-expanded={moreOpen}
+              aria-haspopup="true"
             >
               <span>More</span>
-              <ChevronDown size={14} className={`f1-header__chevron ${moreOpen ? 'f1-header__chevron--open' : ''}`} />
+              <ChevronDown
+                size={14}
+                className={`f1-header__chevron ${moreOpen ? 'f1-header__chevron--open' : ''}`}
+              />
             </button>
             <div className={`f1-header__menu ${moreOpen ? 'f1-header__menu--open' : ''}`}>
               {moreNav.map((item) => {
@@ -135,11 +160,12 @@ export const Header: React.FC = () => {
         {/* Language picker + Profile */}
         <div className="f1-header__actions">
           <div className="f1-header__lang">
-            <Globe size={14} className="f1-header__lang-icon" />
+            <Globe size={14} className="f1-header__lang-icon" aria-hidden="true" />
             <select
               value={currentLang}
               onChange={handleLangChange}
               className="f1-header__lang-select"
+              aria-label="Select language"
             >
               <option value="en">EN</option>
               <option value="es">ES</option>
@@ -158,8 +184,11 @@ export const Header: React.FC = () => {
 
         {/* Mobile Toggle */}
         <button
+          type="button"
           onClick={() => setMobileOpen(!mobileOpen)}
           className="f1-header__mobile-toggle"
+          aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../store/hooks';
 import { registerStart, registerSuccess } from '../../store/slices/authSlice';
 import { useTranslation } from '../../hooks/useTranslation';
 import { Button } from '@/components/atoms/button';
 import './auth.scss';
 
 export const RegisterForm: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -119,16 +119,9 @@ export const RegisterForm: React.FC = () => {
             />
           </div>
 
-          {validationError && (
-            <div className="auth-form__error">{validationError}</div>
-          )}
+          {validationError && <div className="auth-form__error">{validationError}</div>}
 
-          <Button
-            type="submit"
-            variant="primary"
-            className="auth-form__submit"
-            isLoading={false}
-          >
+          <Button type="submit" variant="primary" className="auth-form__submit" isLoading={false}>
             {t('auth.register.submit')}
           </Button>
 

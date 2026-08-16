@@ -1,12 +1,12 @@
 /**
  * Race State Slice
- * 
+ *
  * Manages live race state including:
  * - Timeline entries (incremental updates)
  * - Race control messages
  * - Pit stops
  * - Session status
- * 
+ *
  * Uses incremental updates to prevent unnecessary re-processing.
  */
 
@@ -50,53 +50,52 @@ const raceStateSlice = createSlice({
      */
     updateRaceControl: (state, action: PayloadAction<RaceControlMessage[]>) => {
       state.raceControl = action.payload;
-      
+
       // INCREMENTAL update (NOT rebuild everything)
-      state.timeline = addTimelineEntries(
-        state.timeline,
-        action.payload,
-        state.pitStops,
-        { drivers: state.drivers, sessionStatus: state.sessionStatus }
-      );
+      state.timeline = addTimelineEntries(state.timeline, action.payload, state.pitStops, {
+        drivers: state.drivers,
+        sessionStatus: state.sessionStatus,
+      });
     },
-    
+
     /**
      * Update pit stops (INCREMENTAL).
      * Automatically rebuilds timeline with new entries only.
      */
     updatePitStops: (state, action: PayloadAction<PitStop[]>) => {
       state.pitStops = action.payload;
-      
+
       // INCREMENTAL update (NOT rebuild everything)
-      state.timeline = addTimelineEntries(
-        state.timeline,
-        state.raceControl,
-        action.payload,
-        { drivers: state.drivers, sessionStatus: state.sessionStatus }
-      );
+      state.timeline = addTimelineEntries(state.timeline, state.raceControl, action.payload, {
+        drivers: state.drivers,
+        sessionStatus: state.sessionStatus,
+      });
     },
-    
+
     /**
      * Update drivers list.
      */
     updateDrivers: (state, action: PayloadAction<Driver[]>) => {
       state.drivers = action.payload;
     },
-    
+
     /**
      * Update session status.
      */
-    updateSessionStatus: (state, action: PayloadAction<'scheduled' | 'live' | 'completed' | 'aborted'>) => {
+    updateSessionStatus: (
+      state,
+      action: PayloadAction<'scheduled' | 'live' | 'completed' | 'aborted'>
+    ) => {
       state.sessionStatus = action.payload;
     },
-    
+
     /**
      * Set loading state.
      */
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    
+
     /**
      * Set error state.
      */
@@ -105,7 +104,7 @@ const raceStateSlice = createSlice({
       state.errorMessage = action.payload;
       state.isLoading = false;
     },
-    
+
     /**
      * Clear timeline (for new session).
      */

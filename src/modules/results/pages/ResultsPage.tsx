@@ -1,7 +1,11 @@
 import React from 'react';
-import { useGetScheduleQuery, useGetRaceResultsQuery, useGetDriverStandingsQuery } from '../../../store/services/jolpicaService';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import {
+  useGetScheduleQuery,
+  useGetRaceResultsQuery,
+  useGetDriverStandingsQuery,
+} from '../../../store/services/jolpicaService';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { seasonOptions } from '../../../utils/season';
 import { setSelectedYear, setSelectedRound } from '../../../store/slices/filtersSlice';
 
 import { DropdownFilter } from '@/components/molecules/dropdown-filter';
@@ -11,23 +15,21 @@ import { Award } from 'lucide-react';
 import './results.scss';
 
 export const ResultsPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const { selectedYear, selectedRound } = useSelector((state: RootState) => state.filters);
+  const dispatch = useAppDispatch();
+  const { selectedYear, selectedRound } = useAppSelector((state) => state.filters);
 
   const { data: scheduleData } = useGetScheduleQuery(selectedYear);
   const { data: resultsData, isLoading: resultsLoading } = useGetRaceResultsQuery({
     year: selectedYear,
     round: selectedRound,
   });
-  const { data: standingsData, isLoading: standingsLoading } = useGetDriverStandingsQuery(selectedYear);
+  const { data: standingsData, isLoading: standingsLoading } =
+    useGetDriverStandingsQuery(selectedYear);
 
-  const yearOptions = Array.from({ length: 2026 - 1950 + 1 }, (_, i) => {
-    const yr = (2026 - i).toString();
-    return { value: yr, label: `${yr}` };
-  });
+  const yearOptions = seasonOptions();
 
   const rounds = scheduleData || [];
-  const roundOptions = rounds.map((r: any) => ({
+  const roundOptions = rounds.map((r) => ({
     value: String(r.round),
     label: `Round ${r.round} - ${r.name}`,
   }));
@@ -42,14 +44,16 @@ export const ResultsPage: React.FC = () => {
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between border-b border-slate-800 pb-6 mb-8">
         <div>
           <h1 className="text-3xl font-extrabold text-red-500 uppercase tracking-tight">Results</h1>
-          <p className="text-slate-400 mt-1">Review podium finishes or end-of-year standings charts.</p>
+          <p className="text-slate-400 mt-1">
+            Review podium finishes or end-of-year standings charts.
+          </p>
         </div>
         <div className="flex flex-wrap gap-3">
           <DropdownFilter
             label="Season"
             value={selectedYear}
             options={yearOptions}
-            onChange={(val: any) => {
+            onChange={(val) => {
               dispatch(setSelectedYear(val));
               dispatch(setSelectedRound('1'));
             }}
@@ -60,7 +64,7 @@ export const ResultsPage: React.FC = () => {
               label="Grand Prix"
               value={selectedRound}
               options={roundOptions}
-              onChange={(val: any) => dispatch(setSelectedRound(val))}
+              onChange={(val) => dispatch(setSelectedRound(val))}
               className="w-64"
             />
           )}
@@ -100,19 +104,26 @@ export const ResultsPage: React.FC = () => {
                         idx === 0
                           ? 'text-yellow-400 font-bold'
                           : idx === 1
-                          ? 'text-slate-300 font-bold'
-                          : 'text-amber-600 font-bold';
+                            ? 'text-slate-300 font-bold'
+                            : 'text-amber-600 font-bold';
 
                       return (
                         <tr key={idx} className="hover:bg-slate-800/30 transition-colors">
-                          <td className={`px-4 py-3.5 font-mono ${isPodium ? podiumColor : 'text-slate-400'}`}>
+                          <td
+                            className={`px-4 py-3.5 font-mono ${isPodium ? podiumColor : 'text-slate-400'}`}
+                          >
                             {item.position}
                           </td>
                           <td className="px-4 py-3.5 text-slate-100 font-medium">
-                            {item.Driver?.givenName || 'Unknown'} {item.Driver?.familyName || 'Driver'}
+                            {item.Driver?.givenName || 'Unknown'}{' '}
+                            {item.Driver?.familyName || 'Driver'}
                           </td>
-                          <td className="px-4 py-3.5 text-slate-400">{item.Constructor?.name || 'Unknown'}</td>
-                          <td className="px-4 py-3.5 font-bold text-red-400 font-mono">{item.points}</td>
+                          <td className="px-4 py-3.5 text-slate-400">
+                            {item.Constructor?.name || 'Unknown'}
+                          </td>
+                          <td className="px-4 py-3.5 font-bold text-red-400 font-mono">
+                            {item.points}
+                          </td>
                           <td className="px-4 py-3.5 text-xs font-mono text-slate-400">
                             {item.Time?.time || item.status}
                           </td>
@@ -147,7 +158,9 @@ export const ResultsPage: React.FC = () => {
               {standings.map((entry: any, idx: number) => (
                 <div key={idx} className="flex items-center justify-between py-3">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-sm font-bold text-slate-500 w-4">{entry.position}</span>
+                    <span className="font-mono text-sm font-bold text-slate-500 w-4">
+                      {entry.position}
+                    </span>
                     <span className="text-sm font-semibold text-slate-100">
                       {entry.driver?.firstName || 'Unknown'} {entry.driver?.lastName || 'Driver'}
                     </span>

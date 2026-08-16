@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { useAppSelector } from '../store/hooks';
 import en from '../locales/en.json';
 import es from '../locales/es.json';
 import fr from '../locales/fr.json';
@@ -8,7 +7,7 @@ import de from '../locales/de.json';
 const translations: Record<string, any> = { en, es, fr, de };
 
 export const useTranslation = () => {
-  const currentLang = useSelector((state: RootState) => state.language.currentLanguage);
+  const currentLang = useAppSelector((state) => state.language.currentLanguage);
 
   const t = (path: string): string => {
     const keys = path.split('.');

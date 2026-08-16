@@ -58,7 +58,9 @@ export const HallOfFame: React.FC = () => {
           <h2 className="text-xl font-bold text-slate-100 uppercase tracking-tight flex items-center gap-2">
             Hall of Fame
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">Honoring exceptional individuals establishing racing standards.</p>
+          <p className="text-xs text-slate-400 mt-0.5">
+            Honoring exceptional individuals establishing racing standards.
+          </p>
         </div>
       </div>
 
@@ -75,14 +77,17 @@ export const HallOfFame: React.FC = () => {
               }`}
             >
               <span>{l.name}</span>
-              <Trophy size={16} className={activeLegend === l.id ? 'text-white' : 'text-slate-600'} />
+              <Trophy
+                size={16}
+                className={activeLegend === l.id ? 'text-white' : 'text-slate-600'}
+              />
             </button>
           ))}
         </div>
 
         <div className="md:col-span-2 rounded-xl bg-slate-950 p-5 border border-slate-800/80 relative overflow-hidden flex flex-col justify-between shadow-inner">
           <div className="absolute right-0 top-0 h-40 w-40 translate-x-12 -translate-y-12 bg-yellow-500/5 blur-3xl rounded-full" />
-          
+
           <div>
             <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
               <h3 className="text-xl font-black italic text-slate-100">{currentLegend.name}</h3>
@@ -95,7 +100,9 @@ export const HallOfFame: React.FC = () => {
               <History size={14} className="text-red-500" /> ACTIVE: {currentLegend.activeYears}
             </span>
 
-            <p className="text-sm font-bold text-red-400 mb-2 leading-snug">{currentLegend.legacy}</p>
+            <p className="text-sm font-bold text-red-400 mb-2 leading-snug">
+              {currentLegend.legacy}
+            </p>
             <p className="text-sm text-slate-300 leading-relaxed">{currentLegend.details}</p>
           </div>
 

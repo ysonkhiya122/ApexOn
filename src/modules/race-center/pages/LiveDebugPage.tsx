@@ -1,8 +1,8 @@
 /**
  * Live Debug Page — TASK 7 Testing
- * 
+ *
  * CRITICAL: This is for testing ONLY. Do not use in production.
- * 
+ *
  * Monitors:
  * - Session status
  * - Polling interval
@@ -14,11 +14,11 @@
 
 import React, { useEffect, useState, useMemo } from 'react';
 import { useGetSessionsQuery, useGetLiveTimingQuery } from '../../../store/services/openF1Service';
-import { 
-  findActiveSession, 
-  getSessionStatus, 
+import {
+  findActiveSession,
+  getSessionStatus,
   getPollingInterval,
-  getSessionName 
+  getSessionName,
 } from '../../../utils/race/sessionDiscovery';
 import { Badge } from '@/components/atoms/badge';
 import './LiveDebugPage.scss';
@@ -28,11 +28,12 @@ export const LiveDebugPage: React.FC = () => {
   const [errorCount, setErrorCount] = useState(0);
   const [requestCount, setRequestCount] = useState(0);
   const [latencies, setLatencies] = useState<number[]>([]);
-  const [startTime] = useState(Date.now());
+  const [startTime] = useState(() => Date.now());
+  const [now, setNow] = useState(() => Date.now());
 
   // Session discovery
   const { data: sessionsData } = useGetSessionsQuery({});
-  
+
   // Find active session
   const activeSession = useMemo(() => {
     if (!sessionsData || !Array.isArray(sessionsData)) {
@@ -53,23 +54,15 @@ export const LiveDebugPage: React.FC = () => {
       return 0;
     }
 
-    const sessionType = activeSession?.session_type as
-      | 'race'
-      | 'qualifying'
-      | 'practice'
-      | 'ended'
-      | 'none' || 'none';
+    const sessionType =
+      (activeSession?.session_type as 'race' | 'qualifying' | 'practice' | 'ended' | 'none') ||
+      'none';
 
     return Math.max(getPollingInterval(sessionType, document.visibilityState === 'visible'), 10000);
   }, [activeSession, sessionStatus]);
 
   // Live timing query
-  const { 
-    isLoading,
-    isFetching,
-    error,
-    data,
-  } = useGetLiveTimingQuery(
+  const { isLoading, isFetching, error, data } = useGetLiveTimingQuery(
     activeSession?.session_key ?? 0,
     {
       pollingInterval,
@@ -77,16 +70,19 @@ export const LiveDebugPage: React.FC = () => {
     }
   );
 
-  // Track metrics
+  // Track metrics. Counting query lifecycle events is exactly the
+  // "subscribe to an external system" case the rule carves out, but it can't
+  // see through RTK Query's flags — so it's suppressed deliberately here.
   useEffect(() => {
     if (isFetching) {
-      setRequestCount(prev => prev + 1);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setRequestCount((prev) => prev + 1);
       const latency = Date.now() - startTime;
-      setLatencies(prev => [...prev.slice(-99), latency]); // Keep last 100
+      setLatencies((prev) => [...prev.slice(-99), latency]); // Keep last 100
     }
 
     if (error) {
-      setErrorCount(prev => prev + 1);
+      setErrorCount((prev) => prev + 1);
     }
   }, [isFetching, error, startTime]);
 
@@ -96,26 +92,29 @@ export const LiveDebugPage: React.FC = () => {
     return Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length);
   }, [latencies]);
 
-  // Calculate uptime
+  // Calculate uptime from a ticking clock rather than reading Date.now()
+  // during render (which is impure and made the value unstable).
   const uptime = useMemo(() => {
-    const seconds = Math.floor((Date.now() - startTime) / 1000);
+    const seconds = Math.max(0, Math.floor((now - startTime) / 1000));
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}m ${secs}s`;
-  }, [startTime, requestCount]); // Update on request
+  }, [startTime, now]);
 
-  // Force re-render for uptime display
+  // Drive the uptime display.
   useEffect(() => {
     const interval = setInterval(() => {
-      // Trigger re-render
-      setRequestCount(prev => prev);
+      setNow(Date.now());
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
   // Render status badge
   const renderStatusBadge = () => {
-    const statusConfig: Record<string, { color: 'green' | 'yellow' | 'slate' | 'red', label: string }> = {
+    const statusConfig: Record<
+      string,
+      { color: 'green' | 'yellow' | 'slate' | 'red'; label: string }
+    > = {
       live: { color: 'green', label: 'LIVE' },
       upcoming: { color: 'yellow', label: 'UPCOMING' },
       ended: { color: 'slate', label: 'ENDED' },
@@ -125,7 +124,11 @@ export const LiveDebugPage: React.FC = () => {
     const status = sessionStatus as keyof typeof statusConfig;
     const config = statusConfig[status] || statusConfig.none;
 
-    return <Badge variant={config.color} className="debug-page__status">{config.label}</Badge>;
+    return (
+      <Badge variant={config.color} className="debug-page__status">
+        {config.label}
+      </Badge>
+    );
   };
 
   return (
@@ -152,7 +155,9 @@ export const LiveDebugPage: React.FC = () => {
           </div>
           <div className="live-debug-page__metric">
             <span className="live-debug-page__metric-label">Session Key:</span>
-            <span className="live-debug-page__metric-value">{activeSession?.session_key ?? 'N/A'}</span>
+            <span className="live-debug-page__metric-value">
+              {activeSession?.session_key ?? 'N/A'}
+            </span>
           </div>
           <div className="live-debug-page__metric">
             <span className="live-debug-page__metric-label">Polling:</span>
@@ -177,7 +182,9 @@ export const LiveDebugPage: React.FC = () => {
           </div>
           <div className="live-debug-page__metric">
             <span className="live-debug-page__metric-label">Errors:</span>
-            <span className="live-debug-page__metric-value live-debug-page__error">{errorCount}</span>
+            <span className="live-debug-page__metric-value live-debug-page__error">
+              {errorCount}
+            </span>
           </div>
         </div>
 
@@ -194,11 +201,15 @@ export const LiveDebugPage: React.FC = () => {
           </div>
           <div className="live-debug-page__metric">
             <span className="live-debug-page__metric-label">Drivers:</span>
-            <span className="live-debug-page__metric-value">{Array.isArray(data) ? data.length : 0}</span>
+            <span className="live-debug-page__metric-value">
+              {Array.isArray(data) ? data.length : 0}
+            </span>
           </div>
           <div className="live-debug-page__metric">
             <span className="live-debug-page__metric-label">Has Error:</span>
-            <span className="live-debug-page__metric-value live-debug-page__error">{error ? 'Yes' : 'No'}</span>
+            <span className="live-debug-page__metric-value live-debug-page__error">
+              {error ? 'Yes' : 'No'}
+            </span>
           </div>
         </div>
 
@@ -240,3 +251,5 @@ export const LiveDebugPage: React.FC = () => {
     </div>
   );
 };
+
+export default LiveDebugPage;

@@ -1,11 +1,15 @@
+import { Suspense, lazy } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../store';
 import { Header } from '../components/organisms/header';
 import { Footer } from '../components/organisms/footer';
 import { Preloader } from '../components/organisms/preloader';
-import { ChatDock } from '../modules/ai';
 import { AppRoutes } from './routes/AppRoutes';
+
+// Floating assistant is never needed for first paint — defer it off the
+// critical path so it doesn't tax the initial download.
+const ChatDock = lazy(() => import('../modules/ai').then((m) => ({ default: m.ChatDock })));
 
 export default function App() {
   return (
@@ -18,7 +22,9 @@ export default function App() {
             <AppRoutes />
           </main>
           <Footer />
-          <ChatDock />
+          <Suspense fallback={null}>
+            <ChatDock />
+          </Suspense>
         </div>
       </Router>
     </Provider>

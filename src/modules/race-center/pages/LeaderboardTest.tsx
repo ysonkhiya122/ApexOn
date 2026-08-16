@@ -1,40 +1,36 @@
 /**
  * Leaderboard Test Page
- * 
+ *
  * Tests leaderboard with mock data.
  * Use this to verify all features work correctly.
- * 
+ *
  * Access at: /race-center/test-leaderboard
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../store/hooks';
 import { LeaderboardPanel } from '../../../components/organisms/LeaderboardPanel';
 import { updateLeaderboard, updateSessionStatus } from '../../../store/slices/leaderboardSlice';
 import { mockLeaderboardEntries } from '../../../utils/leaderboard/mockData';
 import './race-center.scss';
 
 export const LeaderboardTest: React.FC = () => {
-  const dispatch = useDispatch();
-  
+  const dispatch = useAppDispatch();
+
   // Load mock data on mount
   useEffect(() => {
     dispatch(updateLeaderboard(mockLeaderboardEntries));
     dispatch(updateSessionStatus('live'));
   }, [dispatch]);
-  
+
   return (
     <div className="race-center-page">
       <div className="race-center-page__header">
         <h1 className="race-center-page__title">Leaderboard (Test Mode)</h1>
-        <p className="race-center-page__subtitle">
-          Testing leaderboard with mock data
-        </p>
-        <div className="race-center-test__badge">
-          🧪 Test Mode - Mock Data
-        </div>
+        <p className="race-center-page__subtitle">Testing leaderboard with mock data</p>
+        <div className="race-center-test__badge">🧪 Test Mode - Mock Data</div>
       </div>
-      
+
       <div className="race-center-page__content">
         {/* Leaderboard Panel */}
         <div className="race-center-page__timeline">
@@ -49,7 +45,7 @@ export const LeaderboardTest: React.FC = () => {
           </div>
           <LeaderboardPanel />
         </div>
-        
+
         {/* Test Info Sidebar */}
         <div className="race-center-page__sidebar">
           <div className="race-center-test__card">
@@ -67,7 +63,7 @@ export const LeaderboardTest: React.FC = () => {
               <li>✅ Mobile responsive</li>
             </ul>
           </div>
-          
+
           <div className="race-center-test__card">
             <h3>Mock Data</h3>
             <p>Drivers: {mockLeaderboardEntries.length} entries</p>
@@ -78,3 +74,5 @@ export const LeaderboardTest: React.FC = () => {
     </div>
   );
 };
+
+export default LeaderboardTest;

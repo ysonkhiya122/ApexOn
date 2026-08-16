@@ -1,6 +1,6 @@
 /**
  * Base API Types
- * 
+ *
  * These types represent the RAW API responses from external providers.
  * Components should NEVER use these directly.
  * Use normalized types from '../normalized/' instead.

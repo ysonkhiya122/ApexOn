@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../store/hooks';
 import { loginStart, loginSuccess, loginFailure } from '../../store/slices/authSlice';
 import { useTranslation } from '../../hooks/useTranslation';
 import { Button } from '@/components/atoms/button';
 import './auth.scss';
 
 export const LoginForm: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
 
-  const from = (location.state as any)?.from?.pathname || '/';
+  const from = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? '/';
 
   const validateForm = () => {
     if (!email || !password) {
@@ -92,16 +92,9 @@ export const LoginForm: React.FC = () => {
             />
           </div>
 
-          {validationError && (
-            <div className="auth-form__error">{validationError}</div>
-          )}
+          {validationError && <div className="auth-form__error">{validationError}</div>}
 
-          <Button
-            type="submit"
-            variant="primary"
-            className="auth-form__submit"
-            isLoading={false}
-          >
+          <Button type="submit" variant="primary" className="auth-form__submit" isLoading={false}>
             {t('auth.login.submit')}
           </Button>
 

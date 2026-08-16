@@ -1,0 +1,25 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Content-hashed assets are immutable — let browsers and the edge keep them
+# forever. This is what makes the vendor-chunk split actually pay off.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# SPA fallback. Harmless with HashRouter today, required when the app moves
+# to BrowserRouter.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

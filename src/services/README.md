@@ -32,6 +32,7 @@ services/
 ### 1. Components Never Know Raw API Shapes
 
 #### ❌ BEFORE (Bad):
+
 ```typescript
 // Component knows API structure
 const driver = data.MRData.DriverTable.Drivers[0];
@@ -39,6 +40,7 @@ return <div>{driver.givenName} {driver.familyName}</div>;
 ```
 
 #### ✅ AFTER (Good):
+
 ```typescript
 // Component knows normalized model
 const driver = useDriver(id); // Returns normalized Driver
@@ -50,6 +52,7 @@ return <div>{driver.fullName}</div>;
 ### 2. All Transformations in Adapters
 
 #### ❌ BEFORE (Bad):
+
 ```typescript
 // Component does transformation
 const fullName = `${driver.givenName} ${driver.familyName}`;
@@ -57,6 +60,7 @@ const points = parseFloat(driver.points);
 ```
 
 #### ✅ AFTER (Good):
+
 ```typescript
 // Adapter does transformation
 const driver = transformDriver(rawDriver);
@@ -69,14 +73,16 @@ const driver = transformDriver(rawDriver);
 ### 3. Centralized Formatting Logic
 
 #### ❌ BEFORE (Bad):
+
 ```typescript
 // Each component formats differently
-component1: `${d.givenName} ${d.familyName}`
-component2: `${driver.givenName}  ${driver.familyName}`
-component3: `${data.givenName} ${data.familyName}`
+component1: `${d.givenName} ${d.familyName}`;
+component2: `${driver.givenName}  ${driver.familyName}`;
+component3: `${data.givenName} ${data.familyName}`;
 ```
 
 #### ✅ AFTER (Good):
+
 ```typescript
 // Single source of truth
 formatDriverName(driver, 'full'); // "Max Verstappen"
@@ -132,11 +138,11 @@ import { transformDrivers } from '@/services';
 
 export const useDrivers = (year: string) => {
   const { data, isLoading, isError } = useGetDriversQuery(year);
-  
+
   const drivers = useMemo(() => {
     return transformDrivers(data?.MRData?.DriverTable?.Drivers || []);
   }, [data]);
-  
+
   return { drivers, isLoading, isError };
 };
 
@@ -151,34 +157,34 @@ const { drivers } = useDrivers('2024');
 
 ### Driver Adapter
 
-| Function | Purpose | Input | Output |
-|----------|---------|-------|--------|
-| `transformDriver()` | Single driver | `JolpicaDriver` | `Driver` |
-| `transformDrivers()` | Multiple drivers | `JolpicaDriver[]` | `Driver[]` |
-| `transformDriverStanding()` | Standing entry | `JolpicaStanding` | `DriverStanding` |
-| `calculateDriverStats()` | Career stats | `JolpicaResult[]` | `DriverStats` |
-| `formatDriverName()` | Name formatting | `Driver, format` | `string` |
-| `getNationalityFlag()` | Flag emoji | `nationality` | `string` |
+| Function                    | Purpose          | Input             | Output           |
+| --------------------------- | ---------------- | ----------------- | ---------------- |
+| `transformDriver()`         | Single driver    | `JolpicaDriver`   | `Driver`         |
+| `transformDrivers()`        | Multiple drivers | `JolpicaDriver[]` | `Driver[]`       |
+| `transformDriverStanding()` | Standing entry   | `JolpicaStanding` | `DriverStanding` |
+| `calculateDriverStats()`    | Career stats     | `JolpicaResult[]` | `DriverStats`    |
+| `formatDriverName()`        | Name formatting  | `Driver, format`  | `string`         |
+| `getNationalityFlag()`      | Flag emoji       | `nationality`     | `string`         |
 
 ### Team Adapter
 
-| Function | Purpose | Input | Output |
-|----------|---------|-------|--------|
-| `transformTeam()` | Single team | `JolpicaConstructor` | `Team` |
-| `transformTeams()` | Multiple teams | `JolpicaConstructor[]` | `Team[]` |
-| `transformConstructorStanding()` | Standing entry | `JolpicaStanding` | `ConstructorStanding` |
-| `formatTeamName()` | Name formatting | `Team, format` | `string` |
+| Function                         | Purpose         | Input                  | Output                |
+| -------------------------------- | --------------- | ---------------------- | --------------------- |
+| `transformTeam()`                | Single team     | `JolpicaConstructor`   | `Team`                |
+| `transformTeams()`               | Multiple teams  | `JolpicaConstructor[]` | `Team[]`              |
+| `transformConstructorStanding()` | Standing entry  | `JolpicaStanding`      | `ConstructorStanding` |
+| `formatTeamName()`               | Name formatting | `Team, format`         | `string`              |
 
 ### Race Adapter
 
-| Function | Purpose | Input | Output |
-|----------|---------|-------|--------|
-| `transformCircuit()` | Single circuit | `JolpicaCircuit` | `Circuit` |
-| `transformRace()` | Single race | `JolpicaRace` | `Race` |
-| `transformRaceResult()` | Race result | `JolpicaResult` | `RaceResult` |
-| `formatRaceDate()` | Date formatting | `date, format` | `string` |
-| `formatLapTime()` | Lap time format | `timeMs` | `string` |
-| `formatRaceTime()` | Time formatting | `time, timezone` | `string` |
+| Function                | Purpose         | Input            | Output       |
+| ----------------------- | --------------- | ---------------- | ------------ |
+| `transformCircuit()`    | Single circuit  | `JolpicaCircuit` | `Circuit`    |
+| `transformRace()`       | Single race     | `JolpicaRace`    | `Race`       |
+| `transformRaceResult()` | Race result     | `JolpicaResult`  | `RaceResult` |
+| `formatRaceDate()`      | Date formatting | `date, format`   | `string`     |
+| `formatLapTime()`       | Lap time format | `timeMs`         | `string`     |
+| `formatRaceTime()`      | Time formatting | `time, timezone` | `string`     |
 
 ---
 
@@ -187,11 +193,13 @@ const { drivers } = useDrivers('2024');
 ### Step 1: Import from Services
 
 **Before:**
+
 ```typescript
 import { useGetDriversQuery } from '../../../store/services/jolpicaService';
 ```
 
 **After:**
+
 ```typescript
 import { useGetDriversQuery } from '@/services';
 ```
@@ -199,12 +207,14 @@ import { useGetDriversQuery } from '@/services';
 ### Step 2: Use Adapters
 
 **Before:**
+
 ```typescript
 const drivers = data.MRData.DriverTable.Drivers;
 const fullName = `${drivers[0].givenName} ${drivers[0].familyName}`;
 ```
 
 **After:**
+
 ```typescript
 const drivers = transformDrivers(data.MRData.DriverTable.Drivers);
 const fullName = drivers[0].fullName;
@@ -213,6 +223,7 @@ const fullName = drivers[0].fullName;
 ### Step 3: Use Normalized Types
 
 **Before:**
+
 ```typescript
 interface Props {
   driver: any; // Raw API object
@@ -220,6 +231,7 @@ interface Props {
 ```
 
 **After:**
+
 ```typescript
 import { Driver } from '@/services';
 
@@ -232,14 +244,14 @@ interface Props {
 
 ## 🎯 Benefits
 
-| Benefit | Description |
-|---------|-------------|
-| **Type Safety** | Full TypeScript support with normalized models |
-| **Maintainability** | Changes to API structure only affect adapters |
-| **Consistency** | Single source of truth for formatting |
-| **Testability** | Adapters can be unit tested independently |
-| **Scalability** | Easy to add new data sources |
-| **Backend Ready** | Easy to swap API sources when backend is built |
+| Benefit             | Description                                    |
+| ------------------- | ---------------------------------------------- |
+| **Type Safety**     | Full TypeScript support with normalized models |
+| **Maintainability** | Changes to API structure only affect adapters  |
+| **Consistency**     | Single source of truth for formatting          |
+| **Testability**     | Adapters can be unit tested independently      |
+| **Scalability**     | Easy to add new data sources                   |
+| **Backend Ready**   | Easy to swap API sources when backend is built |
 
 ---
 

@@ -6,7 +6,12 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'red' | 'slate' | 'green' | 'yellow' | 'blue';
 }
 
-export const Badge: React.FC<BadgeProps> = ({ variant = 'slate', className, children, ...props }) => {
+export const Badge: React.FC<BadgeProps> = ({
+  variant = 'slate',
+  className,
+  children,
+  ...props
+}) => {
   const variants = {
     red: 'bg-red-500/10 text-red-400 border-red-500/30',
     slate: 'bg-slate-500/10 text-slate-400 border-slate-500/30',

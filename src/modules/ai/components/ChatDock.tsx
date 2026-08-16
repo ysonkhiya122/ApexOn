@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { toggleChat, addMessage } from '../../../store/slices/chatSlice';
 import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 import './chat-dock.scss';
 
 export const ChatDock: React.FC = () => {
-  const dispatch = useDispatch();
-  const { chatOpen, messages } = useSelector((state: RootState) => state.chat);
+  const dispatch = useAppDispatch();
+  const { chatOpen, messages } = useAppSelector((state) => state.chat);
   const [inputText, setInputText] = useState('');
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -35,14 +34,18 @@ export const ChatDock: React.FC = () => {
 
     setTimeout(() => {
       const lowerQuery = userMsg.text.toLowerCase();
-      let reply = "That's an interesting F1 query! I'll map this into the performance logs. Feel free to ask about drivers, podium criteria, or tire flags.";
+      let reply =
+        "That's an interesting F1 query! I'll map this into the performance logs. Feel free to ask about drivers, podium criteria, or tire flags.";
 
       if (lowerQuery.includes('point') || lowerQuery.includes('points')) {
-        reply = 'Drivers in the Top 10 earn points (25, 18, 15, 12, 10, 8, 6, 4, 2, 1). Fastest lap scores 1 bonus point if the driver places in the top 10.';
+        reply =
+          'Drivers in the Top 10 earn points (25, 18, 15, 12, 10, 8, 6, 4, 2, 1). Fastest lap scores 1 bonus point if the driver places in the top 10.';
       } else if (lowerQuery.includes('tire') || lowerQuery.includes('tire')) {
-        reply = 'Teams choose from Hard (C1-C2), Medium (C3), or Soft (C4-C5) compounds. Each car must mount at least two unique configurations during full dry sessions.';
+        reply =
+          'Teams choose from Hard (C1-C2), Medium (C3), or Soft (C4-C5) compounds. Each car must mount at least two unique configurations during full dry sessions.';
       } else if (lowerQuery.includes('who') && lowerQuery.includes('champion')) {
-        reply = 'Lewis Hamilton and Michael Schumacher hold the elite record with 7 World Driver Championships each.';
+        reply =
+          'Lewis Hamilton and Michael Schumacher hold the elite record with 7 World Driver Championships each.';
       }
 
       dispatch(
@@ -60,38 +63,51 @@ export const ChatDock: React.FC = () => {
     <div className="f1-chat-dock">
       {!chatOpen && (
         <button
+          type="button"
           onClick={() => dispatch(toggleChat())}
+          aria-label="Open Apexon AI assistant"
           className="chat-trigger fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-red-600 text-white shadow-2xl hover:bg-red-700 hover:scale-105 active:scale-95 transition-all cursor-pointer"
         >
-          <MessageSquare size={24} />
+          <MessageSquare size={24} aria-hidden="true" />
         </button>
       )}
 
       {chatOpen && (
-        <div className="chat-window fixed bottom-6 right-6 z-40 flex h-[450px] w-80 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-2xl sm:w-96">
+        <div
+          role="dialog"
+          aria-label="Apexon AI assistant"
+          className="chat-window fixed bottom-6 right-6 z-40 flex h-[450px] w-80 flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-2xl sm:w-96"
+        >
           <div className="chat-header flex items-center justify-between bg-slate-950 px-4 py-3 border-b border-slate-800">
             <div className="flex items-center gap-2">
-              <Sparkles className="text-red-500 animate-pulse" size={18} />
-              <span className="text-sm font-extrabold uppercase tracking-widest text-slate-100">Apexon AI</span>
+              <Sparkles className="text-red-500 animate-pulse" size={18} aria-hidden="true" />
+              <span className="text-sm font-extrabold uppercase tracking-widest text-slate-100">
+                Apexon AI
+              </span>
             </div>
             <button
+              type="button"
               onClick={() => dispatch(toggleChat())}
+              aria-label="Close Apexon AI assistant"
               className="text-slate-400 hover:text-slate-100 transition-colors"
             >
-              <X size={18} />
+              <X size={18} aria-hidden="true" />
             </button>
           </div>
 
-          <div className="chat-messages flex-1 overflow-y-auto p-4 space-y-3 bg-slate-900/50">
+          <div
+            className="chat-messages flex-1 overflow-y-auto p-4 space-y-3 bg-slate-900/50"
+            role="log"
+            aria-live="polite"
+            aria-label="Conversation"
+          >
             {messages.map((msg) => {
               const isUser = msg.sender === 'user';
               return (
                 <div key={msg.id} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
                   <div
                     className={`max-w-[80%] rounded-lg px-3.5 py-2 text-sm leading-relaxed ${
-                      isUser
-                        ? 'chat-bubble--user'
-                        : 'chat-bubble--assistant'
+                      isUser ? 'chat-bubble--user' : 'chat-bubble--assistant'
                     }`}
                   >
                     {msg.text}
@@ -102,7 +118,10 @@ export const ChatDock: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          <form onSubmit={handleSend} className="chat-input flex gap-2 p-3 bg-slate-950 border-t border-slate-800">
+          <form
+            onSubmit={handleSend}
+            className="chat-input flex gap-2 p-3 bg-slate-950 border-t border-slate-800"
+          >
             <input
               type="text"
               value={inputText}
@@ -112,9 +131,11 @@ export const ChatDock: React.FC = () => {
             />
             <button
               type="submit"
-              className="flex h-9 w-9 items-center justify-center rounded bg-red-600 text-white hover:bg-red-700 transition-colors"
+              aria-label="Send message"
+              disabled={!inputText.trim()}
+              className="flex h-9 w-9 items-center justify-center rounded bg-red-600 text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              <Send size={16} />
+              <Send size={16} aria-hidden="true" />
             </button>
           </form>
         </div>

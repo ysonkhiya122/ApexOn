@@ -56,7 +56,7 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.error = null;
-      
+
       // Persist to localStorage
       localStorage.setItem('apexon_token', action.payload.token);
       localStorage.setItem('apexon_user', JSON.stringify(action.payload.user));
@@ -76,7 +76,7 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.error = null;
-      
+
       // Persist to localStorage
       localStorage.setItem('apexon_token', action.payload.token);
       localStorage.setItem('apexon_user', JSON.stringify(action.payload.user));
@@ -92,7 +92,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isLoading = false;
       state.error = null;
-      
+
       // Clear localStorage
       localStorage.removeItem('apexon_token');
       localStorage.removeItem('apexon_user');
